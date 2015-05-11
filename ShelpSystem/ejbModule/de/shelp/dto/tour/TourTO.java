@@ -114,4 +114,8 @@ public class TourTO {
 	this.status = status;
     }
 
+    public boolean isValid() {
+	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null && owner != null;
+    }
+
 }

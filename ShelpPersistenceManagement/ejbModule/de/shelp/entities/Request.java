@@ -5,6 +5,7 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -14,6 +15,7 @@ import de.shelp.enums.RequestStatus;
 public class Request {
 
     @Id
+    @GeneratedValue
     private long id;
     private User sourceUser;
     private User targetUser;

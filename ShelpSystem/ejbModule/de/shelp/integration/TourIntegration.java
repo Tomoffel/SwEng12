@@ -10,6 +10,9 @@ import org.jboss.ws.api.annotation.WebContext;
 import de.shelp.dao.local.ShelpTourDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.tour.TourTO;
+import de.shelp.enums.ReturnCode;
+import de.shelp.exception.ShelpException;
+import de.shelp.exception.TourNotValidException;
 import de.shelp.util.TourDtoAssembler;
 
 @WebService
@@ -33,9 +36,20 @@ public class TourIntegration {
     private TourDtoAssembler dtoAssembler;
 
     public ReturnCodeResponse createTour(TourTO tourTO, String sessionId) {
-	
-	return new ReturnCodeResponse();
+	ReturnCodeResponse response = new ReturnCodeResponse();
+	try {
+	    if (!tourTO.isValid()) {
+		LOGGER.warn("Es sind nicht alle Felder der Fahrt gefüllt.");
+		throw new TourNotValidException(ReturnCode.ERROR, "Es sind nicht alle Felder der Fahrt gefüllt.");
+	    } else {
+
+	    }
+	} catch (ShelpException ex) {
+	    response.setReturnCode(ex.getErrorCode());
+	    response.setMessage(ex.getMessage());
+	}
+
+	return response;
 
     }
-
 }

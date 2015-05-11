@@ -1,6 +1,7 @@
 package de.shelp.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -8,6 +9,7 @@ import javax.persistence.ManyToOne;
 public class WishlistItem {
 
     @Id
+    @GeneratedValue
     private int id;
     private String text;
     private boolean checked;
