@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity
+
 public class Wishlist {
 
     @Id
@@ -15,7 +15,7 @@ public class Wishlist {
     private long id;
     private User owner;
 
-    @OneToMany(mappedBy = "wishlist")
+//    @OneToMany(mappedBy = "wishlist")
     private List<WishlistItem> wishes;
 
     public long getId() {

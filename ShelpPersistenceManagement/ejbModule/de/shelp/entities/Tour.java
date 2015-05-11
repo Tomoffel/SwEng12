@@ -19,7 +19,7 @@ import de.shelp.enums.DeliveryCondition;
 import de.shelp.enums.PaymentCondition;
 import de.shelp.enums.TourStatus;
 
-@Entity
+//@Entity
 public class Tour {
 
     @Id

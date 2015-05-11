@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class ShelpSessionTO {
 
     private String id;
-    private String username;
+    private UserTO user;
     private Calendar creationOn;
 
     public String getId() {
@@ -16,12 +16,12 @@ public class ShelpSessionTO {
 	this.id = id;
     }
 
-    public String getUsername() {
-	return username;
+    public UserTO getUser() {
+	return user;
     }
 
-    public void setUsername(String username) {
-	this.username = username;
+    public void setUser(UserTO user) {
+	this.user = user;
     }
 
     public Calendar getCreationOn() {

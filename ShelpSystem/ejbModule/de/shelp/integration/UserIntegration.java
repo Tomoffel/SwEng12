@@ -82,7 +82,7 @@ public class UserIntegration {
 	return response;
     }
 
-    public ReturnCodeResponse logout(int sessionId) {
+    public ReturnCodeResponse logout(String sessionId) {
 	dao.closeSession(sessionId);
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	LOGGER.info("Logout erfolgreich. Session=" + sessionId);
@@ -100,7 +100,7 @@ public class UserIntegration {
 	}
 
 	response.setUserList(usersTO);
-	
+
 	return response;
     }
 }

@@ -14,11 +14,11 @@ public class ShelpSession {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
-    private String username;
+    private User user;
     private Calendar creationOn;
 
     public ShelpSession(User user) {
-	this.username = user.getName();
+	this.user = user;
 	this.creationOn = new GregorianCalendar();
     }
 
@@ -30,12 +30,12 @@ public class ShelpSession {
 	this.id = id;
     }
 
-    public String getUsername() {
-	return username;
+    public User getUser() {
+	return user;
     }
 
-    public void setUsername(String username) {
-	this.username = username;
+    public void setUser(User user) {
+	this.user = user;
     }
 
     public Calendar getCreationOn() {

@@ -13,7 +13,7 @@ public class UserDtoAssembler {
     public ShelpSessionTO makeDTO(ShelpSession shelpSession) {
 	ShelpSessionTO dto = new ShelpSessionTO();
 	dto.setId(shelpSession.getId());
-	dto.setUsername(shelpSession.getUsername());
+	dto.setUser(makeDTO(shelpSession.getUser()));
 	dto.setCreationOn(shelpSession.getCreationOn());
 	return dto;
     }

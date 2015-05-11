@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 import de.shelp.enums.RequestStatus;
 
-@Entity
+//@Entity
 public class Request {
 
     @Id
@@ -22,7 +22,7 @@ public class Request {
 
     @ManyToOne
     private Tour tour;
-    private Wishlist wishlist;
+//    private Wishlist wishlist;
     private String notice;
     private Calendar updatedOn;
 
@@ -61,13 +61,13 @@ public class Request {
 	this.tour = tour;
     }
 
-    public Wishlist getWishlist() {
-	return wishlist;
-    }
-
-    public void setWishlist(Wishlist wishlist) {
-	this.wishlist = wishlist;
-    }
+//    public Wishlist getWishlist() {
+//	return wishlist;
+//    }
+//
+//    public void setWishlist(Wishlist wishlist) {
+//	this.wishlist = wishlist;
+//    }
 
     public String getNotice() {
 	return notice;

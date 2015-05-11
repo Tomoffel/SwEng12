@@ -14,8 +14,8 @@ public class WishlistItem {
     private String text;
     private boolean checked;
 
-    @ManyToOne
-    private Wishlist wishlist;
+//    @ManyToOne
+//    private Wishlist wishlist;
 
     public int getId() {
 	return id;
@@ -41,12 +41,12 @@ public class WishlistItem {
 	this.checked = checked;
     }
 
-    public Wishlist getWishlist() {
-	return wishlist;
-    }
-
-    public void setWishlist(Wishlist wishlist) {
-	this.wishlist = wishlist;
-    }
+//    public Wishlist getWishlist() {
+//	return wishlist;
+//    }
+//
+//    public void setWishlist(Wishlist wishlist) {
+//	this.wishlist = wishlist;
+//    }
 
 }

@@ -44,7 +44,7 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
-    public void closeSession(int sessionId) {
+    public void closeSession(String sessionId) {
 	ShelpSession session = em.find(ShelpSession.class, sessionId);
 	em.remove(session);
     }
@@ -57,9 +57,15 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
 	criteriaBuilder.like(user.<String> get("name"), searchText);
 
 	TypedQuery<User> query = em.createQuery(criteriaQuery);
-	//TODO second criteria: check email
+	// TODO second criteria: check email
 
 	return query.getResultList();
+    }
+
+    @Override
+    public ShelpSession getSession(String sessionId) {
+	ShelpSession session = em.find(ShelpSession.class, sessionId);
+	return session;
     }
 
 }

@@ -115,7 +115,7 @@ public class TourTO {
     }
 
     public boolean isValid() {
-	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null && owner != null;
+	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null;
     }
 
 }
