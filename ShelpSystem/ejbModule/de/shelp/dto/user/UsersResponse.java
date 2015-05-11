@@ -4,10 +4,20 @@ import java.util.List;
 
 public class UsersResponse {
 
-    List<UserTO> users;
+    private List<UserTO> users;
 
-    public void addUserList(List<UserTO> usersTO) {
+    public void setUserList(List<UserTO> usersTO) {
 	users = usersTO;
     }
+
+    public List<UserTO> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserTO> users) {
+        this.users = users;
+    }
+    
+    
 
 }

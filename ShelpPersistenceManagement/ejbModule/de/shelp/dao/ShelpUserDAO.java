@@ -11,11 +11,12 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
 
 /**
- * Session Bean implementation class XbankDAO
+ * Session Bean implementation class ShelpUserDAO
  */
 @Stateless
 public class ShelpUserDAO implements ShelpUserDAOLocal {

@@ -1,4 +1,4 @@
-package de.shelp.dao;
+package de.shelp.dao.local;
 
 import java.util.List;
 

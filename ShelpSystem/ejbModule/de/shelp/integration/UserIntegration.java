@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
-import de.shelp.dao.ShelpUserDAOLocal;
+import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.user.UserResponse;
 import de.shelp.dto.user.UserTO;
@@ -20,7 +20,7 @@ import de.shelp.entities.User;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.InvalidLoginException;
 import de.shelp.exception.ShelpException;
-import de.shelp.exception.UserExistEcxeption;
+import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.UserDtoAssembler;
 
 @WebService
@@ -54,7 +54,7 @@ public class UserIntegration {
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
 		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon " + user);
-		throw new UserExistEcxeption(ReturnCode.ERROR, "Registrierung fehlgeschlag. Benutername schon vergeben.");
+		throw new UserNotExistEcxeption(ReturnCode.ERROR, "Registrierung fehlgeschlag. Benutername schon vergeben.");
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -99,7 +99,7 @@ public class UserIntegration {
 	    usersTO.add(dtoAssembler.makeDTO(u));
 	}
 
-	response.addUserList(usersTO);
+	response.setUserList(usersTO);
 	
 	return response;
     }
