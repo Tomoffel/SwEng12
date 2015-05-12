@@ -7,7 +7,11 @@ public class DeliveryConditionResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -8707856420583962264L;
 
-    private final DeliveryCondition[] conditions = DeliveryCondition.values();
+    private DeliveryCondition[] conditions = DeliveryCondition.values();
+
+    public void setConditions(DeliveryCondition[] conditions) {
+	this.conditions = conditions;
+    }
 
     public DeliveryCondition[] getConditions() {
 	return conditions;

@@ -11,11 +11,11 @@ import de.shelp.enums.PaymentCondition;
 public class AllListResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -3883979253357422621L;
-    
-    private final ApprovalStatus[] states = ApprovalStatus.values();
-    private final Capacity[] capacities = Capacity.values();
-    private final DeliveryCondition[] deliveryConditions = DeliveryCondition.values();
-    private final PaymentCondition[] paymentConditions = PaymentCondition.values();
+
+    private ApprovalStatus[] states = ApprovalStatus.values();
+    private Capacity[] capacities = Capacity.values();
+    private DeliveryCondition[] deliveryConditions = DeliveryCondition.values();
+    private PaymentCondition[] paymentConditions = PaymentCondition.values();
     private List<LocationTO> locations;
 
     public List<LocationTO> getLocations() {
@@ -40,6 +40,22 @@ public class AllListResponse extends ReturnCodeResponse {
 
     public PaymentCondition[] getPaymentConditions() {
 	return paymentConditions;
+    }
+
+    public void setStates(ApprovalStatus[] states) {
+	this.states = states;
+    }
+
+    public void setCapacities(Capacity[] capacities) {
+	this.capacities = capacities;
+    }
+
+    public void setDeliveryConditions(DeliveryCondition[] deliveryConditions) {
+	this.deliveryConditions = deliveryConditions;
+    }
+
+    public void setPaymentConditions(PaymentCondition[] paymentConditions) {
+	this.paymentConditions = paymentConditions;
     }
 
 }

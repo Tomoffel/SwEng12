@@ -6,8 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-
+@Entity
 public class Wishlist {
 
     @Id
@@ -15,8 +16,11 @@ public class Wishlist {
     private long id;
     private User owner;
 
-//    @OneToMany(mappedBy = "wishlist")
+    @OneToMany(mappedBy = "owner")
     private List<WishlistItem> wishes;
+
+    @OneToOne(mappedBy = "wishlist")
+    private Request request;
 
     public long getId() {
 	return id;
@@ -40,6 +44,14 @@ public class Wishlist {
 
     public void setWishes(List<WishlistItem> wishes) {
 	this.wishes = wishes;
+    }
+
+    public Request getRequest() {
+	return request;
+    }
+
+    public void setRequest(Request request) {
+	this.request = request;
     }
 
 }

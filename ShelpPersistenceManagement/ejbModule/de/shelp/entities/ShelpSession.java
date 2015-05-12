@@ -7,26 +7,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ShelpSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private int id;
+    @OneToOne
     private User user;
     private Calendar creationOn;
+
+    public ShelpSession() {
+    }
 
     public ShelpSession(User user) {
 	this.user = user;
 	this.creationOn = new GregorianCalendar();
     }
 
-    public String getId() {
+    public int getId() {
 	return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
 	this.id = id;
     }
 
@@ -48,7 +53,7 @@ public class ShelpSession {
 
     @Override
     public String toString() {
-	return id;
+	return String.valueOf(id);
     }
 
 }
