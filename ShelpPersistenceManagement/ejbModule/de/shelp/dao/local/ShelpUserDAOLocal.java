@@ -16,7 +16,7 @@ public interface ShelpUserDAOLocal {
 
     public User createUser(String username, String password, String email);
 
-    public void closeSession(String sessionId);
+    public boolean closeSession(int sessionId);
 
     public List<User> searchUsers(String searchText);
 

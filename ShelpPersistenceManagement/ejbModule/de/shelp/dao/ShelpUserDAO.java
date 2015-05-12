@@ -6,7 +6,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -44,9 +43,13 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
-    public void closeSession(String sessionId) {
+    public boolean closeSession(int sessionId) {
 	ShelpSession session = em.find(ShelpSession.class, sessionId);
+	if (session == null) {
+	    return false;
+	}
 	em.remove(session);
+	return true;
     }
 
     @Override
@@ -54,12 +57,9 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 	CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 	Root<User> user = criteriaQuery.from(User.class);
-	criteriaBuilder.like(user.<String> get("name"), searchText);
-
-	TypedQuery<User> query = em.createQuery(criteriaQuery);
-	// TODO second criteria: check email
-
-	return query.getResultList();
+	criteriaQuery.select(user);
+	criteriaQuery.where(criteriaBuilder.like(user.<String> get("name"), "%" + searchText + "%"));
+	return em.createQuery(criteriaQuery).getResultList();
     }
 
     @Override

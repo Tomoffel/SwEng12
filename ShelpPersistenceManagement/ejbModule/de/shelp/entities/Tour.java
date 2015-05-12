@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import de.shelp.enums.ApprovalStatus;
 import de.shelp.enums.Capacity;
@@ -19,7 +20,7 @@ import de.shelp.enums.DeliveryCondition;
 import de.shelp.enums.PaymentCondition;
 import de.shelp.enums.TourStatus;
 
-//@Entity
+@Entity
 public class Tour {
 
     @Id
@@ -40,14 +41,16 @@ public class Tour {
 
     @Enumerated(EnumType.ORDINAL)
     private TourStatus status;
-    
+
     @ManyToOne
     private User owner;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="tour")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tour")
     private List<Request> request;
 
+    @OneToOne
     private Location location;
+
     private Calendar updatedOn;
     private Calendar time;
 

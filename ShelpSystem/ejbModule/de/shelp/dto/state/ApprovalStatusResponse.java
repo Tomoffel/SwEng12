@@ -7,10 +7,14 @@ public class ApprovalStatusResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -8707856420583962264L;
 
-    private final ApprovalStatus[] states = ApprovalStatus.values();
+    private ApprovalStatus[] states = ApprovalStatus.values();
 
     public ApprovalStatus[] getStates() {
 	return states;
+    }
+
+    public void setStates(ApprovalStatus[] states) {
+	this.states = states;
     }
 
 }

@@ -4,15 +4,15 @@ import java.util.Calendar;
 
 public class ShelpSessionTO {
 
-    private String id;
+    private int id;
     private UserTO user;
     private Calendar creationOn;
 
-    public String getId() {
+    public int getId() {
 	return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
 	this.id = id;
     }
 
@@ -34,6 +34,6 @@ public class ShelpSessionTO {
 
     @Override
     public String toString() {
-	return id;
+	return String.valueOf(id);
     }
 }

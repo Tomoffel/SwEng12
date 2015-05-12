@@ -19,6 +19,7 @@ import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.InvalidLoginException;
+import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
 import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.UserDtoAssembler;
@@ -54,7 +55,7 @@ public class UserIntegration {
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
 		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon " + user);
-		throw new UserNotExistEcxeption(ReturnCode.ERROR, "Registrierung fehlgeschlag. Benutername schon vergeben.");
+		throw new UserNotExistEcxeption(ReturnCode.ERROR, "Registrierung fehlgeschlag. Benutzername schon vergeben.");
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -72,8 +73,8 @@ public class UserIntegration {
 		LOGGER.info("Login erfolgreich. Session=" + session);
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
-		LOGGER.info("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + username);
-		throw new InvalidLoginException("Login fehlgeschlagen, da Kunde unbekannt oder Passwort falsch. username=" + user.getName());
+		LOGGER.info("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + username);
+		throw new InvalidLoginException("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + user.getName());
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -82,10 +83,19 @@ public class UserIntegration {
 	return response;
     }
 
-    public ReturnCodeResponse logout(String sessionId) {
-	dao.closeSession(sessionId);
+    public ReturnCodeResponse logout(int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
-	LOGGER.info("Logout erfolgreich. Session=" + sessionId);
+	try {
+	    if (!dao.closeSession(sessionId)) {
+		LOGGER.info("Logout nicht erfolgreich. Session " + sessionId + " existiert nicht.");
+		throw new SessionNotExistException("Logout nicht erfolgreich. Session " + sessionId + " existiert nicht.");
+	    } else {
+		LOGGER.info("Logout erfolgreich. Session=" + sessionId);
+	    }
+	} catch (ShelpException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
+	}
 	return response;
     }
 

@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Location {
 
     @Id
@@ -12,6 +12,14 @@ public class Location {
     private long id;
     private String description;
     private String zipcode;
+
+    public Location(String description, String zipcode) {
+	this.description = description;
+	this.zipcode = zipcode;
+    }
+
+    public Location() {
+    }
 
     public long getId() {
 	return id;

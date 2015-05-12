@@ -3,6 +3,7 @@ package de.shelp.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -14,8 +15,9 @@ public class WishlistItem {
     private String text;
     private boolean checked;
 
-//    @ManyToOne
-//    private Wishlist wishlist;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Wishlist owner;
 
     public int getId() {
 	return id;
@@ -41,12 +43,12 @@ public class WishlistItem {
 	this.checked = checked;
     }
 
-//    public Wishlist getWishlist() {
-//	return wishlist;
-//    }
-//
-//    public void setWishlist(Wishlist wishlist) {
-//	this.wishlist = wishlist;
-//    }
+    public Wishlist getOwner() {
+	return owner;
+    }
+
+    public void setOwner(Wishlist wishlist) {
+	this.owner = wishlist;
+    }
 
 }

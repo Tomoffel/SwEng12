@@ -7,10 +7,14 @@ public class PaymentConditionsResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -8707856420583962264L;
 
-    private final PaymentCondition[] conditions = PaymentCondition.values();
+    private PaymentCondition[] conditions = PaymentCondition.values();
 
     public PaymentCondition[] getConditions() {
 	return conditions;
+    }
+
+    public void setConditions(PaymentCondition[] conditions) {
+	this.conditions = conditions;
     }
 
 }
