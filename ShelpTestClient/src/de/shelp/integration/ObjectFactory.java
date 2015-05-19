@@ -24,18 +24,18 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _GetApprovalStatusResponse_QNAME = new QName("http://integration.shelp.de/", "getApprovalStatusResponse");
-    private final static QName _GetPaymentConditions_QNAME = new QName("http://integration.shelp.de/", "getPaymentConditions");
-    private final static QName _GetLocationsResponse_QNAME = new QName("http://integration.shelp.de/", "getLocationsResponse");
-    private final static QName _GetAllLists_QNAME = new QName("http://integration.shelp.de/", "getAllLists");
-    private final static QName _GetLocations_QNAME = new QName("http://integration.shelp.de/", "getLocations");
-    private final static QName _GetCapacitiesResponse_QNAME = new QName("http://integration.shelp.de/", "getCapacitiesResponse");
-    private final static QName _GetCapacities_QNAME = new QName("http://integration.shelp.de/", "getCapacities");
-    private final static QName _GetDeliveryConditionsResponse_QNAME = new QName("http://integration.shelp.de/", "getDeliveryConditionsResponse");
-    private final static QName _GetPaymentConditionsResponse_QNAME = new QName("http://integration.shelp.de/", "getPaymentConditionsResponse");
-    private final static QName _GetApprovalStatus_QNAME = new QName("http://integration.shelp.de/", "getApprovalStatus");
-    private final static QName _GetDeliveryConditions_QNAME = new QName("http://integration.shelp.de/", "getDeliveryConditions");
-    private final static QName _GetAllListsResponse_QNAME = new QName("http://integration.shelp.de/", "getAllListsResponse");
+    private final static QName _CreateTourResponse_QNAME = new QName("http://integration.shelp.de/", "createTourResponse");
+    private final static QName _GetTourResponse_QNAME = new QName("http://integration.shelp.de/", "getTourResponse");
+    private final static QName _DeleteTourResponse_QNAME = new QName("http://integration.shelp.de/", "deleteTourResponse");
+    private final static QName _CreateTour_QNAME = new QName("http://integration.shelp.de/", "createTour");
+    private final static QName _GetRequestsOfTourResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTourResponse");
+    private final static QName _SearchTour_QNAME = new QName("http://integration.shelp.de/", "searchTour");
+    private final static QName _SearchTourResponse_QNAME = new QName("http://integration.shelp.de/", "searchTourResponse");
+    private final static QName _GetUpdatedTours_QNAME = new QName("http://integration.shelp.de/", "getUpdatedTours");
+    private final static QName _DeleteTour_QNAME = new QName("http://integration.shelp.de/", "deleteTour");
+    private final static QName _GetTour_QNAME = new QName("http://integration.shelp.de/", "getTour");
+    private final static QName _GetUpdatedToursResponse_QNAME = new QName("http://integration.shelp.de/", "getUpdatedToursResponse");
+    private final static QName _GetRequestsOfTour_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTour");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.shelp.integration
@@ -45,107 +45,99 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPaymentConditions }
+     * Create an instance of {@link GetUpdatedTours }
      * 
      */
-    public GetPaymentConditions createGetPaymentConditions() {
-        return new GetPaymentConditions();
+    public GetUpdatedTours createGetUpdatedTours() {
+        return new GetUpdatedTours();
     }
 
     /**
-     * Create an instance of {@link GetApprovalStatusResponse }
+     * Create an instance of {@link GetTour }
      * 
      */
-    public GetApprovalStatusResponse createGetApprovalStatusResponse() {
-        return new GetApprovalStatusResponse();
+    public GetTour createGetTour() {
+        return new GetTour();
     }
 
     /**
-     * Create an instance of {@link GetLocationsResponse }
+     * Create an instance of {@link DeleteTour }
      * 
      */
-    public GetLocationsResponse createGetLocationsResponse() {
-        return new GetLocationsResponse();
+    public DeleteTour createDeleteTour() {
+        return new DeleteTour();
     }
 
     /**
-     * Create an instance of {@link GetLocations }
+     * Create an instance of {@link GetTourResponse }
      * 
      */
-    public GetLocations createGetLocations() {
-        return new GetLocations();
+    public GetTourResponse createGetTourResponse() {
+        return new GetTourResponse();
     }
 
     /**
-     * Create an instance of {@link GetAllLists }
+     * Create an instance of {@link CreateTourResponse }
      * 
      */
-    public GetAllLists createGetAllLists() {
-        return new GetAllLists();
+    public CreateTourResponse createCreateTourResponse() {
+        return new CreateTourResponse();
     }
 
     /**
-     * Create an instance of {@link GetCapacitiesResponse }
+     * Create an instance of {@link DeleteTourResponse }
      * 
      */
-    public GetCapacitiesResponse createGetCapacitiesResponse() {
-        return new GetCapacitiesResponse();
+    public DeleteTourResponse createDeleteTourResponse() {
+        return new DeleteTourResponse();
     }
 
     /**
-     * Create an instance of {@link GetDeliveryConditions }
+     * Create an instance of {@link GetRequestsOfTourResponse }
      * 
      */
-    public GetDeliveryConditions createGetDeliveryConditions() {
-        return new GetDeliveryConditions();
+    public GetRequestsOfTourResponse createGetRequestsOfTourResponse() {
+        return new GetRequestsOfTourResponse();
     }
 
     /**
-     * Create an instance of {@link GetAllListsResponse }
+     * Create an instance of {@link CreateTour }
      * 
      */
-    public GetAllListsResponse createGetAllListsResponse() {
-        return new GetAllListsResponse();
+    public CreateTour createCreateTour() {
+        return new CreateTour();
     }
 
     /**
-     * Create an instance of {@link GetPaymentConditionsResponse }
+     * Create an instance of {@link SearchTourResponse }
      * 
      */
-    public GetPaymentConditionsResponse createGetPaymentConditionsResponse() {
-        return new GetPaymentConditionsResponse();
+    public SearchTourResponse createSearchTourResponse() {
+        return new SearchTourResponse();
     }
 
     /**
-     * Create an instance of {@link GetDeliveryConditionsResponse }
+     * Create an instance of {@link SearchTour }
      * 
      */
-    public GetDeliveryConditionsResponse createGetDeliveryConditionsResponse() {
-        return new GetDeliveryConditionsResponse();
+    public SearchTour createSearchTour() {
+        return new SearchTour();
     }
 
     /**
-     * Create an instance of {@link GetCapacities }
+     * Create an instance of {@link GetUpdatedToursResponse }
      * 
      */
-    public GetCapacities createGetCapacities() {
-        return new GetCapacities();
+    public GetUpdatedToursResponse createGetUpdatedToursResponse() {
+        return new GetUpdatedToursResponse();
     }
 
     /**
-     * Create an instance of {@link GetApprovalStatus }
+     * Create an instance of {@link GetRequestsOfTour }
      * 
      */
-    public GetApprovalStatus createGetApprovalStatus() {
-        return new GetApprovalStatus();
-    }
-
-    /**
-     * Create an instance of {@link LocationResponse }
-     * 
-     */
-    public LocationResponse createLocationResponse() {
-        return new LocationResponse();
+    public GetRequestsOfTour createGetRequestsOfTour() {
+        return new GetRequestsOfTour();
     }
 
     /**
@@ -157,43 +149,35 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CapacitiesResponse }
+     * Create an instance of {@link WishlistTO }
      * 
      */
-    public CapacitiesResponse createCapacitiesResponse() {
-        return new CapacitiesResponse();
+    public WishlistTO createWishlistTO() {
+        return new WishlistTO();
     }
 
     /**
-     * Create an instance of {@link ApprovalStatusResponse }
+     * Create an instance of {@link UserTO }
      * 
      */
-    public ApprovalStatusResponse createApprovalStatusResponse() {
-        return new ApprovalStatusResponse();
+    public UserTO createUserTO() {
+        return new UserTO();
     }
 
     /**
-     * Create an instance of {@link PaymentConditionsResponse }
+     * Create an instance of {@link TourTO }
      * 
      */
-    public PaymentConditionsResponse createPaymentConditionsResponse() {
-        return new PaymentConditionsResponse();
+    public TourTO createTourTO() {
+        return new TourTO();
     }
 
     /**
-     * Create an instance of {@link DeliveryConditionResponse }
+     * Create an instance of {@link ToursResponse }
      * 
      */
-    public DeliveryConditionResponse createDeliveryConditionResponse() {
-        return new DeliveryConditionResponse();
-    }
-
-    /**
-     * Create an instance of {@link AllListResponse }
-     * 
-     */
-    public AllListResponse createAllListResponse() {
-        return new AllListResponse();
+    public ToursResponse createToursResponse() {
+        return new ToursResponse();
     }
 
     /**
@@ -205,111 +189,135 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetApprovalStatusResponse }{@code >}}
+     * Create an instance of {@link TourResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getApprovalStatusResponse")
-    public JAXBElement<GetApprovalStatusResponse> createGetApprovalStatusResponse(GetApprovalStatusResponse value) {
-        return new JAXBElement<GetApprovalStatusResponse>(_GetApprovalStatusResponse_QNAME, GetApprovalStatusResponse.class, null, value);
+    public TourResponse createTourResponse() {
+        return new TourResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPaymentConditions }{@code >}}
+     * Create an instance of {@link RequestTO }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getPaymentConditions")
-    public JAXBElement<GetPaymentConditions> createGetPaymentConditions(GetPaymentConditions value) {
-        return new JAXBElement<GetPaymentConditions>(_GetPaymentConditions_QNAME, GetPaymentConditions.class, null, value);
+    public RequestTO createRequestTO() {
+        return new RequestTO();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocationsResponse }{@code >}}
+     * Create an instance of {@link RequestsResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getLocationsResponse")
-    public JAXBElement<GetLocationsResponse> createGetLocationsResponse(GetLocationsResponse value) {
-        return new JAXBElement<GetLocationsResponse>(_GetLocationsResponse_QNAME, GetLocationsResponse.class, null, value);
+    public RequestsResponse createRequestsResponse() {
+        return new RequestsResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllLists }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getAllLists")
-    public JAXBElement<GetAllLists> createGetAllLists(GetAllLists value) {
-        return new JAXBElement<GetAllLists>(_GetAllLists_QNAME, GetAllLists.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTourResponse")
+    public JAXBElement<CreateTourResponse> createCreateTourResponse(CreateTourResponse value) {
+        return new JAXBElement<CreateTourResponse>(_CreateTourResponse_QNAME, CreateTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetLocations }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getLocations")
-    public JAXBElement<GetLocations> createGetLocations(GetLocations value) {
-        return new JAXBElement<GetLocations>(_GetLocations_QNAME, GetLocations.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTourResponse")
+    public JAXBElement<GetTourResponse> createGetTourResponse(GetTourResponse value) {
+        return new JAXBElement<GetTourResponse>(_GetTourResponse_QNAME, GetTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetCapacitiesResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getCapacitiesResponse")
-    public JAXBElement<GetCapacitiesResponse> createGetCapacitiesResponse(GetCapacitiesResponse value) {
-        return new JAXBElement<GetCapacitiesResponse>(_GetCapacitiesResponse_QNAME, GetCapacitiesResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTourResponse")
+    public JAXBElement<DeleteTourResponse> createDeleteTourResponse(DeleteTourResponse value) {
+        return new JAXBElement<DeleteTourResponse>(_DeleteTourResponse_QNAME, DeleteTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetCapacities }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTour }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getCapacities")
-    public JAXBElement<GetCapacities> createGetCapacities(GetCapacities value) {
-        return new JAXBElement<GetCapacities>(_GetCapacities_QNAME, GetCapacities.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTour")
+    public JAXBElement<CreateTour> createCreateTour(CreateTour value) {
+        return new JAXBElement<CreateTour>(_CreateTour_QNAME, CreateTour.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetDeliveryConditionsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getDeliveryConditionsResponse")
-    public JAXBElement<GetDeliveryConditionsResponse> createGetDeliveryConditionsResponse(GetDeliveryConditionsResponse value) {
-        return new JAXBElement<GetDeliveryConditionsResponse>(_GetDeliveryConditionsResponse_QNAME, GetDeliveryConditionsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTourResponse")
+    public JAXBElement<GetRequestsOfTourResponse> createGetRequestsOfTourResponse(GetRequestsOfTourResponse value) {
+        return new JAXBElement<GetRequestsOfTourResponse>(_GetRequestsOfTourResponse_QNAME, GetRequestsOfTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPaymentConditionsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SearchTour }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getPaymentConditionsResponse")
-    public JAXBElement<GetPaymentConditionsResponse> createGetPaymentConditionsResponse(GetPaymentConditionsResponse value) {
-        return new JAXBElement<GetPaymentConditionsResponse>(_GetPaymentConditionsResponse_QNAME, GetPaymentConditionsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchTour")
+    public JAXBElement<SearchTour> createSearchTour(SearchTour value) {
+        return new JAXBElement<SearchTour>(_SearchTour_QNAME, SearchTour.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetApprovalStatus }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SearchTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getApprovalStatus")
-    public JAXBElement<GetApprovalStatus> createGetApprovalStatus(GetApprovalStatus value) {
-        return new JAXBElement<GetApprovalStatus>(_GetApprovalStatus_QNAME, GetApprovalStatus.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchTourResponse")
+    public JAXBElement<SearchTourResponse> createSearchTourResponse(SearchTourResponse value) {
+        return new JAXBElement<SearchTourResponse>(_SearchTourResponse_QNAME, SearchTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetDeliveryConditions }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedTours }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getDeliveryConditions")
-    public JAXBElement<GetDeliveryConditions> createGetDeliveryConditions(GetDeliveryConditions value) {
-        return new JAXBElement<GetDeliveryConditions>(_GetDeliveryConditions_QNAME, GetDeliveryConditions.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedTours")
+    public JAXBElement<GetUpdatedTours> createGetUpdatedTours(GetUpdatedTours value) {
+        return new JAXBElement<GetUpdatedTours>(_GetUpdatedTours_QNAME, GetUpdatedTours.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetAllListsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTour }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getAllListsResponse")
-    public JAXBElement<GetAllListsResponse> createGetAllListsResponse(GetAllListsResponse value) {
-        return new JAXBElement<GetAllListsResponse>(_GetAllListsResponse_QNAME, GetAllListsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTour")
+    public JAXBElement<DeleteTour> createDeleteTour(DeleteTour value) {
+        return new JAXBElement<DeleteTour>(_DeleteTour_QNAME, DeleteTour.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTour }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTour")
+    public JAXBElement<GetTour> createGetTour(GetTour value) {
+        return new JAXBElement<GetTour>(_GetTour_QNAME, GetTour.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedToursResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedToursResponse")
+    public JAXBElement<GetUpdatedToursResponse> createGetUpdatedToursResponse(GetUpdatedToursResponse value) {
+        return new JAXBElement<GetUpdatedToursResponse>(_GetUpdatedToursResponse_QNAME, GetUpdatedToursResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTour }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTour")
+    public JAXBElement<GetRequestsOfTour> createGetRequestsOfTour(GetRequestsOfTour value) {
+        return new JAXBElement<GetRequestsOfTour>(_GetRequestsOfTour_QNAME, GetRequestsOfTour.class, null, value);
     }
 
 }

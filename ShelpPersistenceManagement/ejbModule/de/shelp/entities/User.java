@@ -2,9 +2,11 @@ package de.shelp.entities;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User implements Serializable {
@@ -16,6 +18,9 @@ public class User implements Serializable {
     private String email;
     private String password;
     private Calendar creationDate;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Tour> tours;
 
     public User() {
 	super();
@@ -65,4 +70,18 @@ public class User implements Serializable {
     public String toString() {
 	return name;
     }
+
+    public boolean isFriend(User user) {
+	// TODO implement function with friend list
+	return true;
+    }
+
+    public List<Tour> getTours() {
+	return tours;
+    }
+
+    public void setTours(List<Tour> tours) {
+	this.tours = tours;
+    }
+
 }

@@ -38,7 +38,10 @@ import javax.xml.bind.annotation.XmlType;
     ApprovalStatusResponse.class,
     PaymentConditionsResponse.class,
     DeliveryConditionResponse.class,
-    AllListResponse.class
+    AllListResponse.class,
+    ToursResponse.class,
+    TourResponse.class,
+    RequestsResponse.class
 })
 public class ReturnCodeResponse {
 
