@@ -63,7 +63,7 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
-    public ShelpSession getSession(String sessionId) {
+    public ShelpSession getSession(int sessionId) {
 	ShelpSession session = em.find(ShelpSession.class, sessionId);
 	return session;
     }

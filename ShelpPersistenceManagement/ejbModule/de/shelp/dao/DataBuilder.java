@@ -36,7 +36,7 @@ public class DataBuilder {
 	    Location location = iterator.next();
 	    em.remove(location);
 	}
-	LOGGER.info("Alle Locations entfernt.");
+	LOGGER.info("Alle Locations entfernt. Erstelle Anfangslocations");
 	em.persist(new Location(location1, plz1));
 	em.persist(new Location(location2, plz2));
 	em.persist(new Location(location3, plz3));

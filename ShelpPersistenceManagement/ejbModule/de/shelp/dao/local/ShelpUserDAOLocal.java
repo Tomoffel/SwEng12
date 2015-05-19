@@ -20,6 +20,6 @@ public interface ShelpUserDAOLocal {
 
     public List<User> searchUsers(String searchText);
 
-    public ShelpSession getSession(String sessionId);
+    public ShelpSession getSession(int sessionId);
 
 }

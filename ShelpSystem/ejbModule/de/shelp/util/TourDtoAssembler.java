@@ -1,5 +1,6 @@
 package de.shelp.util;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import de.shelp.dto.state.LocationTO;
@@ -9,6 +10,12 @@ import de.shelp.entities.Tour;
 
 @Stateless
 public class TourDtoAssembler {
+
+    /**
+     * EJB zur Erzeugung von DataTransferObjects
+     */
+    @EJB
+    private UserDtoAssembler dtoAssembler;
 
     public Tour makeDAO(TourTO tourTO) {
 	Tour dao = new Tour();
@@ -27,6 +34,32 @@ public class TourDtoAssembler {
 	dao.setDescription(locationTO.getDescription());
 	dao.setZipcode(locationTO.getZipcode());
 	return dao;
+    }
+
+    public TourTO makeDTO(Tour tour) {
+	TourTO dto = new TourTO();
+	dto.setApprovalStatus(tour.getApprovalStatus());
+	dto.setLocation(makeDTO(tour.getLocation()));
+	dto.setCapacity(tour.getCapacity());
+	dto.setPaymentConditions(tour.getPaymentConditions());
+	dto.setDeliveryConditions(tour.getDeliveryConditions());
+	dto.setTime(tour.getTime());
+	dto.setId(tour.getId());
+	dto.setOwner(dtoAssembler.makeDTO(tour.getOwner()));
+	dto.setStatus(tour.getStatus());
+	dto.setUpdatedOn(tour.getUpdatedOn());
+	// TODO change to requests of tour
+	dto.setRequest(null);
+
+	return dto;
+    }
+
+    private LocationTO makeDTO(Location location) {
+	LocationTO dto = new LocationTO();
+	dto.setId(location.getId());
+	dto.setDescription(location.getDescription());
+	dto.setZipcode(location.getZipcode());
+	return dto;
     }
 
 }

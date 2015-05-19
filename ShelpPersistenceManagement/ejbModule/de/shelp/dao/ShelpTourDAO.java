@@ -1,12 +1,16 @@
 package de.shelp.dao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import de.shelp.dao.local.ShelpTourDAOLocal;
@@ -34,22 +38,59 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     }
 
     @Override
-    public void search(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime) {
+    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime, User currentUser) {
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 	CriteriaQuery<Tour> criteriaQuery = criteriaBuilder.createQuery(Tour.class);
 	Root<Tour> tour = criteriaQuery.from(Tour.class);
 
-	criteriaBuilder.between(tour.<Calendar> get("time"), startTime, endTime);
+	List<Tour> searchedTours = new ArrayList<Tour>();
+	// TODO get friends of current user and get their active tours with
+	// friends_only state
 
-	// TypedQuery<User> query = em.createQuery(criteriaQuery);
-	// // TODO second criteria: check email
-	//
-	// return query.getResultList();
+	if (approvalStatus == ApprovalStatus.ALL) {
+	    Predicate andClause = criteriaBuilder.and(
+		    criteriaBuilder.equal(tour.<Location> get("location"), location),
+		    criteriaBuilder.and(criteriaBuilder.between(tour.<Calendar> get("time"), startTime, endTime),
+			    criteriaBuilder.equal(tour.<ApprovalStatus> get("approvalStatus"), ApprovalStatus.ALL)));
+	    criteriaQuery.select(tour);
+	    criteriaQuery.where(andClause);
+	    searchedTours.addAll(em.createQuery(criteriaQuery).getResultList());
+	}
+
+	return searchedTours;
     }
 
     @Override
-    public void searchNear(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime) {
+    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime, User currentUser) {
+	// Get all locations, filter by zipcode of given location
+	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	CriteriaQuery<Location> criteriaQuery = criteriaBuilder.createQuery(Location.class);
+	Root<Location> locationQuery = criteriaQuery.from(Location.class);
+	criteriaQuery.select(locationQuery);
+	criteriaQuery.where(criteriaBuilder.equal(locationQuery.<String> get("zipcode"), location.getZipcode()));
 
+	List<Location> locationList = em.createQuery(criteriaQuery).getResultList();
+
+	// search all tours of location list and at to result
+	List<Tour> resultList = new ArrayList<Tour>();
+
+	for (Location locationSearch : locationList) {
+	    resultList.addAll(search(approvalStatus, locationSearch, startTime, endTime, currentUser));
+	}
+
+	return resultList;
+    }
+
+    @Override
+    public Tour getTour(int tourId) {
+	return em.find(Tour.class, tourId);
+    }
+
+    @Override
+    public void cancleTour(Tour tour) {
+	tour.setStatus(TourStatus.CANCLED);
+	tour.setUpdatedOn(new GregorianCalendar());
+	em.persist(tour);
     }
 
 }
