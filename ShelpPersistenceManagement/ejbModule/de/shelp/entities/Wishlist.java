@@ -53,5 +53,10 @@ public class Wishlist {
     public void setRequest(Request request) {
 	this.request = request;
     }
+    
+    @Override
+    public String toString() {
+        return "Wunschliste " + id + " von " + owner;
+    }
 
 }

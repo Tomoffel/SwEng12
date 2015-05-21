@@ -98,5 +98,10 @@ public class Request {
     public void setStatus(RequestStatus status) {
 	this.status = status;
     }
+    
+    @Override
+    public String toString() {
+        return "Anfrage: " + id + " von " + sourceUser + " zu " + targetUser + " zur Fahrt " + tour ;
+    }
 
 }

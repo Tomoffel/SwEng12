@@ -24,8 +24,8 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     private EntityManager em;
 
     @Override
-    public User findUserByName(String username) {
-	return em.find(User.class, username);
+    public User findUserByName(String email) {
+	return em.find(User.class, email);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
-    public User createUser(String username, String password, String email) {
-	User user = new User(username, email, password, new GregorianCalendar());
+    public User createUser( String password, String email) {
+	User user = new User(email, password, new GregorianCalendar());
 	em.persist(user);
 	return user;
     }
@@ -58,7 +58,7 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
 	CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
 	Root<User> user = criteriaQuery.from(User.class);
 	criteriaQuery.select(user);
-	criteriaQuery.where(criteriaBuilder.like(user.<String> get("name"), "%" + searchText + "%"));
+	criteriaQuery.where(criteriaBuilder.like(user.<String> get("email"), "%" + searchText + "%"));
 	return em.createQuery(criteriaQuery).getResultList();
     }
 

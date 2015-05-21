@@ -144,4 +144,9 @@ public class Tour {
 	this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Fahrt: " + id + " zu " + location + " von " + owner ;
+    }
+    
 }

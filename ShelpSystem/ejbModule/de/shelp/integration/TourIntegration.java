@@ -80,7 +80,7 @@ public class TourIntegration {
 	    Tour tour = tourDtoAssembler.makeDAO(tourTO);
 	    tour = tourDao.createTour(tour, session.getUser());
 
-	    LOGGER.info("Fahrt wurde erstellt " + tour.getId());
+	    LOGGER.info("Fahrt wurde erstellt " + tour.getId() + " nach " + tour.getLocation().getDescription());
 	} catch (ShelpException ex) {
 	    response.setReturnCode(ex.getErrorCode());
 	    response.setMessage(ex.getMessage());
@@ -103,7 +103,7 @@ public class TourIntegration {
 	    LOGGER.info("Sucht nach Fahrten in der Nähe von " + location.getDescription());
 	    tours = tourDao.searchNear(approvalStatus, location, startTime, endTime, currentUser);
 	}
-	LOGGER.info(tours.size() + " Touren gefunden");
+	LOGGER.info(tours.size() + " Fahrt(en) gefunden");
 
 	List<TourTO> responseList = new ArrayList<TourTO>();
 	for (Tour tour : tours) {
@@ -139,8 +139,8 @@ public class TourIntegration {
 	    }
 	    ShelpSession session = userDao.getSession(sessionId);
 	    if (!tour.getOwner().isFriend(session.getUser())) {
-		LOGGER.warn("Zugriff verweigert! " + session.getUser().getName() + " ist nicht der Besitzer der Fahrt!");
-		throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser().getName() + " ist nicht der Besitzer der Fahrt!");
+		LOGGER.warn("Zugriff verweigert! " + session.getUser() + " ist nicht der Besitzer der Fahrt!");
+		throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser() + " ist nicht der Besitzer der Fahrt!");
 	    }
 
 	    tourDao.cancleTour(tour);
@@ -203,8 +203,8 @@ public class TourIntegration {
 	}
 	ShelpSession session = userDao.getSession(sessionId);
 	if (tour.getApprovalStatus().equals(ApprovalStatus.FRIENDS_ONLY) && !tour.getOwner().isFriend(session.getUser())) {
-	    LOGGER.warn("Zugriff verweigert! " + session.getUser().getName() + " ist kein Freund von " + tour.getOwner().getName());
-	    throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser().getName() + " ist kein Freund von " + tour.getOwner().getName());
+	    LOGGER.warn("Zugriff verweigert! " + session.getUser() + " ist kein Freund von " + tour.getOwner());
+	    throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser() + " ist kein Freund von " + tour.getOwner());
 	}
 	return tour;
     }

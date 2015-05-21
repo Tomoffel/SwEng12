@@ -14,7 +14,7 @@ public interface ShelpUserDAOLocal {
 
     public ShelpSession createSession(User user);
 
-    public User createUser(String username, String password, String email);
+    public User createUser(String username, String password);
 
     public boolean closeSession(int sessionId);
 

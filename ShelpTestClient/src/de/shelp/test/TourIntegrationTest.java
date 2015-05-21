@@ -10,7 +10,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import de.shelp.integration.ApprovalStatus;
 import de.shelp.integration.Capacity;
@@ -30,6 +32,7 @@ import de.shelp.integration.UserIntegration;
 import de.shelp.integration.UserIntegrationService;
 import de.shelp.integration.UserResponse;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TourIntegrationTest {
 
     private static TourIntegration remoteSystem;
@@ -109,13 +112,13 @@ public class TourIntegrationTest {
 	tour5.setDeliveryConditions(DeliveryCondition.BRING);
 	tour5.setTime(calendarToXMLGregorianCalendar(calendarInFourDays));
 
-	UserResponse loginResponse = userIntegrationPort.regUser("Thomas", "test123", "thomas@sennekamp.de");
+	UserResponse loginResponse = userIntegrationPort.regUser( "thomas@sennekamp.de", "test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
 	    loginResponse = userIntegrationPort.login("Thomas", "test123");
 	}
 	session1 = loginResponse.getSession();
 
-	loginResponse = userIntegrationPort.regUser("Theresa", "test123", "thomas@sennekamp.de");
+	loginResponse = userIntegrationPort.regUser("Theresa@sennekamp.de", "test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
 	    loginResponse = userIntegrationPort.login("Theresa", "test123");
 	}
@@ -149,10 +152,13 @@ public class TourIntegrationTest {
     }
 
     @Test
-    public void cTestGetTour() {
-	// ReturnCodeResponse createTour = remoteSystem.createTour(tour1,
-	// session1.getId());
-	// Assert.assertEquals(ReturnCode.OK, createTour.getReturnCode());
+    public void dTestSearchToursAllNear() {
+	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
+		false, session1.getId());
+
+	Assert.assertEquals(searchTour.getTours().size(), 2);
+	Assert.assertEquals(searchTour.getTours().get(0).getLocation().getDescription(), locations.get(0).getDescription());
+	Assert.assertEquals(searchTour.getTours().get(1).getLocation().getDescription(), locations.get(1).getDescription());
     }
 
     private static XMLGregorianCalendar calendarToXMLGregorianCalendar(Calendar calendar) {

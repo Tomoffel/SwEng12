@@ -45,4 +45,9 @@ public class Location {
 	this.zipcode = zipcode;
     }
 
+    @Override
+    public String toString() {
+        return description + "(" + zipcode + ")";
+    }
+    
 }

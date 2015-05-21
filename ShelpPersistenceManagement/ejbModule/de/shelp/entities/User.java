@@ -14,7 +14,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = -471315499574973048L;
 
     @Id
-    private String name;
     private String email;
     private String password;
     private Calendar creationDate;
@@ -26,20 +25,11 @@ public class User implements Serializable {
 	super();
     }
 
-    public User(String name, String email, String password, Calendar creationDate) {
+    public User(String email, String password, Calendar creationDate) {
 	super();
-	this.name = name;
 	this.email = email;
 	this.password = password;
 	this.creationDate = creationDate;
-    }
-
-    public String getName() {
-	return name;
-    }
-
-    public void setName(String name) {
-	this.name = name;
     }
 
     public String getEmail() {
@@ -68,7 +58,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-	return name;
+	return email;
     }
 
     public boolean isFriend(User user) {

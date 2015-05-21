@@ -44,12 +44,12 @@ public class UserIntegration {
     @EJB
     private UserDtoAssembler dtoAssembler;
 
-    public UserResponse regUser(String username, String password, String email) {
+    public UserResponse regUser(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
-	    User user = this.dao.findUserByName(username);
+	    User user = this.dao.findUserByName(email);
 	    if (user == null) {
-		user = this.dao.createUser(username, password, email);
+		user = this.dao.createUser(password, email);
 		ShelpSession session = dao.createSession(user);
 		LOGGER.info("Benutzer " + user + " erfolgreich angelegt. Session=" + session);
 		response.setSession(dtoAssembler.makeDTO(session));
@@ -64,17 +64,17 @@ public class UserIntegration {
 	return response;
     }
 
-    public UserResponse login(String username, String password) {
+    public UserResponse login(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
-	    User user = this.dao.findUserByName(username);
+	    User user = this.dao.findUserByName(email);
 	    if (user != null && user.getPassword().equals(password)) {
 		ShelpSession session = dao.createSession(user);
 		LOGGER.info("Login erfolgreich. Session=" + session);
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
-		LOGGER.info("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + username);
-		throw new InvalidLoginException("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + user.getName());
+		LOGGER.info("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + email);
+		throw new InvalidLoginException("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + email);
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());

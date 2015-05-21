@@ -50,5 +50,10 @@ public class WishlistItem {
     public void setOwner(Wishlist wishlist) {
 	this.owner = wishlist;
     }
+    
+    @Override
+    public String toString() {
+        return "Wunschlistobjekt: " + text + " von " + owner;
+    }
 
 }

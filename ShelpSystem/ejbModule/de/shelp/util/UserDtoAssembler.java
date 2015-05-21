@@ -20,7 +20,6 @@ public class UserDtoAssembler {
 
     public UserTO makeDTO(User user) {
 	UserTO dto = new UserTO();
-	dto.setName(user.getName());
 	dto.setEmail(user.getEmail());
 	return dto;
     }

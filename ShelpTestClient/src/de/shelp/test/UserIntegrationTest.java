@@ -23,23 +23,21 @@ public class UserIntegrationTest {
 
     @Test
     public void aTestRegUserSuccess() {
-	UserResponse loginResponse = remoteSystem.regUser("Thomas", "test123", "thomas@sennekamp.de");
+	UserResponse loginResponse = remoteSystem.regUser( "thomas@sennekamp.de", "test123");
 	Assert.assertEquals(loginResponse.getReturnCode(), ReturnCode.OK);
-	Assert.assertEquals(loginResponse.getSession().getUser().getName(), "Thomas");
 	Assert.assertEquals(loginResponse.getSession().getUser().getEmail(), "thomas@sennekamp.de");
     }
 
     @Test
     public void bTestRegUserExist() {
-	UserResponse loginResponse = remoteSystem.regUser("Thomas", "test123", "thomas@sennekamp.de");
+	UserResponse loginResponse = remoteSystem.regUser("thomas@sennekamp.de", "test123");
 	Assert.assertEquals(loginResponse.getReturnCode(), ReturnCode.ERROR);
     }
 
     @Test
     public void cTestLoginAndLogoutSuccess() {
-	UserResponse loginResponse = remoteSystem.login("Thomas", "test123");
+	UserResponse loginResponse = remoteSystem.login("thomas@sennekamp.de", "test123");
 	Assert.assertEquals(loginResponse.getReturnCode(), ReturnCode.OK);
-	Assert.assertEquals(loginResponse.getSession().getUser().getName(), "Thomas");
 	Assert.assertEquals(loginResponse.getSession().getUser().getEmail(), "thomas@sennekamp.de");
 	ReturnCodeResponse logout = remoteSystem.logout(loginResponse.getSession().getId());
 	Assert.assertEquals(logout.getReturnCode(), ReturnCode.OK);
@@ -47,7 +45,7 @@ public class UserIntegrationTest {
 
     @Test
     public void dTestLoginAndLogoutFailed() {
-	UserResponse loginResponse = remoteSystem.login("Thomas", "test12");
+	UserResponse loginResponse = remoteSystem.login("thomas@sennekamp.de", "test12");
 	Assert.assertEquals(loginResponse.getReturnCode(), ReturnCode.ERROR);
 
 	ReturnCodeResponse logout = remoteSystem.logout(10);
@@ -57,22 +55,22 @@ public class UserIntegrationTest {
     @Test
     public void eTestSearchUsers() {
 	// generate some testusers
-	remoteSystem.regUser("Jos", "test123", "thomas@sennekamp.de");
-	remoteSystem.regUser("Theresa", "test123", "thomas@sennekamp.de");
-	remoteSystem.regUser("Roman", "test123", "thomas@sennekamp.de");
-	remoteSystem.regUser("Josef", "test123", "thomas@sennekamp.de");
-	remoteSystem.regUser("Peter", "test123", "thomas@sennekamp.de");
+	remoteSystem.regUser( "jos@sennekamp.de", "test123");
+	remoteSystem.regUser( "theresa@sennekamp.de", "test123");
+	remoteSystem.regUser( "roman@sennekamp.de", "test123");
+	remoteSystem.regUser( "josef@sennekamp.de", "test123");
+	remoteSystem.regUser( "peter@sennekamp.de", "test123");
 
-	UsersResponse searchUsers = remoteSystem.searchUsers("Roman");
-	Assert.assertEquals("Roman", searchUsers.getUsers().get(0).getName());
+	UsersResponse searchUsers = remoteSystem.searchUsers("roman");
+	Assert.assertEquals("roman@sennekamp.de", searchUsers.getUsers().get(0).getEmail());
 
-	searchUsers = remoteSystem.searchUsers("Jos");
-	Assert.assertEquals("Jos", searchUsers.getUsers().get(0).getName());
-	Assert.assertEquals("Josef", searchUsers.getUsers().get(1).getName());
+	searchUsers = remoteSystem.searchUsers("jos");
+	Assert.assertEquals("jos@sennekamp.de", searchUsers.getUsers().get(0).getEmail());
+	Assert.assertEquals("josef@sennekamp.de", searchUsers.getUsers().get(1).getEmail());
 
-	searchUsers = remoteSystem.searchUsers("Th");
-	Assert.assertEquals("Thomas", searchUsers.getUsers().get(0).getName());
-	Assert.assertEquals("Theresa", searchUsers.getUsers().get(1).getName());
+	searchUsers = remoteSystem.searchUsers("th");
+	Assert.assertEquals("thomas@sennekamp.de", searchUsers.getUsers().get(0).getEmail());
+	Assert.assertEquals("theresa@sennekamp.de", searchUsers.getUsers().get(1).getEmail());
 
 	searchUsers = remoteSystem.searchUsers("kasdsdfsdf");
 	Assert.assertEquals(0, searchUsers.getUsers().size());
