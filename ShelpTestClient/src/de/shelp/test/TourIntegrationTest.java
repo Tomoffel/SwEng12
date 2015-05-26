@@ -9,7 +9,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -26,39 +26,47 @@ import de.shelp.integration.StateIntegration;
 import de.shelp.integration.StateIntegrationService;
 import de.shelp.integration.TourIntegration;
 import de.shelp.integration.TourIntegrationService;
+import de.shelp.integration.TourResponse;
 import de.shelp.integration.TourTO;
 import de.shelp.integration.ToursResponse;
 import de.shelp.integration.UserIntegration;
 import de.shelp.integration.UserIntegrationService;
 import de.shelp.integration.UserResponse;
 
+/**
+ * Testet alle Webservice-Schnittstellen zur TourIntegration.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TourIntegrationTest {
 
     private static TourIntegration remoteSystem;
 
-    private TourTO tour1 = new TourTO();
-    private TourTO tour2 = new TourTO();
-    private TourTO tour3 = new TourTO();
-    private TourTO tour4 = new TourTO();
-    private TourTO tour5 = new TourTO();
+    private static TourTO tour1 = new TourTO();
+    private static TourTO tour2 = new TourTO();
+    private static TourTO tour3 = new TourTO();
+    private static TourTO tour4 = new TourTO();
+    private static TourTO tour5 = new TourTO();
 
-    private List<LocationTO> locations;
+    private static List<LocationTO> locations;
 
-    private ShelpSessionTO session1;
+    private static ShelpSessionTO session1;
 
-    private GregorianCalendar calendarInTwoDays;
+    private static GregorianCalendar calendarInTwoDays;
 
-    private GregorianCalendar calendarInThreeDays;
+    private static GregorianCalendar calendarInThreeDays;
 
-    private GregorianCalendar calendarInOneDay;
+    private static GregorianCalendar calendarInOneDay;
 
-    private GregorianCalendar calendarInFourDays;
+    private static GregorianCalendar calendarInFourDays;
 
-    private ShelpSessionTO session2;
+    private static ShelpSessionTO session2;
 
-    @Before
-    public void initTestCase() {
+    /**
+     * Baut einmalig die Verbindung zum Server auf setzt wichtige
+     * Klassenvariablen für die Testfälle
+     */
+    @BeforeClass
+    public static void initTestCase() {
 	TourIntegrationService service = new TourIntegrationService();
 	remoteSystem = service.getTourIntegrationPort();
 
@@ -112,25 +120,31 @@ public class TourIntegrationTest {
 	tour5.setDeliveryConditions(DeliveryCondition.BRING);
 	tour5.setTime(calendarToXMLGregorianCalendar(calendarInFourDays));
 
-	UserResponse loginResponse = userIntegrationPort.regUser( "thomas@sennekamp.de", "test123");
+	UserResponse loginResponse = userIntegrationPort.regUser("thomas@sennekamp.de", "test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
-	    loginResponse = userIntegrationPort.login("Thomas", "test123");
+	    loginResponse = userIntegrationPort.login("thomas@sennekamp.de", "test123");
 	}
 	session1 = loginResponse.getSession();
 
-	loginResponse = userIntegrationPort.regUser("Theresa@sennekamp.de", "test123");
+	loginResponse = userIntegrationPort.regUser("theresa@sennekamp.de", "test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
-	    loginResponse = userIntegrationPort.login("Theresa", "test123");
+	    loginResponse = userIntegrationPort.login("theresa@sennekamp.de", "test123");
 	}
 	session2 = loginResponse.getSession();
     }
-
+    
+   /**
+    * Testet ob eine neue Fahrt erstellt werden kann. Erwartet ein OK.
+    */
     @Test
     public void aTestCreateTour() {
 	ReturnCodeResponse createTour = remoteSystem.createTour(tour1, session1.getId());
 	Assert.assertEquals(ReturnCode.OK, createTour.getReturnCode());
     }
 
+    /**
+     * Testet ob eine unvollständige Fahrt erstellt werden kann. Erwartet ein ERROR.
+     */
     @Test
     public void bTestCreateTourNotFull() {
 	ReturnCodeResponse createTour = remoteSystem.createTour(tour2, session1.getId());
@@ -160,6 +174,37 @@ public class TourIntegrationTest {
 	Assert.assertEquals(searchTour.getTours().get(0).getLocation().getDescription(), locations.get(0).getDescription());
 	Assert.assertEquals(searchTour.getTours().get(1).getLocation().getDescription(), locations.get(1).getDescription());
     }
+
+    @Test
+    public void eTestGetTour() {
+	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
+		false, session1.getId());
+
+	TourResponse tour = remoteSystem.getTour(searchTour.getTours().get(0).getId(), session1.getId());
+	Assert.assertEquals(ReturnCode.OK, tour.getReturnCode());
+	Assert.assertEquals(tour.getTour().getId(), searchTour.getTours().get(0).getId());
+    }
+
+    @Test
+    public void fTestGetTourNotExist() {
+	TourResponse tour = remoteSystem.getTour(500, session1.getId());
+	Assert.assertEquals(ReturnCode.ERROR, tour.getReturnCode());
+    }
+
+    // TODO test with friendship
+    @Test
+    public void gTestGetTourPermissionDenied() {
+	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
+		false, session1.getId());
+
+	// TourResponse tour =
+	// remoteSystem.getTour(searchTour.getTours().get(0).getId(),
+	// session2.getId());
+	// Assert.assertEquals(ReturnCode.PERMISSION_DENIED,
+	// tour.getReturnCode());
+    }
+
+    // TODO test with request and update
 
     private static XMLGregorianCalendar calendarToXMLGregorianCalendar(Calendar calendar) {
 	try {

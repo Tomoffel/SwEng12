@@ -16,7 +16,7 @@ public interface ShelpTourDAOLocal {
 
     public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime, User currentUser);
 
-    public Tour getTour(int tourId);
+    public Tour getTour(long tourId);
 
     public void cancleTour(Tour tour);
 

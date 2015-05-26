@@ -82,7 +82,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     }
 
     @Override
-    public Tour getTour(int tourId) {
+    public Tour getTour(long tourId) {
 	return em.find(Tour.class, tourId);
     }
 

@@ -115,7 +115,7 @@ public class TourIntegration {
 	return response;
     }
 
-    public TourResponse getTour(int tourId, int sessionId) {
+    public TourResponse getTour(long tourId, int sessionId) {
 	TourResponse response = new TourResponse();
 
 	try {
@@ -195,7 +195,7 @@ public class TourIntegration {
 	return response;
     }
 
-    private Tour getTourIntern(int tourId, int sessionId) throws TourNotExistException, PermissionDeniedException {
+    private Tour getTourIntern(long tourId, int sessionId) throws TourNotExistException, PermissionDeniedException {
 	Tour tour = tourDao.getTour(tourId);
 	if (tour == null) {
 	    LOGGER.warn("Fahrt existiert nicht: " + tourId);

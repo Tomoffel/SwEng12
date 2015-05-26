@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.shelp.integration.AllListResponse;
@@ -21,13 +21,19 @@ import de.shelp.integration.PaymentConditionsResponse;
 import de.shelp.integration.StateIntegration;
 import de.shelp.integration.StateIntegrationService;
 
+/**
+ * Testet alle Webservice-Schnittstellen zur StateIntegration.
+ */
 public class StateIntegrationTest {
 
     private static StateIntegration remoteSystem;
-    private ArrayList<String> locationValues;
+    private static ArrayList<String> locationValues;
 
-    @Before
-    public void initTestCase() {
+    /**
+     * Baut einmalig die Verbindung zum Server auf und legt alle benötigten Locations in einer Liste an.
+     */
+    @BeforeClass
+    public static void initTestCase() {
 	StateIntegrationService service = new StateIntegrationService();
 	remoteSystem = service.getStateIntegrationPort();
 
@@ -40,6 +46,9 @@ public class StateIntegrationTest {
 	locationValues.add("Toom Richtung Hiltrup");
     }
 
+    /**
+     * Testet ob der Freigabestatus abgefragt werden kann.
+     */
     @Test
     public void testApprovalStatus() {
 	ApprovalStatusResponse approvalStatus = remoteSystem.getApprovalStatus();
@@ -51,6 +60,9 @@ public class StateIntegrationTest {
 	Assert.assertTrue(list.contains(ApprovalStatus.FRIENDS_ONLY));
     }
 
+    /**
+     * Testet ob der Kapazität abgefragt werden kann.
+     */
     @Test
     public void testCapacities() {
 	CapacitiesResponse capacities = remoteSystem.getCapacities();
@@ -63,6 +75,9 @@ public class StateIntegrationTest {
 	Assert.assertTrue(list.contains(Capacity.SMALL_TRUNK));
     }
 
+    /**
+     * Testet ob der Lieferbedingungen abgefragt werden können.
+     */
     @Test
     public void testDeliveryCondition() {
 	DeliveryConditionResponse conditions = remoteSystem.getDeliveryConditions();
@@ -74,6 +89,9 @@ public class StateIntegrationTest {
 	Assert.assertTrue(list.contains(DeliveryCondition.PICKUP));
     }
 
+    /**
+     * Testet ob der Bezahlmethoden abgefragt werden können.
+     */
     @Test
     public void testPaymentCondition() {
 	PaymentConditionsResponse conditions = remoteSystem.getPaymentConditions();
@@ -85,6 +103,9 @@ public class StateIntegrationTest {
 	Assert.assertTrue(list.contains(PaymentCondition.CASH_IN_ADVANCE));
     }
 
+    /**
+     * Testet ob der Lokations abgefragt werden können.
+     */
     @Test
     public void testLocation() {
 	LocationResponse locations = remoteSystem.getLocations();
@@ -97,6 +118,9 @@ public class StateIntegrationTest {
 	}
     }
 
+    /**
+     * Testet ob alle Statusse in einmal abgefragt werden kann.
+     */
     @Test
     public void testAll() {
 	AllListResponse allLists = remoteSystem.getAllLists();
