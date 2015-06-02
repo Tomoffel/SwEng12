@@ -102,8 +102,8 @@ public class TourIntegration {
 	return response;
     }
 
-    public ToursResponse searchTour(int approvalStatusId, long locationId,
-	    long startTime, long endTime, boolean directSearch,
+    public ToursResponse searchTours(int approvalStatusId, long locationId,
+	    int capacityId, long startTime, long endTime, boolean directSearch,
 	    int sessionId) {
 	ToursResponse response = new ToursResponse();
 
@@ -114,13 +114,15 @@ public class TourIntegration {
 	if (directSearch) {
 	    LOGGER.info("Sucht nach Fahrten zu " + location.getDescription());
 	    tours = tourDao.search(tourDao.getApprovalStatus(approvalStatusId),
-		    location, new Date(startTime), new Date(endTime), currentUser);
+		    location, tourDao.getCapacity(capacityId), new Date(
+			    startTime), new Date(endTime), currentUser);
 	} else {
 	    LOGGER.info("Sucht nach Fahrten in der Nähe von "
 		    + location.getDescription());
 	    tours = tourDao.searchNear(
 		    tourDao.getApprovalStatus(approvalStatusId), location,
-		    new Date(startTime), new Date(endTime), currentUser);
+		    tourDao.getCapacity(capacityId), new Date(startTime),
+		    new Date(endTime), currentUser);
 	}
 	LOGGER.info(tours.size() + " Fahrt(en) gefunden");
 

@@ -15,9 +15,9 @@ public interface ShelpTourDAOLocal {
 
     public Tour createTour(Tour tour, User user);
 
-    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Date startDate, Date endDate, User currentUser);
+    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Capacity capacity, Date startDate, Date endDate, User currentUser);
 
-    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Date startTime, Date endTime, User currentUser);
+    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Capacity capacity, Date startTime, Date endTime, User currentUser);
 
     public Tour getTour(long tourId);
 
