@@ -11,67 +11,78 @@ import javax.persistence.OneToMany;
 @Entity
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -471315499574973048L;
+	private static final long serialVersionUID = -471315499574973048L;
 
-    @Id
-    private String email;
-    private String password;
-    private Calendar creationDate;
+	@Id
+	private String email;
+	private String password;
+	private Calendar creationDate;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Tour> tours;
+	@OneToMany(mappedBy = "targetUser")
+	private List<Rating> ratings;
 
-    public User() {
-	super();
-    }
+	@OneToMany(mappedBy = "owner")
+	private List<Tour> tours;
 
-    public User(String email, String password, Calendar creationDate) {
-	super();
-	this.email = email;
-	this.password = password;
-	this.creationDate = creationDate;
-    }
+	public User() {
+		super();
+	}
 
-    public String getEmail() {
-	return email;
-    }
+	public User(String email, String password, Calendar creationDate) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.creationDate = creationDate;
+	}
 
-    public void setEmail(String email) {
-	this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Calendar getCreationDate() {
-	return creationDate;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setCreationDate(Calendar creationDate) {
-	this.creationDate = creationDate;
-    }
+	public Calendar getCreationDate() {
+		return creationDate;
+	}
 
-    public String getPassword() {
-	return password;
-    }
+	public void setCreationDate(Calendar creationDate) {
+		this.creationDate = creationDate;
+	}
 
-    public void setPassword(String password) {
-	this.password = password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public String toString() {
-	return email;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public boolean isFriend(User user) {
-	// TODO implement function with friend list
-	return true;
-    }
+	@Override
+	public String toString() {
+		return email;
+	}
 
-    public List<Tour> getTours() {
-	return tours;
-    }
+	public boolean isFriend(User user) {
+		// TODO implement function with friend list
+		return true;
+	}
 
-    public void setTours(List<Tour> tours) {
-	this.tours = tours;
-    }
+	public List<Tour> getTours() {
+		return tours;
+	}
+
+	public void setTours(List<Tour> tours) {
+		this.tours = tours;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List <Rating> ratings) {
+		this.ratings = ratings;
+	}
 
 }
