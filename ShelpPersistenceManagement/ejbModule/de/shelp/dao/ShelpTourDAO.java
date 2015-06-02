@@ -14,10 +14,13 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import de.shelp.dao.local.ShelpTourDAOLocal;
+import de.shelp.entities.ApprovalStatus;
+import de.shelp.entities.Capacity;
+import de.shelp.entities.DeliveryCondition;
 import de.shelp.entities.Location;
+import de.shelp.entities.PaymentCondition;
 import de.shelp.entities.Tour;
 import de.shelp.entities.User;
-import de.shelp.enums.ApprovalStatus;
 import de.shelp.enums.TourStatus;
 
 /**
@@ -47,11 +50,12 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	// TODO get friends of current user and get their active tours with
 	// friends_only state
 
-	if (approvalStatus == ApprovalStatus.ALL) {
+	//TODO den String Alle sinnvoll auslagern
+	if (approvalStatus.getDescription().equals("Alle")) {
 	    Predicate andClause = criteriaBuilder.and(
 		    criteriaBuilder.equal(tour.<Location> get("location"), location),
 		    criteriaBuilder.and(criteriaBuilder.between(tour.<Calendar> get("time"), startTime, endTime),
-			    criteriaBuilder.equal(tour.<ApprovalStatus> get("approvalStatus"), ApprovalStatus.ALL)));
+			    criteriaBuilder.equal(tour.<ApprovalStatus> get("approvalStatus"), approvalStatus)));
 	    criteriaQuery.select(tour);
 	    criteriaQuery.where(andClause);
 	    searchedTours.addAll(em.createQuery(criteriaQuery).getResultList());
@@ -91,6 +95,31 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	tour.setStatus(TourStatus.CANCLED);
 	tour.setUpdatedOn(new GregorianCalendar());
 	em.persist(tour);
+    }
+
+    @Override
+    public Location getLocation(long locationId) {
+	return em.find(Location.class, locationId);
+    }
+
+    @Override
+    public ApprovalStatus getApprovalStatus(int approvalStatusId) {
+	return em.find(ApprovalStatus.class, approvalStatusId);
+    }
+
+    @Override
+    public Capacity getCapacity(int capacityId) {
+	return em.find(Capacity.class, capacityId);
+    }
+
+    @Override
+    public PaymentCondition getPaymentCondition(int paymentConditionId) {
+	return em.find(PaymentCondition.class, paymentConditionId);
+    }
+
+    @Override
+    public DeliveryCondition getDeliveryCondition(int deliveryConditionId) {
+	return em.find(DeliveryCondition.class, deliveryConditionId);
     }
 
 }

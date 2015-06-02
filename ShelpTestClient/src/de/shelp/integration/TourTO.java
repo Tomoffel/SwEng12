@@ -21,13 +21,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="approvalStatus" type="{http://integration.shelp.de/}approvalStatus" minOccurs="0"/>
- *         &lt;element name="capacity" type="{http://integration.shelp.de/}capacity" minOccurs="0"/>
- *         &lt;element name="deliveryConditions" type="{http://integration.shelp.de/}deliveryCondition" minOccurs="0"/>
+ *         &lt;element name="approvalStatus" type="{http://integration.shelp.de/}approvalStatusTO" minOccurs="0"/>
+ *         &lt;element name="capacity" type="{http://integration.shelp.de/}capacityTO" minOccurs="0"/>
+ *         &lt;element name="deliveryConditions" type="{http://integration.shelp.de/}deliveryConditionTO" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="location" type="{http://integration.shelp.de/}locationTO" minOccurs="0"/>
  *         &lt;element name="owner" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
- *         &lt;element name="paymentConditions" type="{http://integration.shelp.de/}paymentCondition" minOccurs="0"/>
+ *         &lt;element name="paymentConditions" type="{http://integration.shelp.de/}paymentConditionTO" minOccurs="0"/>
  *         &lt;element name="request" type="{http://integration.shelp.de/}requestTO" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="status" type="{http://integration.shelp.de/}tourStatus" minOccurs="0"/>
  *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
@@ -56,13 +56,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class TourTO {
 
-    protected ApprovalStatus approvalStatus;
-    protected Capacity capacity;
-    protected DeliveryCondition deliveryConditions;
+    protected ApprovalStatusTO approvalStatus;
+    protected CapacityTO capacity;
+    protected DeliveryConditionTO deliveryConditions;
     protected long id;
     protected LocationTO location;
     protected UserTO owner;
-    protected PaymentCondition paymentConditions;
+    protected PaymentConditionTO paymentConditions;
     @XmlElement(nillable = true)
     protected List<RequestTO> request;
     protected TourStatus status;
@@ -76,10 +76,10 @@ public class TourTO {
      * 
      * @return
      *     possible object is
-     *     {@link ApprovalStatus }
+     *     {@link ApprovalStatusTO }
      *     
      */
-    public ApprovalStatus getApprovalStatus() {
+    public ApprovalStatusTO getApprovalStatus() {
         return approvalStatus;
     }
 
@@ -88,10 +88,10 @@ public class TourTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link ApprovalStatus }
+     *     {@link ApprovalStatusTO }
      *     
      */
-    public void setApprovalStatus(ApprovalStatus value) {
+    public void setApprovalStatus(ApprovalStatusTO value) {
         this.approvalStatus = value;
     }
 
@@ -100,10 +100,10 @@ public class TourTO {
      * 
      * @return
      *     possible object is
-     *     {@link Capacity }
+     *     {@link CapacityTO }
      *     
      */
-    public Capacity getCapacity() {
+    public CapacityTO getCapacity() {
         return capacity;
     }
 
@@ -112,10 +112,10 @@ public class TourTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link Capacity }
+     *     {@link CapacityTO }
      *     
      */
-    public void setCapacity(Capacity value) {
+    public void setCapacity(CapacityTO value) {
         this.capacity = value;
     }
 
@@ -124,10 +124,10 @@ public class TourTO {
      * 
      * @return
      *     possible object is
-     *     {@link DeliveryCondition }
+     *     {@link DeliveryConditionTO }
      *     
      */
-    public DeliveryCondition getDeliveryConditions() {
+    public DeliveryConditionTO getDeliveryConditions() {
         return deliveryConditions;
     }
 
@@ -136,10 +136,10 @@ public class TourTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link DeliveryCondition }
+     *     {@link DeliveryConditionTO }
      *     
      */
-    public void setDeliveryConditions(DeliveryCondition value) {
+    public void setDeliveryConditions(DeliveryConditionTO value) {
         this.deliveryConditions = value;
     }
 
@@ -212,10 +212,10 @@ public class TourTO {
      * 
      * @return
      *     possible object is
-     *     {@link PaymentCondition }
+     *     {@link PaymentConditionTO }
      *     
      */
-    public PaymentCondition getPaymentConditions() {
+    public PaymentConditionTO getPaymentConditions() {
         return paymentConditions;
     }
 
@@ -224,10 +224,10 @@ public class TourTO {
      * 
      * @param value
      *     allowed object is
-     *     {@link PaymentCondition }
+     *     {@link PaymentConditionTO }
      *     
      */
-    public void setPaymentConditions(PaymentCondition value) {
+    public void setPaymentConditions(PaymentConditionTO value) {
         this.paymentConditions = value;
     }
 

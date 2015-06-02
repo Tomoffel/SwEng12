@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://integration.shelp.de/}returnCodeResponse">
  *       &lt;sequence>
- *         &lt;element name="states" type="{http://integration.shelp.de/}approvalStatus" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="states" type="{http://integration.shelp.de/}approvalStatusTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -37,7 +37,7 @@ public class ApprovalStatusResponse
 {
 
     @XmlElement(nillable = true)
-    protected List<ApprovalStatus> states;
+    protected List<ApprovalStatusTO> states;
 
     /**
      * Gets the value of the states property.
@@ -57,13 +57,13 @@ public class ApprovalStatusResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ApprovalStatus }
+     * {@link ApprovalStatusTO }
      * 
      * 
      */
-    public List<ApprovalStatus> getStates() {
+    public List<ApprovalStatusTO> getStates() {
         if (states == null) {
-            states = new ArrayList<ApprovalStatus>();
+            states = new ArrayList<ApprovalStatusTO>();
         }
         return this.states;
     }

@@ -3,19 +3,15 @@ package de.shelp.dto.state;
 import java.util.List;
 
 import de.shelp.dto.ReturnCodeResponse;
-import de.shelp.enums.ApprovalStatus;
-import de.shelp.enums.Capacity;
-import de.shelp.enums.DeliveryCondition;
-import de.shelp.enums.PaymentCondition;
 
 public class AllListResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -3883979253357422621L;
 
-    private ApprovalStatus[] states = ApprovalStatus.values();
-    private Capacity[] capacities = Capacity.values();
-    private DeliveryCondition[] deliveryConditions = DeliveryCondition.values();
-    private PaymentCondition[] paymentConditions = PaymentCondition.values();
+    private List<ApprovalStatusTO> states;
+    private List<CapacityTO> capacities;
+    private List<DeliveryConditionTO> deliveryConditions;
+    private List<PaymentConditionTO> paymentConditions;
     private List<LocationTO> locations;
 
     public List<LocationTO> getLocations() {
@@ -26,36 +22,36 @@ public class AllListResponse extends ReturnCodeResponse {
 	this.locations = locations;
     }
 
-    public ApprovalStatus[] getStates() {
+    public List<ApprovalStatusTO> getStates() {
 	return states;
     }
 
-    public Capacity[] getCapacities() {
+    public List<CapacityTO> getCapacities() {
 	return capacities;
     }
 
-    public DeliveryCondition[] getDeliveryConditions() {
+    public List<DeliveryConditionTO> getDeliveryConditions() {
 	return deliveryConditions;
     }
 
-    public PaymentCondition[] getPaymentConditions() {
+    public List<PaymentConditionTO> getPaymentConditions() {
 	return paymentConditions;
     }
 
-    public void setStates(ApprovalStatus[] states) {
-	this.states = states;
+    public void setStates(List<ApprovalStatusTO> list) {
+	this.states = list;
     }
 
-    public void setCapacities(Capacity[] capacities) {
-	this.capacities = capacities;
+    public void setCapacities(List<CapacityTO> list) {
+	this.capacities = list;
     }
 
-    public void setDeliveryConditions(DeliveryCondition[] deliveryConditions) {
-	this.deliveryConditions = deliveryConditions;
+    public void setDeliveryConditions(List<DeliveryConditionTO> list) {
+	this.deliveryConditions = list;
     }
 
-    public void setPaymentConditions(PaymentCondition[] paymentConditions) {
-	this.paymentConditions = paymentConditions;
+    public void setPaymentConditions(List<PaymentConditionTO> list) {
+	this.paymentConditions = list;
     }
 
 }

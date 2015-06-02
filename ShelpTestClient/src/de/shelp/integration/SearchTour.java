@@ -18,8 +18,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://integration.shelp.de/}approvalStatus" minOccurs="0"/>
- *         &lt;element name="arg1" type="{http://integration.shelp.de/}locationTO" minOccurs="0"/>
+ *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
@@ -43,8 +43,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 })
 public class SearchTour {
 
-    protected ApprovalStatus arg0;
-    protected LocationTO arg1;
+    protected int arg0;
+    protected long arg1;
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar arg2;
     @XmlSchemaType(name = "dateTime")
@@ -55,48 +55,32 @@ public class SearchTour {
     /**
      * Ruft den Wert der arg0-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link ApprovalStatus }
-     *     
      */
-    public ApprovalStatus getArg0() {
+    public int getArg0() {
         return arg0;
     }
 
     /**
      * Legt den Wert der arg0-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link ApprovalStatus }
-     *     
      */
-    public void setArg0(ApprovalStatus value) {
+    public void setArg0(int value) {
         this.arg0 = value;
     }
 
     /**
      * Ruft den Wert der arg1-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link LocationTO }
-     *     
      */
-    public LocationTO getArg1() {
+    public long getArg1() {
         return arg1;
     }
 
     /**
      * Legt den Wert der arg1-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link LocationTO }
-     *     
      */
-    public void setArg1(LocationTO value) {
+    public void setArg1(long value) {
         this.arg1 = value;
     }
 

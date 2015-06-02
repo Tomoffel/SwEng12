@@ -1,20 +1,21 @@
 package de.shelp.dto.state;
 
+import java.util.List;
+
 import de.shelp.dto.ReturnCodeResponse;
-import de.shelp.enums.PaymentCondition;
 
 public class PaymentConditionsResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -8707856420583962264L;
 
-    private PaymentCondition[] conditions = PaymentCondition.values();
+    private List<PaymentConditionTO> conditions;
 
-    public PaymentCondition[] getConditions() {
+    public List<PaymentConditionTO> getConditions() {
 	return conditions;
     }
 
-    public void setConditions(PaymentCondition[] conditions) {
-	this.conditions = conditions;
+    public void setConditions(List<PaymentConditionTO> list) {
+	this.conditions = list;
     }
 
 }

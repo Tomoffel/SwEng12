@@ -8,15 +8,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.shelp.integration.AllListResponse;
-import de.shelp.integration.ApprovalStatus;
 import de.shelp.integration.ApprovalStatusResponse;
+import de.shelp.integration.ApprovalStatusTO;
 import de.shelp.integration.CapacitiesResponse;
-import de.shelp.integration.Capacity;
-import de.shelp.integration.DeliveryCondition;
+import de.shelp.integration.CapacityTO;
 import de.shelp.integration.DeliveryConditionResponse;
+import de.shelp.integration.DeliveryConditionTO;
 import de.shelp.integration.LocationResponse;
 import de.shelp.integration.LocationTO;
-import de.shelp.integration.PaymentCondition;
+import de.shelp.integration.PaymentConditionTO;
 import de.shelp.integration.PaymentConditionsResponse;
 import de.shelp.integration.StateIntegration;
 import de.shelp.integration.StateIntegrationService;
@@ -28,6 +28,10 @@ public class StateIntegrationTest {
 
     private static StateIntegration remoteSystem;
     private static ArrayList<String> locationValues;
+    private static ArrayList<String> statesValues;
+    private static ArrayList<String> capacityValues;
+    private static ArrayList<String> deliveryValues;
+    private static ArrayList<String> paymentValues;
 
     /**
      * Baut einmalig die Verbindung zum Server auf und legt alle benötigten Locations in einer Liste an.
@@ -44,6 +48,24 @@ public class StateIntegrationTest {
 	locationValues.add("Saturn Arkaden");
 	locationValues.add("Lidl Friedrich-Ebert-Straße");
 	locationValues.add("Toom Richtung Hiltrup");
+	
+	statesValues = new ArrayList<String>();
+	statesValues.add("Alle");
+	statesValues.add("Nur Freunde");
+	
+	capacityValues = new ArrayList<String>();
+	capacityValues.add("Kleiner Kofferraum");
+	capacityValues.add("Mittlerer Kofferraum");
+	capacityValues.add("Großer Kofferraum");
+	
+	deliveryValues = new ArrayList<String>();
+	deliveryValues.add("Abholen");
+	deliveryValues.add("Bringen");
+	
+	paymentValues = new ArrayList<String>();
+	paymentValues.add("Barzahlung");
+	paymentValues.add("Vorkasse");
+	paymentValues.add("PayPal");
     }
 
     /**
@@ -55,9 +77,10 @@ public class StateIntegrationTest {
 	checkApprovalStatus(approvalStatus.getStates());
     }
 
-    private void checkApprovalStatus(List<ApprovalStatus> list) {
-	Assert.assertTrue(list.contains(ApprovalStatus.ALL));
-	Assert.assertTrue(list.contains(ApprovalStatus.FRIENDS_ONLY));
+    private void checkApprovalStatus(List<ApprovalStatusTO> list) {
+	for (ApprovalStatusTO approvalStatusTO : list) {
+	    Assert.assertTrue(statesValues.contains(approvalStatusTO.getDescription()));
+	}
     }
 
     /**
@@ -69,10 +92,10 @@ public class StateIntegrationTest {
 	checkCapacities(capacities.getCapacities());
     }
 
-    private void checkCapacities(List<Capacity> list) {
-	Assert.assertTrue(list.contains(Capacity.LARGE_TRUNK));
-	Assert.assertTrue(list.contains(Capacity.MIDDLE_TRUNK));
-	Assert.assertTrue(list.contains(Capacity.SMALL_TRUNK));
+    private void checkCapacities(List<CapacityTO> list) {
+	for (CapacityTO capacityTO : list) {
+	    Assert.assertTrue(capacityValues.contains(capacityTO.getDescription()));
+	}
     }
 
     /**
@@ -84,9 +107,10 @@ public class StateIntegrationTest {
 	checkDeliveryCondition(conditions.getConditions());
     }
 
-    private void checkDeliveryCondition(List<DeliveryCondition> list) {
-	Assert.assertTrue(list.contains(DeliveryCondition.BRING));
-	Assert.assertTrue(list.contains(DeliveryCondition.PICKUP));
+    private void checkDeliveryCondition(List<DeliveryConditionTO> list) {
+	for (DeliveryConditionTO deliveryTO : list) {
+	    Assert.assertTrue(deliveryValues.contains(deliveryTO.getDescription()));
+	}
     }
 
     /**
@@ -98,9 +122,10 @@ public class StateIntegrationTest {
 	checkPaymentCondition(conditions.getConditions());
     }
 
-    private void checkPaymentCondition(List<PaymentCondition> list) {
-	Assert.assertTrue(list.contains(PaymentCondition.CASH));
-	Assert.assertTrue(list.contains(PaymentCondition.CASH_IN_ADVANCE));
+    private void checkPaymentCondition(List<PaymentConditionTO> list) {
+	for (PaymentConditionTO paymentTO : list) {
+	    Assert.assertTrue(paymentValues.contains(paymentTO.getDescription()));
+	}
     }
 
     /**

@@ -19,11 +19,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://integration.shelp.de/}returnCodeResponse">
  *       &lt;sequence>
- *         &lt;element name="capacities" type="{http://integration.shelp.de/}capacity" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="deliveryConditions" type="{http://integration.shelp.de/}deliveryCondition" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="capacities" type="{http://integration.shelp.de/}capacityTO" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="deliveryConditions" type="{http://integration.shelp.de/}deliveryConditionTO" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="locations" type="{http://integration.shelp.de/}locationTO" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="paymentConditions" type="{http://integration.shelp.de/}paymentCondition" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="states" type="{http://integration.shelp.de/}approvalStatus" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="paymentConditions" type="{http://integration.shelp.de/}paymentConditionTO" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="states" type="{http://integration.shelp.de/}approvalStatusTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -45,15 +45,15 @@ public class AllListResponse
 {
 
     @XmlElement(nillable = true)
-    protected List<Capacity> capacities;
+    protected List<CapacityTO> capacities;
     @XmlElement(nillable = true)
-    protected List<DeliveryCondition> deliveryConditions;
+    protected List<DeliveryConditionTO> deliveryConditions;
     @XmlElement(nillable = true)
     protected List<LocationTO> locations;
     @XmlElement(nillable = true)
-    protected List<PaymentCondition> paymentConditions;
+    protected List<PaymentConditionTO> paymentConditions;
     @XmlElement(nillable = true)
-    protected List<ApprovalStatus> states;
+    protected List<ApprovalStatusTO> states;
 
     /**
      * Gets the value of the capacities property.
@@ -73,13 +73,13 @@ public class AllListResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Capacity }
+     * {@link CapacityTO }
      * 
      * 
      */
-    public List<Capacity> getCapacities() {
+    public List<CapacityTO> getCapacities() {
         if (capacities == null) {
-            capacities = new ArrayList<Capacity>();
+            capacities = new ArrayList<CapacityTO>();
         }
         return this.capacities;
     }
@@ -102,13 +102,13 @@ public class AllListResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DeliveryCondition }
+     * {@link DeliveryConditionTO }
      * 
      * 
      */
-    public List<DeliveryCondition> getDeliveryConditions() {
+    public List<DeliveryConditionTO> getDeliveryConditions() {
         if (deliveryConditions == null) {
-            deliveryConditions = new ArrayList<DeliveryCondition>();
+            deliveryConditions = new ArrayList<DeliveryConditionTO>();
         }
         return this.deliveryConditions;
     }
@@ -160,13 +160,13 @@ public class AllListResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PaymentCondition }
+     * {@link PaymentConditionTO }
      * 
      * 
      */
-    public List<PaymentCondition> getPaymentConditions() {
+    public List<PaymentConditionTO> getPaymentConditions() {
         if (paymentConditions == null) {
-            paymentConditions = new ArrayList<PaymentCondition>();
+            paymentConditions = new ArrayList<PaymentConditionTO>();
         }
         return this.paymentConditions;
     }
@@ -189,13 +189,13 @@ public class AllListResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ApprovalStatus }
+     * {@link ApprovalStatusTO }
      * 
      * 
      */
-    public List<ApprovalStatus> getStates() {
+    public List<ApprovalStatusTO> getStates() {
         if (states == null) {
-            states = new ArrayList<ApprovalStatus>();
+            states = new ArrayList<ApprovalStatusTO>();
         }
         return this.states;
     }

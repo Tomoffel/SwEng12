@@ -14,11 +14,12 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import de.shelp.integration.ApprovalStatus;
-import de.shelp.integration.Capacity;
-import de.shelp.integration.DeliveryCondition;
+import de.shelp.integration.AllListResponse;
+import de.shelp.integration.ApprovalStatusTO;
+import de.shelp.integration.CapacityTO;
+import de.shelp.integration.DeliveryConditionTO;
 import de.shelp.integration.LocationTO;
-import de.shelp.integration.PaymentCondition;
+import de.shelp.integration.PaymentConditionTO;
 import de.shelp.integration.ReturnCode;
 import de.shelp.integration.ReturnCodeResponse;
 import de.shelp.integration.ShelpSessionTO;
@@ -61,6 +62,14 @@ public class TourIntegrationTest {
 
     private static ShelpSessionTO session2;
 
+    private static List<CapacityTO> capacities;
+
+    private static List<DeliveryConditionTO> deliveryConditions;
+
+    private static List<PaymentConditionTO> paymentConditions;
+
+    private static List<ApprovalStatusTO> states;
+
     /**
      * Baut einmalig die Verbindung zum Server auf setzt wichtige
      * Klassenvariablen für die Testfälle
@@ -71,12 +80,21 @@ public class TourIntegrationTest {
 	remoteSystem = service.getTourIntegrationPort();
 
 	UserIntegrationService userService = new UserIntegrationService();
-	UserIntegration userIntegrationPort = userService.getUserIntegrationPort();
+	UserIntegration userIntegrationPort = userService
+		.getUserIntegrationPort();
 
 	StateIntegrationService stateService = new StateIntegrationService();
-	StateIntegration stateRemoteSystem = stateService.getStateIntegrationPort();
+	StateIntegration stateRemoteSystem = stateService
+		.getStateIntegrationPort();
 
-	locations = stateRemoteSystem.getLocations().getLocations();
+	AllListResponse allLists = stateRemoteSystem.getAllLists();
+
+	locations = allLists.getLocations();
+	capacities = allLists.getCapacities();
+	deliveryConditions = allLists.getDeliveryConditions();
+	paymentConditions = allLists.getPaymentConditions();
+	states = allLists.getStates();
+
 	calendarInTwoDays = new GregorianCalendar();
 	calendarInTwoDays.add(Calendar.DAY_OF_MONTH, 2);
 
@@ -89,100 +107,133 @@ public class TourIntegrationTest {
 	calendarInFourDays = new GregorianCalendar();
 	calendarInFourDays.add(Calendar.DAY_OF_MONTH, 4);
 
-	tour1.setApprovalStatus(ApprovalStatus.ALL);
+	tour1.setApprovalStatus(states.get(0));
 	tour1.setLocation(locations.get(0));
-	tour1.setCapacity(Capacity.LARGE_TRUNK);
-	tour1.setPaymentConditions(PaymentCondition.CASH);
-	tour1.setDeliveryConditions(DeliveryCondition.BRING);
+	tour1.setCapacity(capacities.get(1));
+	tour1.setPaymentConditions(paymentConditions.get(1));
+	tour1.setDeliveryConditions(deliveryConditions.get(0));
 	tour1.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
 
 	tour2.setLocation(locations.get(2));
-	tour2.setPaymentConditions(PaymentCondition.CASH_IN_ADVANCE);
+	tour2.setPaymentConditions(paymentConditions.get(0));
 
-	tour3.setApprovalStatus(ApprovalStatus.ALL);
+	tour3.setApprovalStatus(states.get(0));
 	tour3.setLocation(locations.get(1));
-	tour3.setCapacity(Capacity.MIDDLE_TRUNK);
-	tour3.setPaymentConditions(PaymentCondition.CASH);
-	tour3.setDeliveryConditions(DeliveryCondition.BRING);
+	tour3.setCapacity(capacities.get(2));
+	tour3.setPaymentConditions(paymentConditions.get(2));
+	tour3.setDeliveryConditions(deliveryConditions.get(1));
 	tour3.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
 
-	tour4.setApprovalStatus(ApprovalStatus.ALL);
+	tour4.setApprovalStatus(states.get(0));
 	tour4.setLocation(locations.get(5));
-	tour4.setCapacity(Capacity.MIDDLE_TRUNK);
-	tour4.setPaymentConditions(PaymentCondition.CASH);
-	tour4.setDeliveryConditions(DeliveryCondition.BRING);
+	tour4.setCapacity(capacities.get(2));
+	tour4.setPaymentConditions(paymentConditions.get(2));
+	tour4.setDeliveryConditions(deliveryConditions.get(1));
 	tour4.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
 
-	tour5.setApprovalStatus(ApprovalStatus.ALL);
+	tour5.setApprovalStatus(states.get(0));
 	tour5.setLocation(locations.get(2));
-	tour5.setCapacity(Capacity.MIDDLE_TRUNK);
-	tour5.setPaymentConditions(PaymentCondition.CASH);
-	tour5.setDeliveryConditions(DeliveryCondition.BRING);
+	tour5.setCapacity(capacities.get(2));
+	tour5.setPaymentConditions(paymentConditions.get(2));
+	tour5.setDeliveryConditions(deliveryConditions.get(1));
 	tour5.setTime(calendarToXMLGregorianCalendar(calendarInFourDays));
 
-	UserResponse loginResponse = userIntegrationPort.regUser("thomas@sennekamp.de", "test123");
+	UserResponse loginResponse = userIntegrationPort.regUser(
+		"thomas@sennekamp.de", "test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
-	    loginResponse = userIntegrationPort.login("thomas@sennekamp.de", "test123");
+	    loginResponse = userIntegrationPort.login("thomas@sennekamp.de",
+		    "test123");
 	}
 	session1 = loginResponse.getSession();
 
-	loginResponse = userIntegrationPort.regUser("theresa@sennekamp.de", "test123");
+	loginResponse = userIntegrationPort.regUser("theresa@sennekamp.de",
+		"test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
-	    loginResponse = userIntegrationPort.login("theresa@sennekamp.de", "test123");
+	    loginResponse = userIntegrationPort.login("theresa@sennekamp.de",
+		    "test123");
 	}
 	session2 = loginResponse.getSession();
     }
-    
-   /**
-    * Testet ob eine neue Fahrt erstellt werden kann. Erwartet ein OK.
-    */
+
+    /**
+     * Testet ob eine neue Fahrt erstellt werden kann. Erwartet ein OK.
+     */
     @Test
     public void aTestCreateTour() {
-	ReturnCodeResponse createTour = remoteSystem.createTour(tour1, session1.getId());
+	ReturnCodeResponse createTour = remoteSystem.createTour(tour1
+		.getApprovalStatus().getId(), tour1.getLocation().getId(),
+		tour1.getCapacity().getId(), tour1.getPaymentConditions()
+			.getId(), tour1.getDeliveryConditions().getId(), tour1
+			.getTime(), session1.getId());
 	Assert.assertEquals(ReturnCode.OK, createTour.getReturnCode());
     }
 
     /**
-     * Testet ob eine unvollständige Fahrt erstellt werden kann. Erwartet ein ERROR.
+     * Testet ob eine unvollständige Fahrt erstellt werden kann. Erwartet ein
+     * ERROR.
      */
     @Test
     public void bTestCreateTourNotFull() {
-	ReturnCodeResponse createTour = remoteSystem.createTour(tour2, session1.getId());
+	ReturnCodeResponse createTour = remoteSystem.createTour(100, 100,
+		5, 105, 200, null, session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createTour.getReturnCode());
     }
 
     // TODO check with friendship
     @Test
     public void cTestSearchToursAllDirect() {
-	remoteSystem.createTour(tour3, session1.getId());
-	remoteSystem.createTour(tour4, session2.getId());
-	remoteSystem.createTour(tour5, session2.getId());
+	remoteSystem.createTour(tour3.getApprovalStatus().getId(), tour3
+		.getLocation().getId(), tour1.getCapacity().getId(), tour3
+		.getPaymentConditions().getId(), tour3.getDeliveryConditions()
+		.getId(), tour3.getTime(), session1.getId());
+	remoteSystem.createTour(tour4.getApprovalStatus().getId(), tour4
+		.getLocation().getId(), tour1.getCapacity().getId(), tour4
+		.getPaymentConditions().getId(), tour4.getDeliveryConditions()
+		.getId(), tour4.getTime(), session2.getId());
+	remoteSystem.createTour(tour5.getApprovalStatus().getId(), tour5
+		.getLocation().getId(), tour1.getCapacity().getId(), tour5
+		.getPaymentConditions().getId(), tour5.getDeliveryConditions()
+		.getId(), tour5.getTime(), session2.getId());
 
-	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
-		true, session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
+		.getId(), locations.get(0).getId(),
+		calendarToXMLGregorianCalendar(calendarInOneDay),
+		calendarToXMLGregorianCalendar(calendarInThreeDays), true,
+		session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 1);
-	Assert.assertEquals(searchTour.getTours().get(0).getLocation().getDescription(), locations.get(0).getDescription());
+	Assert.assertEquals(searchTour.getTours().get(0).getLocation()
+		.getDescription(), locations.get(0).getDescription());
     }
 
     @Test
     public void dTestSearchToursAllNear() {
-	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
-		false, session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
+		.getId(), locations.get(0).getId(),
+		calendarToXMLGregorianCalendar(calendarInOneDay),
+		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 2);
-	Assert.assertEquals(searchTour.getTours().get(0).getLocation().getDescription(), locations.get(0).getDescription());
-	Assert.assertEquals(searchTour.getTours().get(1).getLocation().getDescription(), locations.get(1).getDescription());
+	Assert.assertEquals(searchTour.getTours().get(0).getLocation()
+		.getDescription(), locations.get(0).getDescription());
+	Assert.assertEquals(searchTour.getTours().get(1).getLocation()
+		.getDescription(), locations.get(1).getDescription());
     }
 
     @Test
     public void eTestGetTour() {
-	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
-		false, session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
+		.getId(), locations.get(0).getId(),
+		calendarToXMLGregorianCalendar(calendarInOneDay),
+		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		session1.getId());
 
-	TourResponse tour = remoteSystem.getTour(searchTour.getTours().get(0).getId(), session1.getId());
+	TourResponse tour = remoteSystem.getTour(searchTour.getTours().get(0)
+		.getId(), session1.getId());
 	Assert.assertEquals(ReturnCode.OK, tour.getReturnCode());
-	Assert.assertEquals(tour.getTour().getId(), searchTour.getTours().get(0).getId());
+	Assert.assertEquals(tour.getTour().getId(), searchTour.getTours()
+		.get(0).getId());
     }
 
     @Test
@@ -194,8 +245,11 @@ public class TourIntegrationTest {
     // TODO test with friendship
     @Test
     public void gTestGetTourPermissionDenied() {
-	ToursResponse searchTour = remoteSystem.searchTour(ApprovalStatus.ALL, locations.get(0), calendarToXMLGregorianCalendar(calendarInOneDay), calendarToXMLGregorianCalendar(calendarInThreeDays),
-		false, session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
+		.getId(), locations.get(0).getId(),
+		calendarToXMLGregorianCalendar(calendarInOneDay),
+		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		session1.getId());
 
 	// TourResponse tour =
 	// remoteSystem.getTour(searchTour.getTours().get(0).getId(),
@@ -206,7 +260,8 @@ public class TourIntegrationTest {
 
     // TODO test with request and update
 
-    private static XMLGregorianCalendar calendarToXMLGregorianCalendar(Calendar calendar) {
+    private static XMLGregorianCalendar calendarToXMLGregorianCalendar(
+	    Calendar calendar) {
 	try {
 	    DatatypeFactory dtf = DatatypeFactory.newInstance();
 	    XMLGregorianCalendar xgc = dtf.newXMLGregorianCalendar();
@@ -219,7 +274,8 @@ public class TourIntegrationTest {
 	    xgc.setMillisecond(calendar.get(Calendar.MILLISECOND));
 
 	    // Calendar ZONE_OFFSET and DST_OFFSET fields are in milliseconds.
-	    int offsetInMinutes = (calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / (60 * 1000);
+	    int offsetInMinutes = (calendar.get(Calendar.ZONE_OFFSET) + calendar
+		    .get(Calendar.DST_OFFSET)) / (60 * 1000);
 	    xgc.setTimezone(offsetInMinutes);
 	    return xgc;
 	} catch (DatatypeConfigurationException e) {

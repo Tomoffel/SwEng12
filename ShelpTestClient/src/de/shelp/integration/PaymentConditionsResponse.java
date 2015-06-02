@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://integration.shelp.de/}returnCodeResponse">
  *       &lt;sequence>
- *         &lt;element name="conditions" type="{http://integration.shelp.de/}paymentCondition" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="conditions" type="{http://integration.shelp.de/}paymentConditionTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -37,7 +37,7 @@ public class PaymentConditionsResponse
 {
 
     @XmlElement(nillable = true)
-    protected List<PaymentCondition> conditions;
+    protected List<PaymentConditionTO> conditions;
 
     /**
      * Gets the value of the conditions property.
@@ -57,13 +57,13 @@ public class PaymentConditionsResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PaymentCondition }
+     * {@link PaymentConditionTO }
      * 
      * 
      */
-    public List<PaymentCondition> getConditions() {
+    public List<PaymentConditionTO> getConditions() {
         if (conditions == null) {
-            conditions = new ArrayList<PaymentCondition>();
+            conditions = new ArrayList<PaymentConditionTO>();
         }
         return this.conditions;
     }

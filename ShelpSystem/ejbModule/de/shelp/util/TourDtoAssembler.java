@@ -17,16 +17,19 @@ public class TourDtoAssembler {
     @EJB
     private UserDtoAssembler dtoAssembler;
 
-    public Tour makeDAO(TourTO tourTO) {
-	Tour dao = new Tour();
-	dao.setApprovalStatus(tourTO.getApprovalStatus());
-	dao.setLocation(makeDAO(tourTO.getLocation()));
-	dao.setCapacity(tourTO.getCapacity());
-	dao.setPaymentConditions(tourTO.getPaymentConditions());
-	dao.setDeliveryConditions(tourTO.getDeliveryConditions());
-	dao.setTime(tourTO.getTime());
-	return dao;
-    }
+    @EJB
+    private StateDtoAssembler stateDtoAssembler;
+
+    // public Tour makeDAO(TourTO tourTO) {
+    // Tour dao = new Tour();
+    // dao.setApprovalStatus(tourTO.getApprovalStatus());
+    // dao.setLocation(makeDAO(tourTO.getLocation()));
+    // dao.setCapacity(tourTO.getCapacity());
+    // dao.setPaymentConditions(tourTO.getPaymentConditions());
+    // dao.setDeliveryConditions(tourTO.getDeliveryConditions());
+    // dao.setTime(tourTO.getTime());
+    // return dao;
+    // }
 
     public Location makeDAO(LocationTO locationTO) {
 	Location dao = new Location();
@@ -38,11 +41,11 @@ public class TourDtoAssembler {
 
     public TourTO makeDTO(Tour tour) {
 	TourTO dto = new TourTO();
-	dto.setApprovalStatus(tour.getApprovalStatus());
+	dto.setApprovalStatus(stateDtoAssembler.makeDTO(tour.getApprovalStatus()));
 	dto.setLocation(makeDTO(tour.getLocation()));
-	dto.setCapacity(tour.getCapacity());
-	dto.setPaymentConditions(tour.getPaymentConditions());
-	dto.setDeliveryConditions(tour.getDeliveryConditions());
+	dto.setCapacity(stateDtoAssembler.makeDTO(tour.getCapacity()));
+	dto.setPaymentConditions(stateDtoAssembler.makeDTO(tour.getPaymentConditions()));
+	dto.setDeliveryConditions(stateDtoAssembler.makeDTO(tour.getDeliveryConditions()));
 	dto.setTime(tour.getTime());
 	dto.setId(tour.getId());
 	dto.setOwner(dtoAssembler.makeDTO(tour.getOwner()));

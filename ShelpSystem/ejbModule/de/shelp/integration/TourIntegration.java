@@ -16,16 +16,15 @@ import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.request.RequestTO;
 import de.shelp.dto.request.RequestsResponse;
-import de.shelp.dto.state.LocationTO;
 import de.shelp.dto.tour.TourResponse;
 import de.shelp.dto.tour.TourTO;
 import de.shelp.dto.tour.ToursResponse;
+import de.shelp.entities.ApprovalStatus;
 import de.shelp.entities.Location;
 import de.shelp.entities.Request;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.Tour;
 import de.shelp.entities.User;
-import de.shelp.enums.ApprovalStatus;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.PermissionDeniedException;
 import de.shelp.exception.ShelpException;
@@ -39,7 +38,8 @@ import de.shelp.util.TourDtoAssembler;
 @Stateless
 public class TourIntegration {
 
-    private static final Logger LOGGER = Logger.getLogger(TourIntegration.class);
+    private static final Logger LOGGER = Logger
+	    .getLogger(TourIntegration.class);
 
     /**
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
@@ -67,20 +67,33 @@ public class TourIntegration {
     @EJB
     private RequestDtoAssembler requestDtoAssembler;
 
-    public ReturnCodeResponse createTour(TourTO tourTO, int sessionId) {
+    public ReturnCodeResponse createTour(int approvalStatusId, long locationId,
+	    int capacityId, int paymentConditionId, int deliveryConditionId,
+	    Calendar time, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
-	    if (!tourTO.isValid()) {
+	    Tour tour = new Tour();
+	    tour.setApprovalStatus(tourDao.getApprovalStatus(approvalStatusId));
+	    tour.setLocation(tourDao.getLocation(locationId));
+	    tour.setCapacity(tourDao.getCapacity(capacityId));
+	    tour.setPaymentConditions(tourDao
+		    .getPaymentCondition(paymentConditionId));
+	    tour.setDeliveryConditions(tourDao
+		    .getDeliveryCondition(deliveryConditionId));
+	    tour.setTime(time);
+
+	    if (!tour.isValid()) {
 		LOGGER.warn("Es sind nicht alle Felder der Fahrt gefüllt.");
-		throw new TourNotValidException(ReturnCode.ERROR, "Es sind nicht alle Felder der Fahrt gefüllt.");
+		throw new TourNotValidException(ReturnCode.ERROR,
+			"Es sind nicht alle Felder der Fahrt gefüllt.");
 	    }
 
 	    ShelpSession session = userDao.getSession(sessionId);
 
-	    Tour tour = tourDtoAssembler.makeDAO(tourTO);
 	    tour = tourDao.createTour(tour, session.getUser());
 
-	    LOGGER.info("Fahrt wurde erstellt " + tour.getId() + " nach " + tour.getLocation().getDescription());
+	    LOGGER.info("Fahrt wurde erstellt " + tour.getId() + " nach "
+		    + tour.getLocation().getDescription());
 	} catch (ShelpException ex) {
 	    response.setReturnCode(ex.getErrorCode());
 	    response.setMessage(ex.getMessage());
@@ -89,19 +102,25 @@ public class TourIntegration {
 	return response;
     }
 
-    public ToursResponse searchTour(ApprovalStatus approvalStatus, LocationTO locationTO, Calendar startTime, Calendar endTime, boolean directSearch, int sessionId) {
+    public ToursResponse searchTour(int approvalStatusId, long locationId,
+	    Calendar startTime, Calendar endTime, boolean directSearch,
+	    int sessionId) {
 	ToursResponse response = new ToursResponse();
 
-	Location location = tourDtoAssembler.makeDAO(locationTO);
+	Location location = tourDao.getLocation(locationId);
 	User currentUser = userDao.getSession(sessionId).getUser();
 
 	List<Tour> tours = null;
 	if (directSearch) {
 	    LOGGER.info("Sucht nach Fahrten zu " + location.getDescription());
-	    tours = tourDao.search(approvalStatus, location, startTime, endTime, currentUser);
+	    tours = tourDao.search(tourDao.getApprovalStatus(approvalStatusId),
+		    location, startTime, endTime, currentUser);
 	} else {
-	    LOGGER.info("Sucht nach Fahrten in der Nähe von " + location.getDescription());
-	    tours = tourDao.searchNear(approvalStatus, location, startTime, endTime, currentUser);
+	    LOGGER.info("Sucht nach Fahrten in der Nähe von "
+		    + location.getDescription());
+	    tours = tourDao.searchNear(
+		    tourDao.getApprovalStatus(approvalStatusId), location,
+		    startTime, endTime, currentUser);
 	}
 	LOGGER.info(tours.size() + " Fahrt(en) gefunden");
 
@@ -119,7 +138,8 @@ public class TourIntegration {
 	TourResponse response = new TourResponse();
 
 	try {
-	    response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(tourId, sessionId)));
+	    response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(
+		    tourId, sessionId)));
 	} catch (TourNotExistException | PermissionDeniedException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
@@ -128,19 +148,23 @@ public class TourIntegration {
 	return response;
     }
 
-    public ReturnCodeResponse deleteTour(int tourId, int sessionId) {
+    public ReturnCodeResponse deleteTour(long tourId, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 
 	try {
 	    Tour tour = tourDao.getTour(tourId);
 	    if (tour == null) {
 		LOGGER.warn("Fahrt existiert nicht: " + tourId);
-		throw new TourNotExistException("Fahrt existiert nicht: " + tourId);
+		throw new TourNotExistException("Fahrt existiert nicht: "
+			+ tourId);
 	    }
 	    ShelpSession session = userDao.getSession(sessionId);
 	    if (!tour.getOwner().isFriend(session.getUser())) {
-		LOGGER.warn("Zugriff verweigert! " + session.getUser() + " ist nicht der Besitzer der Fahrt!");
-		throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser() + " ist nicht der Besitzer der Fahrt!");
+		LOGGER.warn("Zugriff verweigert! " + session.getUser()
+			+ " ist nicht der Besitzer der Fahrt!");
+		throw new PermissionDeniedException("Zugriff verweigert! "
+			+ session.getUser()
+			+ " ist nicht der Besitzer der Fahrt!");
 	    }
 
 	    tourDao.cancleTour(tour);
@@ -195,16 +219,21 @@ public class TourIntegration {
 	return response;
     }
 
-    private Tour getTourIntern(long tourId, int sessionId) throws TourNotExistException, PermissionDeniedException {
+    private Tour getTourIntern(long tourId, int sessionId)
+	    throws TourNotExistException, PermissionDeniedException {
 	Tour tour = tourDao.getTour(tourId);
 	if (tour == null) {
 	    LOGGER.warn("Fahrt existiert nicht: " + tourId);
 	    throw new TourNotExistException("Fahrt existiert nicht: " + tourId);
 	}
 	ShelpSession session = userDao.getSession(sessionId);
-	if (tour.getApprovalStatus().equals(ApprovalStatus.FRIENDS_ONLY) && !tour.getOwner().isFriend(session.getUser())) {
-	    LOGGER.warn("Zugriff verweigert! " + session.getUser() + " ist kein Freund von " + tour.getOwner());
-	    throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser() + " ist kein Freund von " + tour.getOwner());
+	if (tour.getApprovalStatus().equals(new ApprovalStatus("Nur Freunde"))
+		&& !tour.getOwner().isFriend(session.getUser())) {
+	    LOGGER.warn("Zugriff verweigert! " + session.getUser()
+		    + " ist kein Freund von " + tour.getOwner());
+	    throw new PermissionDeniedException("Zugriff verweigert! "
+		    + session.getUser() + " ist kein Freund von "
+		    + tour.getOwner());
 	}
 	return tour;
     }

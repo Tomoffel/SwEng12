@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://integration.shelp.de/}returnCodeResponse">
  *       &lt;sequence>
- *         &lt;element name="capacities" type="{http://integration.shelp.de/}capacity" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="capacities" type="{http://integration.shelp.de/}capacityTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -37,7 +37,7 @@ public class CapacitiesResponse
 {
 
     @XmlElement(nillable = true)
-    protected List<Capacity> capacities;
+    protected List<CapacityTO> capacities;
 
     /**
      * Gets the value of the capacities property.
@@ -57,13 +57,13 @@ public class CapacitiesResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Capacity }
+     * {@link CapacityTO }
      * 
      * 
      */
-    public List<Capacity> getCapacities() {
+    public List<CapacityTO> getCapacities() {
         if (capacities == null) {
-            capacities = new ArrayList<Capacity>();
+            capacities = new ArrayList<CapacityTO>();
         }
         return this.capacities;
     }

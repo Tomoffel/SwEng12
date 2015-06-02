@@ -13,12 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-import de.shelp.enums.ApprovalStatus;
-import de.shelp.enums.Capacity;
-import de.shelp.enums.DeliveryCondition;
-import de.shelp.enums.PaymentCondition;
 import de.shelp.enums.TourStatus;
 
 @Entity
@@ -28,18 +23,22 @@ public class Tour {
     @GeneratedValue
     private long id;
 
-    @Enumerated(EnumType.ORDINAL)
+    @ManyToOne
+    @JoinColumn(name = "approval_status_id")
     private ApprovalStatus approvalStatus;
-
-    @Enumerated(EnumType.ORDINAL)
+    
+    @ManyToOne
+    @JoinColumn(name = "capacity_id")
     private Capacity capacity;
-
-    @Enumerated(EnumType.ORDINAL)
+    
+    @ManyToOne
+    @JoinColumn(name = "payment_condition_id")
     private PaymentCondition paymentConditions;
-
-    @Enumerated(EnumType.ORDINAL)
+    
+    @ManyToOne
+    @JoinColumn(name = "devlivery_condition_id")
     private DeliveryCondition deliveryConditions;
-
+    
     @Enumerated(EnumType.ORDINAL)
     private TourStatus status;
 
@@ -50,7 +49,8 @@ public class Tour {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tour")
     private List<Request> request;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "location_id")
     private Location location;
 
     private Calendar updatedOn;
@@ -147,6 +147,10 @@ public class Tour {
     @Override
     public String toString() {
         return "Fahrt: " + id + " zu " + location + " von " + owner ;
+    }
+    
+    public boolean isValid() {
+	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null;
     }
     
 }

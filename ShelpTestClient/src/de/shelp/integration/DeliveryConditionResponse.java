@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;extension base="{http://integration.shelp.de/}returnCodeResponse">
  *       &lt;sequence>
- *         &lt;element name="conditions" type="{http://integration.shelp.de/}deliveryCondition" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="conditions" type="{http://integration.shelp.de/}deliveryConditionTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/extension>
  *   &lt;/complexContent>
@@ -37,7 +37,7 @@ public class DeliveryConditionResponse
 {
 
     @XmlElement(nillable = true)
-    protected List<DeliveryCondition> conditions;
+    protected List<DeliveryConditionTO> conditions;
 
     /**
      * Gets the value of the conditions property.
@@ -57,13 +57,13 @@ public class DeliveryConditionResponse
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DeliveryCondition }
+     * {@link DeliveryConditionTO }
      * 
      * 
      */
-    public List<DeliveryCondition> getConditions() {
+    public List<DeliveryConditionTO> getConditions() {
         if (conditions == null) {
-            conditions = new ArrayList<DeliveryCondition>();
+            conditions = new ArrayList<DeliveryConditionTO>();
         }
         return this.conditions;
     }

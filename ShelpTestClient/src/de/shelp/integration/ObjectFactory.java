@@ -173,11 +173,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ApprovalStatusTO }
+     * 
+     */
+    public ApprovalStatusTO createApprovalStatusTO() {
+        return new ApprovalStatusTO();
+    }
+
+    /**
+     * Create an instance of {@link DeliveryConditionTO }
+     * 
+     */
+    public DeliveryConditionTO createDeliveryConditionTO() {
+        return new DeliveryConditionTO();
+    }
+
+    /**
      * Create an instance of {@link ToursResponse }
      * 
      */
     public ToursResponse createToursResponse() {
         return new ToursResponse();
+    }
+
+    /**
+     * Create an instance of {@link PaymentConditionTO }
+     * 
+     */
+    public PaymentConditionTO createPaymentConditionTO() {
+        return new PaymentConditionTO();
     }
 
     /**
@@ -197,6 +221,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RequestsResponse }
+     * 
+     */
+    public RequestsResponse createRequestsResponse() {
+        return new RequestsResponse();
+    }
+
+    /**
      * Create an instance of {@link RequestTO }
      * 
      */
@@ -205,11 +237,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RequestsResponse }
+     * Create an instance of {@link CapacityTO }
      * 
      */
-    public RequestsResponse createRequestsResponse() {
-        return new RequestsResponse();
+    public CapacityTO createCapacityTO() {
+        return new CapacityTO();
     }
 
     /**

@@ -13,12 +13,20 @@ import org.jboss.ws.api.annotation.WebContext;
 import de.shelp.dao.local.ShelpStateDAOLocal;
 import de.shelp.dto.state.AllListResponse;
 import de.shelp.dto.state.ApprovalStatusResponse;
+import de.shelp.dto.state.ApprovalStatusTO;
 import de.shelp.dto.state.CapacitiesResponse;
+import de.shelp.dto.state.CapacityTO;
 import de.shelp.dto.state.DeliveryConditionResponse;
+import de.shelp.dto.state.DeliveryConditionTO;
 import de.shelp.dto.state.LocationResponse;
 import de.shelp.dto.state.LocationTO;
+import de.shelp.dto.state.PaymentConditionTO;
 import de.shelp.dto.state.PaymentConditionsResponse;
+import de.shelp.entities.ApprovalStatus;
+import de.shelp.entities.Capacity;
+import de.shelp.entities.DeliveryCondition;
 import de.shelp.entities.Location;
+import de.shelp.entities.PaymentCondition;
 import de.shelp.util.StateDtoAssembler;
 
 @WebService
@@ -26,7 +34,8 @@ import de.shelp.util.StateDtoAssembler;
 @Stateless
 public class StateIntegration {
 
-    private static final Logger LOGGER = Logger.getLogger(StateIntegration.class);
+    private static final Logger LOGGER = Logger
+	    .getLogger(StateIntegration.class);
 
     /**
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
@@ -42,8 +51,10 @@ public class StateIntegration {
     private StateDtoAssembler dtoAssembler;
 
     public ApprovalStatusResponse getApprovalStatus() {
+	ApprovalStatusResponse response = new ApprovalStatusResponse();
 	LOGGER.info("Get approval status");
-	return new ApprovalStatusResponse();
+	response.setStates(getAllApprovalStatesTO());
+	return response;
     }
 
     public LocationResponse getLocations() {
@@ -55,18 +66,57 @@ public class StateIntegration {
     }
 
     public CapacitiesResponse getCapacities() {
+	CapacitiesResponse response = new CapacitiesResponse();
 	LOGGER.info("Get capacities");
-	return new CapacitiesResponse();
+	response.setCapacities(getAllCapacitiesTO());
+	return response;
+    }
+
+    private List<CapacityTO> getAllCapacitiesTO() {
+	List<Capacity> capacities = dao.getCapacities();
+
+	List<CapacityTO> capacitiesTO = new ArrayList<CapacityTO>();
+	for (Capacity capacity : capacities) {
+	    capacitiesTO.add(dtoAssembler.makeDTO(capacity));
+	}
+
+	return capacitiesTO;
     }
 
     public PaymentConditionsResponse getPaymentConditions() {
+	PaymentConditionsResponse response = new PaymentConditionsResponse();
 	LOGGER.info("Get payment conditions");
-	return new PaymentConditionsResponse();
+	response.setConditions(getAllPaymentConditionsTO());
+	return response;
+    }
+
+    private List<PaymentConditionTO> getAllPaymentConditionsTO() {
+	List<PaymentCondition> conditions = dao.getPaymentConditions();
+
+	List<PaymentConditionTO> conditionsTO = new ArrayList<PaymentConditionTO>();
+	for (PaymentCondition condition : conditions) {
+	    conditionsTO.add(dtoAssembler.makeDTO(condition));
+	}
+
+	return conditionsTO;
     }
 
     public DeliveryConditionResponse getDeliveryConditions() {
+	DeliveryConditionResponse response = new DeliveryConditionResponse();
 	LOGGER.info("Get delivery conditions");
-	return new DeliveryConditionResponse();
+	response.setConditions(getAllDeliveryConditionsTO());
+	return response;
+    }
+
+    private List<DeliveryConditionTO> getAllDeliveryConditionsTO() {
+	List<DeliveryCondition> conditions = dao.getDeliveryConditions();
+
+	List<DeliveryConditionTO> conditionsTO = new ArrayList<DeliveryConditionTO>();
+	for (DeliveryCondition condition : conditions) {
+	    conditionsTO.add(dtoAssembler.makeDTO(condition));
+	}
+
+	return conditionsTO;
     }
 
     public AllListResponse getAllLists() {
@@ -74,6 +124,10 @@ public class StateIntegration {
 
 	AllListResponse response = new AllListResponse();
 	response.setLocations(getAllLocationsTO());
+	response.setStates(getAllApprovalStatesTO());
+	response.setCapacities(getAllCapacitiesTO());
+	response.setDeliveryConditions(getAllDeliveryConditionsTO());
+	response.setPaymentConditions(getAllPaymentConditionsTO());
 
 	return response;
     }
@@ -87,5 +141,16 @@ public class StateIntegration {
 	}
 
 	return locationsTO;
+    }
+
+    private List<ApprovalStatusTO> getAllApprovalStatesTO() {
+	List<ApprovalStatus> approvalStates = dao.getApprovalStates();
+
+	List<ApprovalStatusTO> approvalStatesTO = new ArrayList<ApprovalStatusTO>();
+	for (ApprovalStatus approvalStatus : approvalStates) {
+	    approvalStatesTO.add(dtoAssembler.makeDTO(approvalStatus));
+	}
+
+	return approvalStatesTO;
     }
 }

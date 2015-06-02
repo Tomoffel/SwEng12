@@ -4,22 +4,22 @@ import java.util.Calendar;
 import java.util.List;
 
 import de.shelp.dto.request.RequestTO;
+import de.shelp.dto.state.ApprovalStatusTO;
+import de.shelp.dto.state.CapacityTO;
+import de.shelp.dto.state.DeliveryConditionTO;
 import de.shelp.dto.state.LocationTO;
+import de.shelp.dto.state.PaymentConditionTO;
 import de.shelp.dto.user.UserTO;
-import de.shelp.enums.ApprovalStatus;
-import de.shelp.enums.Capacity;
-import de.shelp.enums.DeliveryCondition;
-import de.shelp.enums.PaymentCondition;
 import de.shelp.enums.TourStatus;
 
 public class TourTO {
 
     private long id;
-    private ApprovalStatus approvalStatus;
+    private ApprovalStatusTO approvalStatus;
     private LocationTO location;
-    private Capacity capacity;
-    private PaymentCondition paymentConditions;
-    private DeliveryCondition deliveryConditions;
+    private CapacityTO capacity;
+    private PaymentConditionTO paymentConditions;
+    private DeliveryConditionTO deliveryConditions;
     private Calendar time;
     private List<RequestTO> request;
     private UserTO owner;
@@ -34,11 +34,11 @@ public class TourTO {
 	this.id = id;
     }
 
-    public ApprovalStatus getApprovalStatus() {
+    public ApprovalStatusTO getApprovalStatus() {
 	return approvalStatus;
     }
 
-    public void setApprovalStatus(ApprovalStatus approvalStatus) {
+    public void setApprovalStatus(ApprovalStatusTO approvalStatus) {
 	this.approvalStatus = approvalStatus;
     }
 
@@ -50,27 +50,27 @@ public class TourTO {
 	this.location = location;
     }
 
-    public Capacity getCapacity() {
+    public CapacityTO getCapacity() {
 	return capacity;
     }
 
-    public void setCapacity(Capacity capacity) {
+    public void setCapacity(CapacityTO capacity) {
 	this.capacity = capacity;
     }
 
-    public PaymentCondition getPaymentConditions() {
+    public PaymentConditionTO getPaymentConditions() {
 	return paymentConditions;
     }
 
-    public void setPaymentConditions(PaymentCondition paymentConditions) {
+    public void setPaymentConditions(PaymentConditionTO paymentConditions) {
 	this.paymentConditions = paymentConditions;
     }
 
-    public DeliveryCondition getDeliveryConditions() {
+    public DeliveryConditionTO getDeliveryConditions() {
 	return deliveryConditions;
     }
 
-    public void setDeliveryConditions(DeliveryCondition deliveryConditions) {
+    public void setDeliveryConditions(DeliveryConditionTO deliveryConditions) {
 	this.deliveryConditions = deliveryConditions;
     }
 

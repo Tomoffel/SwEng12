@@ -3,10 +3,13 @@ package de.shelp.dao.local;
 import java.util.Calendar;
 import java.util.List;
 
+import de.shelp.entities.ApprovalStatus;
+import de.shelp.entities.Capacity;
+import de.shelp.entities.DeliveryCondition;
 import de.shelp.entities.Location;
+import de.shelp.entities.PaymentCondition;
 import de.shelp.entities.Tour;
 import de.shelp.entities.User;
-import de.shelp.enums.ApprovalStatus;
 
 public interface ShelpTourDAOLocal {
 
@@ -19,5 +22,15 @@ public interface ShelpTourDAOLocal {
     public Tour getTour(long tourId);
 
     public void cancleTour(Tour tour);
+
+    public Location getLocation(long locationId);
+
+    public ApprovalStatus getApprovalStatus(int approvalStatusId);
+
+    public Capacity getCapacity(int capacityId);
+
+    public PaymentCondition getPaymentCondition(int paymentConditionId);
+
+    public DeliveryCondition getDeliveryCondition(int deliveryConditionId);
 
 }

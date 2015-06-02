@@ -67,6 +67,56 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>48153</env-entry-value>
 			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/approvalStatusAll</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Alle</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/approvalStatusFriend</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Nur Freunde</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/smallTrunk</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Kleiner Kofferraum</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/middleTrunk</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Mittlerer Kofferraum</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/hugeTrunk</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Großer Kofferraum</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/bring</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Bringen</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/pickup</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Abholen</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/cashInAdvance</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Vorkasse</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/cash</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Barzahlung</env-entry-value>
+			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/paypal</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>PayPal</env-entry-value>
+			</env-entry>
 		</session>
 	</enterprise-beans>
 </ejb-jar>
