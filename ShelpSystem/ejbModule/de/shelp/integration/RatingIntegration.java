@@ -103,8 +103,11 @@ public class RatingIntegration {
 		throw new ShelpException(ReturnCode.ERROR,
 			"Man darf sich nicht selbst bewerten " + session.getUser());
 	    }
-
-	    // TODO: Check Range of Ratingvalue (int or float)
+	    if(rating < 1 && rating > 5) {
+		LOGGER.info("Ungültiges Rating " + rating);
+		throw new ShelpException(ReturnCode.ERROR,
+			"Ungültiges Rating " + rating);
+	    }
 
 	    Rating newRating = new Rating();
 	    newRating.setTargetUser(targetUser);
@@ -114,6 +117,8 @@ public class RatingIntegration {
 
 	    daoRating.createRating(newRating);
 
+	    LOGGER.info("Benutzer " + session.getUser() + " hat " + targetUser + " mit " + rating + " Sternen bewertet.");
+	    
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());

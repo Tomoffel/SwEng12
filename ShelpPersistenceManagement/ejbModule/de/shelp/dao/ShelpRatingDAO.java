@@ -15,8 +15,7 @@ public class ShelpRatingDAO implements ShelpRatingDAOLocal {
 
 	@Override
 	public void createRating(Rating newRating) {
-		em.persist(newRating);
-
+	    em.persist(newRating);
 	}
 
 }
