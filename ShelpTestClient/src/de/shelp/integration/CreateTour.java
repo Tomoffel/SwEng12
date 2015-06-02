@@ -3,9 +3,7 @@ package de.shelp.integration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -23,7 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="arg6" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -50,8 +48,7 @@ public class CreateTour {
     protected int arg2;
     protected int arg3;
     protected int arg4;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar arg5;
+    protected long arg5;
     protected int arg6;
 
     /**
@@ -137,24 +134,16 @@ public class CreateTour {
     /**
      * Ruft den Wert der arg5-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public XMLGregorianCalendar getArg5() {
+    public long getArg5() {
         return arg5;
     }
 
     /**
      * Legt den Wert der arg5-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public void setArg5(XMLGregorianCalendar value) {
+    public void setArg5(long value) {
         this.arg5 = value;
     }
 

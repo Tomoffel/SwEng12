@@ -1,6 +1,7 @@
 package de.shelp.entities;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -53,8 +54,8 @@ public class Tour {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    private Calendar updatedOn;
-    private Calendar time;
+    private Date updatedOn;
+    private Date time;
 
     public long getId() {
 	return id;
@@ -104,11 +105,11 @@ public class Tour {
 	this.deliveryConditions = deliveryConditions;
     }
 
-    public Calendar getTime() {
+    public Date getTime() {
 	return time;
     }
 
-    public void setTime(Calendar time) {
+    public void setTime(Date time) {
 	this.time = time;
     }
 
@@ -120,11 +121,11 @@ public class Tour {
 	this.owner = owner;
     }
 
-    public Calendar getUpdatedOn() {
+    public Date getUpdatedOn() {
 	return updatedOn;
     }
 
-    public void setUpdatedOn(Calendar updatedOn) {
+    public void setUpdatedOn(Date updatedOn) {
 	this.updatedOn = updatedOn;
     }
 

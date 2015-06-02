@@ -2,11 +2,12 @@
 package de.shelp.integration;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -66,10 +67,8 @@ public class TourTO {
     @XmlElement(nillable = true)
     protected List<RequestTO> request;
     protected TourStatus status;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar time;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar updatedOn;
+    protected Date time;
+    protected Date updatedOn;
 
     /**
      * Ruft den Wert der approvalStatus-Eigenschaft ab.
@@ -292,7 +291,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getTime() {
+    public Date getTime() {
         return time;
     }
 
@@ -304,7 +303,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setTime(XMLGregorianCalendar value) {
+    public void setTime(Date value) {
         this.time = value;
     }
 
@@ -316,7 +315,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public XMLGregorianCalendar getUpdatedOn() {
+    public Date getUpdatedOn() {
         return updatedOn;
     }
 
@@ -328,7 +327,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setUpdatedOn(XMLGregorianCalendar value) {
+    public void setUpdatedOn(Date value) {
         this.updatedOn = value;
     }
 

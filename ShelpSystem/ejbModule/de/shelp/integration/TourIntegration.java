@@ -1,7 +1,7 @@
 package de.shelp.integration;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -69,7 +69,7 @@ public class TourIntegration {
 
     public ReturnCodeResponse createTour(int approvalStatusId, long locationId,
 	    int capacityId, int paymentConditionId, int deliveryConditionId,
-	    Calendar time, int sessionId) {
+	    long time, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
 	    Tour tour = new Tour();
@@ -80,7 +80,7 @@ public class TourIntegration {
 		    .getPaymentCondition(paymentConditionId));
 	    tour.setDeliveryConditions(tourDao
 		    .getDeliveryCondition(deliveryConditionId));
-	    tour.setTime(time);
+	    tour.setTime(new Date(time));
 
 	    if (!tour.isValid()) {
 		LOGGER.warn("Es sind nicht alle Felder der Fahrt gefüllt.");
@@ -103,7 +103,7 @@ public class TourIntegration {
     }
 
     public ToursResponse searchTour(int approvalStatusId, long locationId,
-	    Calendar startTime, Calendar endTime, boolean directSearch,
+	    long startTime, long endTime, boolean directSearch,
 	    int sessionId) {
 	ToursResponse response = new ToursResponse();
 
@@ -114,13 +114,13 @@ public class TourIntegration {
 	if (directSearch) {
 	    LOGGER.info("Sucht nach Fahrten zu " + location.getDescription());
 	    tours = tourDao.search(tourDao.getApprovalStatus(approvalStatusId),
-		    location, startTime, endTime, currentUser);
+		    location, new Date(startTime), new Date(endTime), currentUser);
 	} else {
 	    LOGGER.info("Sucht nach Fahrten in der Nähe von "
 		    + location.getDescription());
 	    tours = tourDao.searchNear(
 		    tourDao.getApprovalStatus(approvalStatusId), location,
-		    startTime, endTime, currentUser);
+		    new Date(startTime), new Date(endTime), currentUser);
 	}
 	LOGGER.info(tours.size() + " Fahrt(en) gefunden");
 
@@ -176,7 +176,7 @@ public class TourIntegration {
 	return response;
     }
 
-    public ToursResponse getUpdatedTours(int sessionId, Calendar timepoint) {
+    public ToursResponse getUpdatedTours(int sessionId, long timepoint) {
 	ToursResponse response = new ToursResponse();
 
 	ShelpSession session = userDao.getSession(sessionId);
@@ -186,7 +186,7 @@ public class TourIntegration {
 	List<TourTO> resultList = new ArrayList<TourTO>();
 	// check if tour has updated after timepoint
 	for (Tour tour : tours) {
-	    if (tour.getUpdatedOn().after(timepoint)) {
+	    if (tour.getUpdatedOn().after(new Date(timepoint))) {
 		resultList.add(tourDtoAssembler.makeDTO(tour));
 	    }
 	}

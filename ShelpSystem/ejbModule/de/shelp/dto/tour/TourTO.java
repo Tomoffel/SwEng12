@@ -1,6 +1,6 @@
 package de.shelp.dto.tour;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.shelp.dto.request.RequestTO;
@@ -20,10 +20,10 @@ public class TourTO {
     private CapacityTO capacity;
     private PaymentConditionTO paymentConditions;
     private DeliveryConditionTO deliveryConditions;
-    private Calendar time;
+    private Date time;
     private List<RequestTO> request;
     private UserTO owner;
-    private Calendar updatedOn;
+    private Date updatedOn;
     private TourStatus status;
 
     public long getId() {
@@ -74,11 +74,11 @@ public class TourTO {
 	this.deliveryConditions = deliveryConditions;
     }
 
-    public Calendar getTime() {
+    public Date getTime() {
 	return time;
     }
 
-    public void setTime(Calendar time) {
+    public void setTime(Date time) {
 	this.time = time;
     }
 
@@ -90,11 +90,11 @@ public class TourTO {
 	this.owner = owner;
     }
 
-    public Calendar getUpdatedOn() {
+    public Date getUpdatedOn() {
 	return updatedOn;
     }
 
-    public void setUpdatedOn(Calendar updatedOn) {
+    public void setUpdatedOn(Date updatedOn) {
 	this.updatedOn = updatedOn;
     }
 

@@ -1,6 +1,6 @@
 package de.shelp.dao.local;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.shelp.entities.ApprovalStatus;
@@ -15,9 +15,9 @@ public interface ShelpTourDAOLocal {
 
     public Tour createTour(Tour tour, User user);
 
-    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime, User currentUser);
+    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Date startDate, Date endDate, User currentUser);
 
-    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Calendar startTime, Calendar endTime, User currentUser);
+    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Date startTime, Date endTime, User currentUser);
 
     public Tour getTour(long tourId);
 

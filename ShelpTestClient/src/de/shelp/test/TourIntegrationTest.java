@@ -112,7 +112,7 @@ public class TourIntegrationTest {
 	tour1.setCapacity(capacities.get(1));
 	tour1.setPaymentConditions(paymentConditions.get(1));
 	tour1.setDeliveryConditions(deliveryConditions.get(0));
-	tour1.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
+	tour1.setTime(calendarInTwoDays.getTime());
 
 	tour2.setLocation(locations.get(2));
 	tour2.setPaymentConditions(paymentConditions.get(0));
@@ -122,21 +122,21 @@ public class TourIntegrationTest {
 	tour3.setCapacity(capacities.get(2));
 	tour3.setPaymentConditions(paymentConditions.get(2));
 	tour3.setDeliveryConditions(deliveryConditions.get(1));
-	tour3.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
+	tour3.setTime(calendarInTwoDays.getTime());
 
 	tour4.setApprovalStatus(states.get(0));
 	tour4.setLocation(locations.get(5));
 	tour4.setCapacity(capacities.get(2));
 	tour4.setPaymentConditions(paymentConditions.get(2));
 	tour4.setDeliveryConditions(deliveryConditions.get(1));
-	tour4.setTime(calendarToXMLGregorianCalendar(calendarInTwoDays));
+	tour4.setTime(calendarInTwoDays.getTime());
 
 	tour5.setApprovalStatus(states.get(0));
 	tour5.setLocation(locations.get(2));
 	tour5.setCapacity(capacities.get(2));
 	tour5.setPaymentConditions(paymentConditions.get(2));
 	tour5.setDeliveryConditions(deliveryConditions.get(1));
-	tour5.setTime(calendarToXMLGregorianCalendar(calendarInFourDays));
+	tour5.setTime(calendarInFourDays.getTime());
 
 	UserResponse loginResponse = userIntegrationPort.regUser(
 		"thomas@sennekamp.de", "test123");
@@ -164,7 +164,7 @@ public class TourIntegrationTest {
 		.getApprovalStatus().getId(), tour1.getLocation().getId(),
 		tour1.getCapacity().getId(), tour1.getPaymentConditions()
 			.getId(), tour1.getDeliveryConditions().getId(), tour1
-			.getTime(), session1.getId());
+			.getTime().getTime(), session1.getId());
 	Assert.assertEquals(ReturnCode.OK, createTour.getReturnCode());
     }
 
@@ -174,8 +174,8 @@ public class TourIntegrationTest {
      */
     @Test
     public void bTestCreateTourNotFull() {
-	ReturnCodeResponse createTour = remoteSystem.createTour(100, 100,
-		5, 105, 200, null, session1.getId());
+	ReturnCodeResponse createTour = remoteSystem.createTour(100, 100, 5,
+		105, 200, 0L, session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createTour.getReturnCode());
     }
 
@@ -185,20 +185,19 @@ public class TourIntegrationTest {
 	remoteSystem.createTour(tour3.getApprovalStatus().getId(), tour3
 		.getLocation().getId(), tour1.getCapacity().getId(), tour3
 		.getPaymentConditions().getId(), tour3.getDeliveryConditions()
-		.getId(), tour3.getTime(), session1.getId());
+		.getId(), tour3.getTime().getTime(), session1.getId());
 	remoteSystem.createTour(tour4.getApprovalStatus().getId(), tour4
 		.getLocation().getId(), tour1.getCapacity().getId(), tour4
 		.getPaymentConditions().getId(), tour4.getDeliveryConditions()
-		.getId(), tour4.getTime(), session2.getId());
+		.getId(), tour4.getTime().getTime(), session2.getId());
 	remoteSystem.createTour(tour5.getApprovalStatus().getId(), tour5
 		.getLocation().getId(), tour1.getCapacity().getId(), tour5
 		.getPaymentConditions().getId(), tour5.getDeliveryConditions()
-		.getId(), tour5.getTime(), session2.getId());
+		.getId(), tour5.getTime().getTime(), session2.getId());
 
 	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(),
-		calendarToXMLGregorianCalendar(calendarInOneDay),
-		calendarToXMLGregorianCalendar(calendarInThreeDays), true,
+		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
+		.getTime(), calendarInThreeDays.getTime().getTime(), true,
 		session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 1);
@@ -209,9 +208,8 @@ public class TourIntegrationTest {
     @Test
     public void dTestSearchToursAllNear() {
 	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(),
-		calendarToXMLGregorianCalendar(calendarInOneDay),
-		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
+		.getTime(), calendarInThreeDays.getTime().getTime(), false,
 		session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 2);
@@ -224,9 +222,8 @@ public class TourIntegrationTest {
     @Test
     public void eTestGetTour() {
 	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(),
-		calendarToXMLGregorianCalendar(calendarInOneDay),
-		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
+		.getTime(), calendarInThreeDays.getTime().getTime(), false,
 		session1.getId());
 
 	TourResponse tour = remoteSystem.getTour(searchTour.getTours().get(0)
@@ -246,9 +243,8 @@ public class TourIntegrationTest {
     @Test
     public void gTestGetTourPermissionDenied() {
 	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(),
-		calendarToXMLGregorianCalendar(calendarInOneDay),
-		calendarToXMLGregorianCalendar(calendarInThreeDays), false,
+		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
+		.getTime(), calendarInThreeDays.getTime().getTime(), false,
 		session1.getId());
 
 	// TourResponse tour =
@@ -259,30 +255,5 @@ public class TourIntegrationTest {
     }
 
     // TODO test with request and update
-
-    private static XMLGregorianCalendar calendarToXMLGregorianCalendar(
-	    Calendar calendar) {
-	try {
-	    DatatypeFactory dtf = DatatypeFactory.newInstance();
-	    XMLGregorianCalendar xgc = dtf.newXMLGregorianCalendar();
-	    xgc.setYear(calendar.get(Calendar.YEAR));
-	    xgc.setMonth(calendar.get(Calendar.MONTH) + 1);
-	    xgc.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-	    xgc.setHour(calendar.get(Calendar.HOUR_OF_DAY));
-	    xgc.setMinute(calendar.get(Calendar.MINUTE));
-	    xgc.setSecond(calendar.get(Calendar.SECOND));
-	    xgc.setMillisecond(calendar.get(Calendar.MILLISECOND));
-
-	    // Calendar ZONE_OFFSET and DST_OFFSET fields are in milliseconds.
-	    int offsetInMinutes = (calendar.get(Calendar.ZONE_OFFSET) + calendar
-		    .get(Calendar.DST_OFFSET)) / (60 * 1000);
-	    xgc.setTimezone(offsetInMinutes);
-	    return xgc;
-	} catch (DatatypeConfigurationException e) {
-	    e.printStackTrace();
-	    return null;
-	}
-
-    }
 
 }
