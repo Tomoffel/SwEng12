@@ -16,6 +16,7 @@ import org.jboss.logging.Logger;
 import de.shelp.entities.ApprovalStatus;
 import de.shelp.entities.Capacity;
 import de.shelp.entities.DeliveryCondition;
+import de.shelp.entities.FriendshipStatus;
 import de.shelp.entities.Location;
 import de.shelp.entities.PaymentCondition;
 
@@ -32,7 +33,7 @@ public class DataBuilder {
     private String location1, plz1, location2, plz2, location3, plz3,
 	    location4, plz4, location5, plz5, location6, plz6,
 	    approvalStatusAll, approvalStatusFriend, smallTrunk, middleTrunk,
-	    hugeTrunk, bring, pickup, cashInAdvance, cash, paypal;
+	    hugeTrunk, bring, pickup, cashInAdvance, cash, paypal, friendshipDeniend,friendshipAsk,friendshipAccepted;
 
     @PostConstruct
     private void init() {
@@ -68,6 +69,9 @@ public class DataBuilder {
 	em.persist(new PaymentCondition(cashInAdvance));
 	em.persist(new PaymentCondition(paypal));
 
+	em.persist(new FriendshipStatus(friendshipAccepted));
+	em.persist(new FriendshipStatus(friendshipAsk));
+	em.persist(new FriendshipStatus(friendshipDeniend));
     }
 
 }

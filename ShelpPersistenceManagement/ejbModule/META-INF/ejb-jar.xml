@@ -117,6 +117,21 @@
 				<env-entry-type>java.lang.String</env-entry-type>
 				<env-entry-value>PayPal</env-entry-value>
 			</env-entry>
+			<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/friendshipAccepted</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Akzeptiert</env-entry-value>
+			</env-entry>
+						<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/friendshipAsk</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Angefragt</env-entry-value>
+			</env-entry>
+						<env-entry>
+				<env-entry-name>de.shelp.dao.DataBuilder/friendshipDeniend</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>Abgelehnt</env-entry-value>
+			</env-entry>
 		</session>
 	</enterprise-beans>
 </ejb-jar>
