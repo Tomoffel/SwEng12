@@ -28,96 +28,102 @@ import de.shelp.util.RatingDtoAssembler;
 @Stateless
 public class RatingIntegration {
 
-	/**
-	 * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-	 * Injection gefüllt.
-	 */
-	@EJB(beanName = "ShelpRatingDAO", beanInterface = ShelpRatingDAOLocal.class)
-	private ShelpRatingDAOLocal daoRating;
+    /**
+     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
+     * Injection gefüllt.
+     */
+    @EJB(beanName = "ShelpRatingDAO", beanInterface = ShelpRatingDAOLocal.class)
+    private ShelpRatingDAOLocal daoRating;
 
-	/**
-	 * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-	 * Injection gefüllt.
-	 */
-	@EJB(beanName = "ShelpUserDAO", beanInterface = ShelpUserDAOLocal.class)
-	private ShelpUserDAOLocal daoUser;
+    /**
+     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
+     * Injection gefüllt.
+     */
+    @EJB(beanName = "ShelpUserDAO", beanInterface = ShelpUserDAOLocal.class)
+    private ShelpUserDAOLocal daoUser;
 
-	/**
-	 * EJB zur Erzeugung von DataTransferObjects
-	 */
-	@EJB
-	private RatingDtoAssembler dtoAssembler;
+    /**
+     * EJB zur Erzeugung von DataTransferObjects
+     */
+    @EJB
+    private RatingDtoAssembler dtoAssembler;
 
-	private static final Logger LOGGER = Logger
-			.getLogger(RatingIntegration.class);
+    private static final Logger LOGGER = Logger
+	    .getLogger(RatingIntegration.class);
 
-	public RatingResponse getRatings(String userName) {
-		RatingResponse response = new RatingResponse();
+    public RatingResponse getRatings(String userName) {
+	RatingResponse response = new RatingResponse();
 
-		User user = daoUser.findUserByName(userName);
-		try {
-			if (user == null) {
-				LOGGER.info("User " + userName + "existiert nicht.");
-				throw new UserNotExistEcxeption(ReturnCode.ERROR, "User "
-						+ userName + "existiert nicht.");
-			}
+	User user = daoUser.findUserByName(userName);
+	try {
+	    if (user == null) {
+		LOGGER.info("User " + userName + "existiert nicht.");
+		throw new UserNotExistEcxeption(ReturnCode.ERROR, "User "
+			+ userName + "existiert nicht.");
+	    }
 
-			
-			List<Rating> ratings = user.getRatings();
+	    List<Rating> ratings = user.getRatings();
 
-			List<RatingTO> ratingsTO = new ArrayList<RatingTO>();
-			for (Rating r : ratings) {
-				ratingsTO.add(dtoAssembler.makeDTO(r));
-			}
+	    List<RatingTO> ratingsTO = new ArrayList<RatingTO>();
+	    for (Rating r : ratings) {
+		ratingsTO.add(dtoAssembler.makeDTO(r));
+	    }
 
-			response.setRatings(ratingsTO);
+	    response.setRatings(ratingsTO);
 
-			LOGGER.info("Es wurden" + ratingsTO.size()
-					+ " Ratings für den Benutzer " + userName + " gefunden.");
-		} catch (ShelpException e) {
-			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
-		}
-		return response;
+	    LOGGER.info("Es wurden" + ratingsTO.size()
+		    + " Ratings für den Benutzer " + userName + " gefunden.");
+	} catch (ShelpException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
+	}
+	return response;
 
+    }
+
+    public ReturnCodeResponse createRating(String targetUserId, int rating,
+	    String notice, int sessionId) {
+	ReturnCodeResponse response = new ReturnCodeResponse();
+
+	ShelpSession session = daoUser.getSession(sessionId);
+	User targetUser = daoUser.findUserByName(targetUserId);
+	try {
+	    if (targetUser == null) {
+		LOGGER.info("TargetUser existiert nicht.");
+		throw new UserNotExistEcxeption(ReturnCode.ERROR,
+			"TargetUser existiert nicht.");
+	    }
+	    if (session == null) {
+		LOGGER.info("Session-Id existiert nicht.");
+		throw new UserNotExistEcxeption(ReturnCode.ERROR,
+			"Session-Id existiert nicht.");
+	    }
+	    if(targetUser.equals(session.getUser())) {
+		LOGGER.info("Man darf sich nicht selbst bewerten " + session.getUser());
+		throw new ShelpException(ReturnCode.ERROR,
+			"Man darf sich nicht selbst bewerten " + session.getUser());
+	    }
+	    if(rating < 1 && rating > 5) {
+		LOGGER.info("Ungültiges Rating " + rating);
+		throw new ShelpException(ReturnCode.ERROR,
+			"Ungültiges Rating " + rating);
+	    }
+
+	    Rating newRating = new Rating();
+	    newRating.setTargetUser(targetUser);
+	    newRating.setSourceUser(session.getUser());
+	    newRating.setRating(rating);
+	    newRating.setNotice(notice);
+
+	    daoRating.createRating(newRating);
+
+	    LOGGER.info("Benutzer " + session.getUser() + " hat " + targetUser + " mit " + rating + " Sternen bewertet.");
+	    
+	} catch (ShelpException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
 	}
 
-	public ReturnCodeResponse createRating(String targetUserId, int rating,
-			String notice, int sessionId) {
-		ReturnCodeResponse response = new ReturnCodeResponse();
-
-		ShelpSession session = daoUser.getSession(sessionId);
-
-		User targetUser = daoUser.findUserByName(targetUserId);
-		try {
-			if (targetUser == null) {
-				LOGGER.info("TargetUser existiert nicht.");
-				throw new UserNotExistEcxeption(ReturnCode.ERROR,
-						"TargetUser existiert nicht.");
-			}
-				if (session == null) {
-					LOGGER.info("Session-Id existiert nicht.");
-					throw new UserNotExistEcxeption(ReturnCode.ERROR,
-							"Session-Id existiert nicht.");
-				}
-			
-
-		
-			// TODO: Check Range of Ratingvalue (int or float)
-
-			Rating newRating = new Rating();
-			newRating.setTargetUser(targetUser);
-			newRating.setSourceUser(session.getUser());
-			newRating.setRating(rating);
-			newRating.setNotice(notice);
-
-			daoRating.createRating(newRating);
-
-		} catch (ShelpException e) {
-			response.setReturnCode(e.getErrorCode());
-			response.setMessage(e.getMessage());
-		}
-
-		return response;
-	}
+	return response;
+    }
 }

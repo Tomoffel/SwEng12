@@ -1,20 +1,13 @@
 package de.shelp.dao;
 
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import de.shelp.dao.local.ShelpRatingDAOLocal;
-import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.entities.Rating;
-import de.shelp.entities.User;
 
+@Stateless
 public class ShelpRatingDAO implements ShelpRatingDAOLocal {
 
 	@PersistenceContext
@@ -22,8 +15,7 @@ public class ShelpRatingDAO implements ShelpRatingDAOLocal {
 
 	@Override
 	public void createRating(Rating newRating) {
-		em.persist(newRating);
-
+	    em.persist(newRating);
 	}
 
 }
