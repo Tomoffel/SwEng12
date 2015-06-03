@@ -3,7 +3,7 @@ package de.shelp.util;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import de.shelp.dto.friend.FriendShipTO;
+import de.shelp.dto.friend.FriendshipTO;
 import de.shelp.dto.friend.FriendshipStatusTO;
 import de.shelp.dto.rating.RatingTO;
 import de.shelp.entities.Friendship;
@@ -18,9 +18,9 @@ public class FriendDtoAssembler {
     @EJB
     private UserDtoAssembler dtoAssembler;
 
-	public FriendShipTO makeDTO(Friendship f) {
+	public FriendshipTO makeDTO(Friendship f) {
 
-		FriendShipTO dto = new FriendShipTO();
+		FriendshipTO dto = new FriendshipTO();
 		dto.setInitiatorUser(dtoAssembler.makeDTO(f.getInitiatorUser()));
 		dto.setRecipientUser(dtoAssembler.makeDTO(f.getRecipientUser()));
 		dto.setId(f.getId());

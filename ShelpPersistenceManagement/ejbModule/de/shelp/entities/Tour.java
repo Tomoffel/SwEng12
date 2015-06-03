@@ -33,11 +33,11 @@ public class Tour {
     
     @ManyToOne
     @JoinColumn(name = "payment_condition_id")
-    private PaymentCondition paymentConditions;
+    private PaymentCondition paymentCondition;
     
     @ManyToOne
     @JoinColumn(name = "devlivery_condition_id")
-    private DeliveryCondition deliveryConditions;
+    private DeliveryCondition deliveryCondition;
     
     @Enumerated(EnumType.ORDINAL)
     private TourStatus status;
@@ -88,20 +88,20 @@ public class Tour {
 	this.capacity = capacity;
     }
 
-    public PaymentCondition getPaymentConditions() {
-	return paymentConditions;
+    public PaymentCondition getPaymentCondition() {
+	return paymentCondition;
     }
 
-    public void setPaymentConditions(PaymentCondition paymentConditions) {
-	this.paymentConditions = paymentConditions;
+    public void setPaymentCondition(PaymentCondition paymentCondition) {
+	this.paymentCondition = paymentCondition;
     }
 
-    public DeliveryCondition getDeliveryConditions() {
-	return deliveryConditions;
+    public DeliveryCondition getDeliveryCondition() {
+	return deliveryCondition;
     }
 
-    public void setDeliveryConditions(DeliveryCondition deliveryConditions) {
-	this.deliveryConditions = deliveryConditions;
+    public void setDeliveryCondition(DeliveryCondition deliveryCondition) {
+	this.deliveryCondition = deliveryCondition;
     }
 
     public Date getTime() {
@@ -150,7 +150,7 @@ public class Tour {
     }
     
     public boolean isValid() {
-	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null;
+	return approvalStatus != null && location != null && capacity != null && paymentCondition != null && deliveryCondition != null && time != null;
     }
     
 }

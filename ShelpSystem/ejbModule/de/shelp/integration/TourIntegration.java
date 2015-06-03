@@ -76,9 +76,9 @@ public class TourIntegration {
 	    tour.setApprovalStatus(tourDao.getApprovalStatus(approvalStatusId));
 	    tour.setLocation(tourDao.getLocation(locationId));
 	    tour.setCapacity(tourDao.getCapacity(capacityId));
-	    tour.setPaymentConditions(tourDao
+	    tour.setPaymentCondition(tourDao
 		    .getPaymentCondition(paymentConditionId));
-	    tour.setDeliveryConditions(tourDao
+	    tour.setDeliveryCondition(tourDao
 		    .getDeliveryCondition(deliveryConditionId));
 	    tour.setTime(new Date(time));
 

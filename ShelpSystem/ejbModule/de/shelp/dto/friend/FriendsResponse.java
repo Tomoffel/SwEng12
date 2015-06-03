@@ -9,13 +9,13 @@ import de.shelp.entities.Friendship;
 public class FriendsResponse extends ReturnCodeResponse {
 
 	private static final long serialVersionUID = 8974472260940989428L;
-	private List<FriendShipTO> friendshipTO;
+	private List<FriendshipTO> friendshipTO;
 
-	public List<FriendShipTO> getFriends() {
+	public List<FriendshipTO> getFriends() {
 		return friendshipTO;
 	}
 
-	public void setFriends(List<FriendShipTO> friendsTO) {
+	public void setFriends(List<FriendshipTO> friendsTO) {
 		this.friendshipTO = friendsTO;
 
 	}

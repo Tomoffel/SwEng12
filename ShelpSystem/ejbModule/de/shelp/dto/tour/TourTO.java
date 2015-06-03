@@ -18,9 +18,9 @@ public class TourTO {
     private ApprovalStatusTO approvalStatus;
     private LocationTO location;
     private CapacityTO capacity;
-    private PaymentConditionTO paymentConditions;
-    private DeliveryConditionTO deliveryConditions;
-    private Date time;
+    private PaymentConditionTO paymentCondition;
+    private DeliveryConditionTO deliveryCondition;
+    private long time;
     private List<RequestTO> request;
     private UserTO owner;
     private Date updatedOn;
@@ -58,27 +58,27 @@ public class TourTO {
 	this.capacity = capacity;
     }
 
-    public PaymentConditionTO getPaymentConditions() {
-	return paymentConditions;
+    public PaymentConditionTO getPaymentCondition() {
+	return paymentCondition;
     }
 
-    public void setPaymentConditions(PaymentConditionTO paymentConditions) {
-	this.paymentConditions = paymentConditions;
+    public void setPaymentCondition(PaymentConditionTO paymentCondition) {
+	this.paymentCondition = paymentCondition;
     }
 
-    public DeliveryConditionTO getDeliveryConditions() {
-	return deliveryConditions;
+    public DeliveryConditionTO getDeliveryCondition() {
+	return deliveryCondition;
     }
 
-    public void setDeliveryConditions(DeliveryConditionTO deliveryConditions) {
-	this.deliveryConditions = deliveryConditions;
+    public void setDeliveryCondition(DeliveryConditionTO deliveryCondition) {
+	this.deliveryCondition = deliveryCondition;
     }
 
-    public Date getTime() {
+    public long getTime() {
 	return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(long time) {
 	this.time = time;
     }
 
@@ -115,7 +115,7 @@ public class TourTO {
     }
 
     public boolean isValid() {
-	return approvalStatus != null && location != null && capacity != null && paymentConditions != null && deliveryConditions != null && time != null;
+	return approvalStatus != null && location != null && capacity != null && paymentCondition != null && deliveryCondition != null;
     }
 
 }

@@ -44,9 +44,9 @@ public class TourDtoAssembler {
 	dto.setApprovalStatus(stateDtoAssembler.makeDTO(tour.getApprovalStatus()));
 	dto.setLocation(makeDTO(tour.getLocation()));
 	dto.setCapacity(stateDtoAssembler.makeDTO(tour.getCapacity()));
-	dto.setPaymentConditions(stateDtoAssembler.makeDTO(tour.getPaymentConditions()));
-	dto.setDeliveryConditions(stateDtoAssembler.makeDTO(tour.getDeliveryConditions()));
-	dto.setTime(tour.getTime());
+	dto.setPaymentCondition(stateDtoAssembler.makeDTO(tour.getPaymentCondition()));
+	dto.setDeliveryCondition(stateDtoAssembler.makeDTO(tour.getDeliveryCondition()));
+	dto.setTime(tour.getTime().getTime());
 	dto.setId(tour.getId());
 	dto.setOwner(dtoAssembler.makeDTO(tour.getOwner()));
 	dto.setStatus(tour.getStatus());
