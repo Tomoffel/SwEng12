@@ -3,22 +3,21 @@ package de.shelp.integration;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für returnCodeResponse complex type.
+ * <p>Java-Klasse für SessionNotExistException complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="returnCodeResponse">
+ * &lt;complexType name="SessionNotExistException">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="errorCode" type="{http://integration.shelp.de/}returnCode" minOccurs="0"/>
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="returnCode" type="{http://integration.shelp.de/}returnCode" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -28,17 +27,38 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "returnCodeResponse", propOrder = {
-    "message",
-    "returnCode"
+@XmlType(name = "SessionNotExistException", propOrder = {
+    "errorCode",
+    "message"
 })
-@XmlSeeAlso({
-    FriendsResponse.class
-})
-public class ReturnCodeResponse {
+public class SessionNotExistException {
 
+    protected ReturnCode errorCode;
     protected String message;
-    protected ReturnCode returnCode;
+
+    /**
+     * Ruft den Wert der errorCode-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ReturnCode }
+     *     
+     */
+    public ReturnCode getErrorCode() {
+        return errorCode;
+    }
+
+    /**
+     * Legt den Wert der errorCode-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ReturnCode }
+     *     
+     */
+    public void setErrorCode(ReturnCode value) {
+        this.errorCode = value;
+    }
 
     /**
      * Ruft den Wert der message-Eigenschaft ab.
@@ -62,30 +82,6 @@ public class ReturnCodeResponse {
      */
     public void setMessage(String value) {
         this.message = value;
-    }
-
-    /**
-     * Ruft den Wert der returnCode-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ReturnCode }
-     *     
-     */
-    public ReturnCode getReturnCode() {
-        return returnCode;
-    }
-
-    /**
-     * Legt den Wert der returnCode-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ReturnCode }
-     *     
-     */
-    public void setReturnCode(ReturnCode value) {
-        this.returnCode = value;
     }
 
 }

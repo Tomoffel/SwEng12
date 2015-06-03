@@ -3,8 +3,12 @@ package de.shelp.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import de.shelp.enums.FriendshipStatus;
 
 @Entity
 public class Friendship {
@@ -19,8 +23,10 @@ public class Friendship {
 
     @ManyToOne
     private User recipientUser;
-
+    
+    @Enumerated(EnumType.ORDINAL)
     private FriendshipStatus status;
+    
     private Date changeOn;
 
     public Friendship() {

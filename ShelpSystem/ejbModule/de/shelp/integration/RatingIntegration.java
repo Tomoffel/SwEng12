@@ -103,7 +103,7 @@ public class RatingIntegration {
 		throw new ShelpException(ReturnCode.ERROR,
 			"Man darf sich nicht selbst bewerten " + session.getUser());
 	    }
-	    if(rating < 1 && rating > 5) {
+	    if(rating < 1 || rating > 5) {
 		LOGGER.info("Ungültiges Rating " + rating);
 		throw new ShelpException(ReturnCode.ERROR,
 			"Ungültiges Rating " + rating);

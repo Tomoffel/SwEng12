@@ -3,13 +3,14 @@ package de.shelp.dto.friend;
 import java.util.Calendar;
 
 import de.shelp.dto.user.UserTO;
+import de.shelp.enums.FriendshipStatus;
 
 public class FriendshipTO {
 
     private long id;
     private UserTO initiatorUser;
     private UserTO recipientUser;
-    private FriendshipStatusTO status;
+    private FriendshipStatus status;
     private Calendar changedOn;
     
     public FriendshipTO() {
@@ -39,11 +40,11 @@ public class FriendshipTO {
 	this.recipientUser = recipientUser;
     }
 
-    public FriendshipStatusTO getStatus() {
+    public FriendshipStatus getStatus() {
 	return status;
     }
 
-    public void setStatus(FriendshipStatusTO status) {
+    public void setStatus(FriendshipStatus status) {
 	this.status = status;
     }
 

@@ -24,10 +24,17 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreateRating_QNAME = new QName("http://integration.shelp.de/", "createRating");
-    private final static QName _GetRatings_QNAME = new QName("http://integration.shelp.de/", "getRatings");
-    private final static QName _CreateRatingResponse_QNAME = new QName("http://integration.shelp.de/", "createRatingResponse");
-    private final static QName _GetRatingsResponse_QNAME = new QName("http://integration.shelp.de/", "getRatingsResponse");
+    private final static QName _AcceptFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "acceptFriendshipResponse");
+    private final static QName _SessionNotExistException_QNAME = new QName("http://integration.shelp.de/", "SessionNotExistException");
+    private final static QName _GetFriendsResponse_QNAME = new QName("http://integration.shelp.de/", "getFriendsResponse");
+    private final static QName _DeniedFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "deniedFriendshipResponse");
+    private final static QName _AddFriend_QNAME = new QName("http://integration.shelp.de/", "addFriend");
+    private final static QName _DeleteFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "deleteFriendshipResponse");
+    private final static QName _AddFriendResponse_QNAME = new QName("http://integration.shelp.de/", "addFriendResponse");
+    private final static QName _GetFriends_QNAME = new QName("http://integration.shelp.de/", "getFriends");
+    private final static QName _DeleteFriendship_QNAME = new QName("http://integration.shelp.de/", "deleteFriendship");
+    private final static QName _DeniedFriendship_QNAME = new QName("http://integration.shelp.de/", "deniedFriendship");
+    private final static QName _AcceptFriendship_QNAME = new QName("http://integration.shelp.de/", "acceptFriendship");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.shelp.integration
@@ -37,43 +44,91 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetRatings }
+     * Create an instance of {@link GetFriendsResponse }
      * 
      */
-    public GetRatings createGetRatings() {
-        return new GetRatings();
+    public GetFriendsResponse createGetFriendsResponse() {
+        return new GetFriendsResponse();
     }
 
     /**
-     * Create an instance of {@link CreateRatingResponse }
+     * Create an instance of {@link DeniedFriendshipResponse }
      * 
      */
-    public CreateRatingResponse createCreateRatingResponse() {
-        return new CreateRatingResponse();
+    public DeniedFriendshipResponse createDeniedFriendshipResponse() {
+        return new DeniedFriendshipResponse();
     }
 
     /**
-     * Create an instance of {@link CreateRating }
+     * Create an instance of {@link AcceptFriendshipResponse }
      * 
      */
-    public CreateRating createCreateRating() {
-        return new CreateRating();
+    public AcceptFriendshipResponse createAcceptFriendshipResponse() {
+        return new AcceptFriendshipResponse();
     }
 
     /**
-     * Create an instance of {@link GetRatingsResponse }
+     * Create an instance of {@link SessionNotExistException }
      * 
      */
-    public GetRatingsResponse createGetRatingsResponse() {
-        return new GetRatingsResponse();
+    public SessionNotExistException createSessionNotExistException() {
+        return new SessionNotExistException();
     }
 
     /**
-     * Create an instance of {@link RatingTO }
+     * Create an instance of {@link GetFriends }
      * 
      */
-    public RatingTO createRatingTO() {
-        return new RatingTO();
+    public GetFriends createGetFriends() {
+        return new GetFriends();
+    }
+
+    /**
+     * Create an instance of {@link DeniedFriendship }
+     * 
+     */
+    public DeniedFriendship createDeniedFriendship() {
+        return new DeniedFriendship();
+    }
+
+    /**
+     * Create an instance of {@link DeleteFriendship }
+     * 
+     */
+    public DeleteFriendship createDeleteFriendship() {
+        return new DeleteFriendship();
+    }
+
+    /**
+     * Create an instance of {@link AcceptFriendship }
+     * 
+     */
+    public AcceptFriendship createAcceptFriendship() {
+        return new AcceptFriendship();
+    }
+
+    /**
+     * Create an instance of {@link DeleteFriendshipResponse }
+     * 
+     */
+    public DeleteFriendshipResponse createDeleteFriendshipResponse() {
+        return new DeleteFriendshipResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddFriend }
+     * 
+     */
+    public AddFriend createAddFriend() {
+        return new AddFriend();
+    }
+
+    /**
+     * Create an instance of {@link AddFriendResponse }
+     * 
+     */
+    public AddFriendResponse createAddFriendResponse() {
+        return new AddFriendResponse();
     }
 
     /**
@@ -85,11 +140,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RatingResponse }
+     * Create an instance of {@link FriendshipTO }
      * 
      */
-    public RatingResponse createRatingResponse() {
-        return new RatingResponse();
+    public FriendshipTO createFriendshipTO() {
+        return new FriendshipTO();
+    }
+
+    /**
+     * Create an instance of {@link FriendsResponse }
+     * 
+     */
+    public FriendsResponse createFriendsResponse() {
+        return new FriendsResponse();
     }
 
     /**
@@ -101,39 +164,102 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateRating }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptFriendshipResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createRating")
-    public JAXBElement<CreateRating> createCreateRating(CreateRating value) {
-        return new JAXBElement<CreateRating>(_CreateRating_QNAME, CreateRating.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptFriendshipResponse")
+    public JAXBElement<AcceptFriendshipResponse> createAcceptFriendshipResponse(AcceptFriendshipResponse value) {
+        return new JAXBElement<AcceptFriendshipResponse>(_AcceptFriendshipResponse_QNAME, AcceptFriendshipResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRatings }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SessionNotExistException }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRatings")
-    public JAXBElement<GetRatings> createGetRatings(GetRatings value) {
-        return new JAXBElement<GetRatings>(_GetRatings_QNAME, GetRatings.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "SessionNotExistException")
+    public JAXBElement<SessionNotExistException> createSessionNotExistException(SessionNotExistException value) {
+        return new JAXBElement<SessionNotExistException>(_SessionNotExistException_QNAME, SessionNotExistException.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateRatingResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFriendsResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createRatingResponse")
-    public JAXBElement<CreateRatingResponse> createCreateRatingResponse(CreateRatingResponse value) {
-        return new JAXBElement<CreateRatingResponse>(_CreateRatingResponse_QNAME, CreateRatingResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getFriendsResponse")
+    public JAXBElement<GetFriendsResponse> createGetFriendsResponse(GetFriendsResponse value) {
+        return new JAXBElement<GetFriendsResponse>(_GetFriendsResponse_QNAME, GetFriendsResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRatingsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeniedFriendshipResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRatingsResponse")
-    public JAXBElement<GetRatingsResponse> createGetRatingsResponse(GetRatingsResponse value) {
-        return new JAXBElement<GetRatingsResponse>(_GetRatingsResponse_QNAME, GetRatingsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deniedFriendshipResponse")
+    public JAXBElement<DeniedFriendshipResponse> createDeniedFriendshipResponse(DeniedFriendshipResponse value) {
+        return new JAXBElement<DeniedFriendshipResponse>(_DeniedFriendshipResponse_QNAME, DeniedFriendshipResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddFriend }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "addFriend")
+    public JAXBElement<AddFriend> createAddFriend(AddFriend value) {
+        return new JAXBElement<AddFriend>(_AddFriend_QNAME, AddFriend.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFriendshipResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteFriendshipResponse")
+    public JAXBElement<DeleteFriendshipResponse> createDeleteFriendshipResponse(DeleteFriendshipResponse value) {
+        return new JAXBElement<DeleteFriendshipResponse>(_DeleteFriendshipResponse_QNAME, DeleteFriendshipResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AddFriendResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "addFriendResponse")
+    public JAXBElement<AddFriendResponse> createAddFriendResponse(AddFriendResponse value) {
+        return new JAXBElement<AddFriendResponse>(_AddFriendResponse_QNAME, AddFriendResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetFriends }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getFriends")
+    public JAXBElement<GetFriends> createGetFriends(GetFriends value) {
+        return new JAXBElement<GetFriends>(_GetFriends_QNAME, GetFriends.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFriendship }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteFriendship")
+    public JAXBElement<DeleteFriendship> createDeleteFriendship(DeleteFriendship value) {
+        return new JAXBElement<DeleteFriendship>(_DeleteFriendship_QNAME, DeleteFriendship.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeniedFriendship }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deniedFriendship")
+    public JAXBElement<DeniedFriendship> createDeniedFriendship(DeniedFriendship value) {
+        return new JAXBElement<DeniedFriendship>(_DeniedFriendship_QNAME, DeniedFriendship.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptFriendship }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptFriendship")
+    public JAXBElement<AcceptFriendship> createAcceptFriendship(AcceptFriendship value) {
+        return new JAXBElement<AcceptFriendship>(_AcceptFriendship_QNAME, AcceptFriendship.class, null, value);
     }
 
 }

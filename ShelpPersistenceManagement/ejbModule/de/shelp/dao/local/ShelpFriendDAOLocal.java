@@ -1,17 +1,16 @@
 package de.shelp.dao.local;
 
+import javax.ejb.Local;
+
 import de.shelp.entities.Friendship;
-import de.shelp.entities.FriendshipStatus;
 
+@Local
 public interface ShelpFriendDAOLocal {
-	
-	public void createFriendship(Friendship friendship);
 
-	public FriendshipStatus getFriendshipStatus(String description);
+    public void saveFriendship(Friendship friendship);
 
-	public Friendship findFriendshipById(int friendshipHash);
+    public Friendship findFriendshipById(int friendshipHash);
 
-	public FriendshipStatus getFriendShipStatusById(int friendshipStatusId);
-
+    public void deleteFriendship(Friendship friendship);
 
 }

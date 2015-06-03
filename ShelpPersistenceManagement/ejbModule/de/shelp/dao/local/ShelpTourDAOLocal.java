@@ -3,6 +3,8 @@ package de.shelp.dao.local;
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.Local;
+
 import de.shelp.entities.ApprovalStatus;
 import de.shelp.entities.Capacity;
 import de.shelp.entities.DeliveryCondition;
@@ -11,6 +13,7 @@ import de.shelp.entities.PaymentCondition;
 import de.shelp.entities.Tour;
 import de.shelp.entities.User;
 
+@Local
 public interface ShelpTourDAOLocal {
 
     public Tour createTour(Tour tour, User user);

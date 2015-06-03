@@ -17,9 +17,9 @@ import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.friend.FriendsResponse;
 import de.shelp.dto.friend.FriendshipTO;
 import de.shelp.entities.Friendship;
-import de.shelp.entities.FriendshipStatus;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
+import de.shelp.enums.FriendshipStatus;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
@@ -45,7 +45,7 @@ public class FriendIntegration {
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
      * Injection gefüllt.
      */
-    @EJB(beanName = "ShelpFriendshipDAO", beanInterface = ShelpFriendDAOLocal.class)
+    @EJB(beanName = "ShelpFriendDAO", beanInterface = ShelpFriendDAOLocal.class)
     private ShelpFriendDAOLocal daoFriend;
 
     /**
@@ -83,21 +83,38 @@ public class FriendIntegration {
 
     }
 
-    public ReturnCodeResponse changeFriendShip(int friendshipId,
-	    int friendshipStatusId) {
+    public ReturnCodeResponse acceptFriendship(int friendshipId, int sessionId) {
+	return changeFriendShip(friendshipId, FriendshipStatus.ACCEPT,
+		sessionId);
+    }
+
+    public ReturnCodeResponse deniedFriendship(int friendshipId, int sessionId) {
+	return changeFriendShip(friendshipId, FriendshipStatus.DENIED,
+		sessionId);
+    }
+
+    public ReturnCodeResponse deleteFriendship(int friendshipId, int sessionId) {
+	ReturnCodeResponse response = new ReturnCodeResponse();
+	try {
+	    Friendship friendship = checkFriendship(sessionId, friendshipId);
+
+	    daoFriend.deleteFriendship(friendship);
+	} catch (ShelpException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
+	}
+	return response;
+    }
+
+    private ReturnCodeResponse changeFriendShip(int friendshipId,
+	    FriendshipStatus status, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 
 	try {
-	    Friendship friendship = daoFriend.findFriendshipById(friendshipId);
-	    if (friendship == null) {
-		LOGGER.info("Freundschaft existiert nicht!");
-		throw new ShelpException(ReturnCode.ERROR,
-			("Freundschaft existiert nicht!"));
-	    }
+	    Friendship friendship = checkFriendship(sessionId, friendshipId);
+	    friendship.setStatus(status);
+	    daoFriend.saveFriendship(friendship);
 
-	    friendship.setStatus(daoFriend
-		    .getFriendShipStatusById(friendshipStatusId));
-	    daoFriend.createFriendship(friendship);
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
@@ -120,7 +137,7 @@ public class FriendIntegration {
 	    }
 	    if (session == null) {
 		LOGGER.info("Session-Id existiert nicht.");
-		throw new UserNotExistEcxeption(ReturnCode.ERROR,
+		throw new SessionNotExistException(
 			"Session-Id existiert nicht.");
 	    }
 	    if (targetUser.equals(session.getUser())) {
@@ -135,37 +152,33 @@ public class FriendIntegration {
 	    friendship.setInitiatorUser(session.getUser());
 	    friendship.setRecipientUser(targetUser);
 
-	    // TODO Strings sinnvoll auslagern
-	    FriendshipStatus asked = daoFriend.getFriendshipStatus("Angefragt");
-	    friendship.setStatus(asked);
+	    friendship.setStatus(FriendshipStatus.ASKED);
 
 	    Friendship dbFriendship = daoFriend.findFriendshipById(friendship
 		    .getFriendshipHash());
 	    if (dbFriendship == null) {
 		friendship.setId(friendship.getFriendshipHash());
 		friendship.setChangeOn(new Date());
-		daoFriend.createFriendship(friendship);
+		daoFriend.saveFriendship(friendship);
 	    } else {
-		FriendshipStatus denied = daoFriend
-			.getFriendshipStatus("Abgelehnt");
-		FriendshipStatus accepted = daoFriend
-			.getFriendshipStatus("Aktzeptiert");
 
-		if (dbFriendship.getStatus().equals(asked)) {
+		if (dbFriendship.getStatus().equals(FriendshipStatus.ASKED)) {
 		    LOGGER.info("Anfrage wurde schon gestellt zwischen "
 			    + session.getUser() + " und " + targetUser + ".");
 		    throw new ShelpException(ReturnCode.ERROR,
 			    "Anfrage wurde schon gestellt zwischen "
 				    + session.getUser() + " und " + targetUser
 				    + ".");
-		} else if (dbFriendship.getStatus().equals(denied)) {
+		} else if (dbFriendship.getStatus().equals(
+			FriendshipStatus.DENIED)) {
 		    LOGGER.info("Anfrage wurde schon abgelehnt zwischen "
 			    + session.getUser() + " und " + targetUser + ".");
 		    throw new ShelpException(ReturnCode.ERROR,
 			    "Anfrage wurde schon abgelehnt zwischen "
 				    + session.getUser() + " und " + targetUser
 				    + ".");
-		} else if (dbFriendship.getStatus().equals(accepted)) {
+		} else if (dbFriendship.getStatus().equals(
+			FriendshipStatus.ACCEPT)) {
 		    LOGGER.info("Anfrage wurde schon angenommen zwischen "
 			    + session.getUser() + " und " + targetUser + ".");
 		    throw new ShelpException(ReturnCode.ERROR,
@@ -180,6 +193,37 @@ public class FriendIntegration {
 	    response.setMessage(e.getMessage());
 	}
 	return response;
+    }
+
+    private Friendship checkFriendship(int sessionId, int friendshipId)
+	    throws ShelpException {
+
+	ShelpSession session = daoUser.getSession(sessionId);
+	if (session == null) {
+	    LOGGER.info("Session-Id existiert nicht.");
+	    throw new SessionNotExistException("Session-Id existiert nicht.");
+	}
+
+	Friendship friendship = daoFriend.findFriendshipById(friendshipId);
+	if (friendship == null) {
+	    LOGGER.info("Freundschaft existiert nicht!");
+	    throw new ShelpException(ReturnCode.ERROR,
+		    ("Freundschaft existiert nicht!"));
+	}
+
+	if (friendship.getInitiatorUser().equals(session.getUser())
+		|| friendship.getRecipientUser().equals(session.getUser())) {
+	    return friendship;
+	} else {
+	    LOGGER.warn("Zugriff verweigert. Anfragende Session "
+		    + session.getId() + " ist nicht an der Freundschaft "
+		    + friendshipId + " beteiligt!");
+	    throw new ShelpException(
+		    ReturnCode.PERMISSION_DENIED,
+		    ("Zugriff verweigert. Anfragende Session "
+			    + session.getId()
+			    + " ist nicht an der Freundschaft " + friendshipId + " beteiligt!"));
+	}
     }
 
 }

@@ -20,25 +20,6 @@ public class TourDtoAssembler {
     @EJB
     private StateDtoAssembler stateDtoAssembler;
 
-    // public Tour makeDAO(TourTO tourTO) {
-    // Tour dao = new Tour();
-    // dao.setApprovalStatus(tourTO.getApprovalStatus());
-    // dao.setLocation(makeDAO(tourTO.getLocation()));
-    // dao.setCapacity(tourTO.getCapacity());
-    // dao.setPaymentConditions(tourTO.getPaymentConditions());
-    // dao.setDeliveryConditions(tourTO.getDeliveryConditions());
-    // dao.setTime(tourTO.getTime());
-    // return dao;
-    // }
-
-    public Location makeDAO(LocationTO locationTO) {
-	Location dao = new Location();
-	dao.setId(locationTO.getId());
-	dao.setDescription(locationTO.getDescription());
-	dao.setZipcode(locationTO.getZipcode());
-	return dao;
-    }
-
     public TourTO makeDTO(Tour tour) {
 	TourTO dto = new TourTO();
 	dto.setApprovalStatus(stateDtoAssembler.makeDTO(tour.getApprovalStatus()));
