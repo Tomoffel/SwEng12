@@ -1,6 +1,6 @@
 package de.shelp.entities;
 
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,7 +30,7 @@ public class Request {
     private Wishlist wishlist;
 
     private String notice;
-    private Calendar updatedOn;
+    private Date updatedOn;
 
     @Enumerated(EnumType.ORDINAL)
     private RequestStatus status;
@@ -83,11 +83,11 @@ public class Request {
 	this.notice = notice;
     }
 
-    public Calendar getUpdatedOn() {
+    public Date getUpdatedOn() {
 	return updatedOn;
     }
 
-    public void setUpdatedOn(Calendar updatedOn) {
+    public void setUpdatedOn(Date updatedOn) {
 	this.updatedOn = updatedOn;
     }
 

@@ -54,8 +54,7 @@ public class FriendIntegration {
     @EJB
     private FriendDtoAssembler dtoAssembler;
 
-    public FriendsResponse getFriends(int sessionId)
-	    throws SessionNotExistException {
+    public FriendsResponse getFriends(int sessionId) {
 	FriendsResponse response = new FriendsResponse();
 
 	ShelpSession session = daoUser.getSession(sessionId);
@@ -68,17 +67,22 @@ public class FriendIntegration {
 
 	    User user = session.getUser();
 
-	    List<Friendship> friends = user.getFriends();
+	    List<Friendship> friends = user.getFriendships();
 
 	    List<FriendshipTO> friendsTO = new ArrayList<FriendshipTO>();
 	    for (Friendship f : friends) {
 		friendsTO.add(dtoAssembler.makeDTO(f));
 	    }
 
+	    response.setFriends(friendsTO);
+	    LOGGER.info(friendsTO.size()
+		    + " Freundschaften wurde zur SessionId " + sessionId
+		    + " gefunden.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
 	}
+
 	return response;
 
     }
@@ -96,9 +100,11 @@ public class FriendIntegration {
     public ReturnCodeResponse deleteFriendship(int friendshipId, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
-	    Friendship friendship = checkFriendship(sessionId, friendshipId);
+	    Friendship friendship = checkFriendship(sessionId, friendshipId,
+		    false);
 
 	    daoFriend.deleteFriendship(friendship);
+	    LOGGER.info("Die Freundschaft " + friendshipId + " wurde gelöscht.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
@@ -111,9 +117,14 @@ public class FriendIntegration {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 
 	try {
-	    Friendship friendship = checkFriendship(sessionId, friendshipId);
+	    Friendship friendship = checkFriendship(sessionId, friendshipId,
+		    true);
 	    friendship.setStatus(status);
+	    friendship.setChangeOn(new Date());
 	    daoFriend.saveFriendship(friendship);
+
+	    LOGGER.info("Der Status der Freundschaft " + friendshipId
+		    + " wurde auf  " + status + " gewechselt.");
 
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -160,6 +171,10 @@ public class FriendIntegration {
 		friendship.setId(friendship.getFriendshipHash());
 		friendship.setChangeOn(new Date());
 		daoFriend.saveFriendship(friendship);
+
+		LOGGER.info("Zwischen " + session.getUser() + " und "
+			+ targetUser
+			+ " wurde eine Freunschaftsanfrage erstellt.");
 	    } else {
 
 		if (dbFriendship.getStatus().equals(FriendshipStatus.ASKED)) {
@@ -195,8 +210,8 @@ public class FriendIntegration {
 	return response;
     }
 
-    private Friendship checkFriendship(int sessionId, int friendshipId)
-	    throws ShelpException {
+    private Friendship checkFriendship(int sessionId, int friendshipId,
+	    boolean checkChange) throws ShelpException {
 
 	ShelpSession session = daoUser.getSession(sessionId);
 	if (session == null) {
@@ -208,22 +223,37 @@ public class FriendIntegration {
 	if (friendship == null) {
 	    LOGGER.info("Freundschaft existiert nicht!");
 	    throw new ShelpException(ReturnCode.ERROR,
-		    ("Freundschaft existiert nicht!"));
+		    "Freundschaft existiert nicht!");
 	}
-
-	if (friendship.getInitiatorUser().equals(session.getUser())
-		|| friendship.getRecipientUser().equals(session.getUser())) {
-	    return friendship;
-	} else {
+	if (checkChange) {
+	    if (!friendship.getRecipientUser().equals(session.getUser())) {
+		LOGGER.warn("Zugriff verweigert. Anfragende Session "
+			+ session.getId()
+			+ " ist nicht der Empfänger der Freundschaftsanfrage "
+			+ friendshipId + "!");
+		throw new ShelpException(
+			ReturnCode.PERMISSION_DENIED,
+			"Zugriff verweigert. Anfragende Session "
+				+ session.getId()
+				+ " ist nicht der Empfänger der Freundschaftsanfrage "
+				+ friendshipId + "!");
+	    } else if (!friendship.getStatus().equals(FriendshipStatus.ASKED)) {
+		LOGGER.warn("Freundschaftsanfrage wurde schon angenommen/abgelehnt.");
+		throw new ShelpException(ReturnCode.ERROR,
+			"Freundschaftsanfrage wurde schon angenommen/abgelehnt.");
+	    }
+	} else if (!friendship.getInitiatorUser().equals(session.getUser())
+		&& !friendship.getRecipientUser().equals(session.getUser())) {
 	    LOGGER.warn("Zugriff verweigert. Anfragende Session "
 		    + session.getId() + " ist nicht an der Freundschaft "
 		    + friendshipId + " beteiligt!");
-	    throw new ShelpException(
-		    ReturnCode.PERMISSION_DENIED,
-		    ("Zugriff verweigert. Anfragende Session "
-			    + session.getId()
-			    + " ist nicht an der Freundschaft " + friendshipId + " beteiligt!"));
+	    throw new ShelpException(ReturnCode.PERMISSION_DENIED,
+		    "Zugriff verweigert. Anfragende Session " + session.getId()
+			    + " ist nicht an der Freundschaft " + friendshipId
+			    + " beteiligt!");
 	}
+	return friendship;
+
     }
 
 }

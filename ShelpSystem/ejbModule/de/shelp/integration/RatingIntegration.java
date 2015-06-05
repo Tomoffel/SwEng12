@@ -57,9 +57,9 @@ public class RatingIntegration {
 	User user = daoUser.findUserByName(userName);
 	try {
 	    if (user == null) {
-		LOGGER.info("User " + userName + "existiert nicht.");
+		LOGGER.info("User " + userName + " existiert nicht.");
 		throw new UserNotExistEcxeption(ReturnCode.ERROR, "User "
-			+ userName + "existiert nicht.");
+			+ userName + " existiert nicht.");
 	    }
 
 	    List<Rating> ratings = user.getRatings();
@@ -71,8 +71,8 @@ public class RatingIntegration {
 
 	    response.setRatings(ratingsTO);
 
-	    LOGGER.info("Es wurden" + ratingsTO.size()
-		    + " Ratings für den Benutzer " + userName + " gefunden.");
+	    LOGGER.info("Es wurde(n) " + ratingsTO.size()
+		    + " Bewertung(en) für den Benutzer " + userName + " gefunden.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());

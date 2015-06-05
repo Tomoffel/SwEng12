@@ -22,6 +22,7 @@ public class FriendDtoAssembler {
 	dto.setRecipientUser(dtoAssembler.makeDTO(f.getRecipientUser()));
 	dto.setId(f.getId());
 	dto.setStatus(f.getStatus());
+	dto.setChangedOn(f.getChangeOn().getTime());
 
 	return dto;
 

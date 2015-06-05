@@ -106,33 +106,33 @@ public class TourIntegrationTest {
 	tour1.setApprovalStatus(states.get(0));
 	tour1.setLocation(locations.get(0));
 	tour1.setCapacity(capacities.get(1));
-	tour1.setPaymentConditions(paymentConditions.get(1));
-	tour1.setDeliveryConditions(deliveryConditions.get(0));
-	tour1.setTime(calendarInTwoDays.getTime());
+	tour1.setPaymentCondition(paymentConditions.get(1));
+	tour1.setDeliveryCondition(deliveryConditions.get(0));
+	tour1.setTime(calendarInTwoDays.getTime().getTime());
 
 	tour2.setLocation(locations.get(2));
-	tour2.setPaymentConditions(paymentConditions.get(0));
+	tour2.setPaymentCondition(paymentConditions.get(0));
 
 	tour3.setApprovalStatus(states.get(0));
 	tour3.setLocation(locations.get(1));
 	tour3.setCapacity(capacities.get(2));
-	tour3.setPaymentConditions(paymentConditions.get(2));
-	tour3.setDeliveryConditions(deliveryConditions.get(1));
-	tour3.setTime(calendarInTwoDays.getTime());
+	tour3.setPaymentCondition(paymentConditions.get(2));
+	tour3.setDeliveryCondition(deliveryConditions.get(1));
+	tour3.setTime(calendarInTwoDays.getTime().getTime());
 
 	tour4.setApprovalStatus(states.get(0));
 	tour4.setLocation(locations.get(5));
 	tour4.setCapacity(capacities.get(2));
-	tour4.setPaymentConditions(paymentConditions.get(2));
-	tour4.setDeliveryConditions(deliveryConditions.get(1));
-	tour4.setTime(calendarInTwoDays.getTime());
+	tour4.setPaymentCondition(paymentConditions.get(2));
+	tour4.setDeliveryCondition(deliveryConditions.get(1));
+	tour4.setTime(calendarInTwoDays.getTime().getTime());
 
 	tour5.setApprovalStatus(states.get(0));
 	tour5.setLocation(locations.get(2));
 	tour5.setCapacity(capacities.get(2));
-	tour5.setPaymentConditions(paymentConditions.get(2));
-	tour5.setDeliveryConditions(deliveryConditions.get(1));
-	tour5.setTime(calendarInFourDays.getTime());
+	tour5.setPaymentCondition(paymentConditions.get(2));
+	tour5.setDeliveryCondition(deliveryConditions.get(1));
+	tour5.setTime(calendarInFourDays.getTime().getTime());
 
 	UserResponse loginResponse = userIntegrationPort.regUser(
 		"thomas@sennekamp.de", "test123");
@@ -158,9 +158,9 @@ public class TourIntegrationTest {
     public void aTestCreateTour() {
 	ReturnCodeResponse createTour = remoteSystem.createTour(tour1
 		.getApprovalStatus().getId(), tour1.getLocation().getId(),
-		tour1.getCapacity().getId(), tour1.getPaymentConditions()
-			.getId(), tour1.getDeliveryConditions().getId(), tour1
-			.getTime().getTime(), session1.getId());
+		tour1.getCapacity().getId(), tour1.getPaymentCondition()
+			.getId(), tour1.getDeliveryCondition().getId(), tour1
+			.getTime(), session1.getId());
 	Assert.assertEquals(ReturnCode.OK, createTour.getReturnCode());
     }
 
@@ -180,21 +180,21 @@ public class TourIntegrationTest {
     public void cTestSearchToursAllDirect() {
 	remoteSystem.createTour(tour3.getApprovalStatus().getId(), tour3
 		.getLocation().getId(), tour1.getCapacity().getId(), tour3
-		.getPaymentConditions().getId(), tour3.getDeliveryConditions()
-		.getId(), tour3.getTime().getTime(), session1.getId());
+		.getPaymentCondition().getId(), tour3.getDeliveryCondition()
+		.getId(), tour3.getTime(), session1.getId());
 	remoteSystem.createTour(tour4.getApprovalStatus().getId(), tour4
 		.getLocation().getId(), tour1.getCapacity().getId(), tour4
-		.getPaymentConditions().getId(), tour4.getDeliveryConditions()
-		.getId(), tour4.getTime().getTime(), session2.getId());
+		.getPaymentCondition().getId(), tour4.getDeliveryCondition()
+		.getId(), tour4.getTime(), session2.getId());
 	remoteSystem.createTour(tour5.getApprovalStatus().getId(), tour5
 		.getLocation().getId(), tour1.getCapacity().getId(), tour5
-		.getPaymentConditions().getId(), tour5.getDeliveryConditions()
-		.getId(), tour5.getTime().getTime(), session2.getId());
+		.getPaymentCondition().getId(), tour5.getDeliveryCondition()
+		.getId(), tour5.getTime(), session2.getId());
 
-	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
-		.getTime(), calendarInThreeDays.getTime().getTime(), true,
-		session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
+		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
+		calendarInOneDay.getTime().getTime(), calendarInThreeDays
+			.getTime().getTime(), true, session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 1);
 	Assert.assertEquals(searchTour.getTours().get(0).getLocation()
@@ -203,10 +203,10 @@ public class TourIntegrationTest {
 
     @Test
     public void dTestSearchToursAllNear() {
-	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
-		.getTime(), calendarInThreeDays.getTime().getTime(), false,
-		session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
+		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
+		calendarInOneDay.getTime().getTime(), calendarInThreeDays
+			.getTime().getTime(), false, session1.getId());
 
 	Assert.assertEquals(searchTour.getTours().size(), 2);
 	Assert.assertEquals(searchTour.getTours().get(0).getLocation()
@@ -217,10 +217,10 @@ public class TourIntegrationTest {
 
     @Test
     public void eTestGetTour() {
-	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
-		.getTime(), calendarInThreeDays.getTime().getTime(), false,
-		session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
+		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
+		calendarInOneDay.getTime().getTime(), calendarInThreeDays
+			.getTime().getTime(), false, session1.getId());
 
 	TourResponse tour = remoteSystem.getTour(searchTour.getTours().get(0)
 		.getId(), session1.getId());
@@ -238,10 +238,10 @@ public class TourIntegrationTest {
     // TODO test with friendship
     @Test
     public void gTestGetTourPermissionDenied() {
-	ToursResponse searchTour = remoteSystem.searchTour(states.get(0)
-		.getId(), locations.get(0).getId(), calendarInOneDay.getTime()
-		.getTime(), calendarInThreeDays.getTime().getTime(), false,
-		session1.getId());
+	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
+		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
+		calendarInOneDay.getTime().getTime(), calendarInThreeDays
+			.getTime().getTime(), false, session1.getId());
 
 	// TourResponse tour =
 	// remoteSystem.getTour(searchTour.getTours().get(0).getId(),

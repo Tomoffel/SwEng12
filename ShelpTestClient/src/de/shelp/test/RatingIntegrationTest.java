@@ -8,6 +8,7 @@ import org.junit.runners.MethodSorters;
 
 import de.shelp.integration.RatingIntegration;
 import de.shelp.integration.RatingIntegrationService;
+import de.shelp.integration.RatingResponse;
 import de.shelp.integration.ReturnCode;
 import de.shelp.integration.ReturnCodeResponse;
 import de.shelp.integration.ShelpSessionTO;
@@ -16,7 +17,7 @@ import de.shelp.integration.UserIntegrationService;
 import de.shelp.integration.UserResponse;
 
 /**
- * Testet alle Webservice-Schnittstellen zur UserIntegration.
+ * Testet alle Webservice-Schnittstellen zur RatingIntegration.
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RatingIntegrationTest {
@@ -64,28 +65,60 @@ public class RatingIntegrationTest {
     @Test
     public void bTestCreateRatingFailed() {
 	// Session existiert nicht
-	ReturnCodeResponse createRating = remoteSystem.createRating(session2.getUser().getEmail(), 4, "Guter Fahrer", 5000);
+	ReturnCodeResponse createRating = remoteSystem.createRating(session2
+		.getUser().getEmail(), 4, "Guter Fahrer", 5000);
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("Session-Id existiert nicht.", createRating.getMessage());
-	
+	Assert.assertEquals("Session-Id existiert nicht.",
+		createRating.getMessage());
+
 	// targetuser existiert nicht
-	createRating = remoteSystem.createRating("nichtvorhanden", 4, "Guter Fahrer", session1.getId());
+	createRating = remoteSystem.createRating("nichtvorhanden", 4,
+		"Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("TargetUser existiert nicht.", createRating.getMessage());
-	
+	Assert.assertEquals("TargetUser existiert nicht.",
+		createRating.getMessage());
+
 	// eigene bewertung nicht möglich
-	createRating = remoteSystem.createRating(session2.getUser().getEmail(), 4, "Guter Fahrer", session2.getId());
+	createRating = remoteSystem.createRating(session2.getUser().getEmail(),
+		4, "Guter Fahrer", session2.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("Man darf sich nicht selbst bewerten " + session2.getUser().getEmail(), createRating.getMessage());
-	
+	Assert.assertEquals("Man darf sich nicht selbst bewerten "
+		+ session2.getUser().getEmail(), createRating.getMessage());
+
 	// bewertung kleiner 1
-	createRating = remoteSystem.createRating(session2.getUser().getEmail(), 0, "Guter Fahrer", session1.getId());
+	createRating = remoteSystem.createRating(session2.getUser().getEmail(),
+		0, "Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
 	Assert.assertEquals("Ungültiges Rating 0", createRating.getMessage());
-	
+
 	// bewertung größer 5
-	createRating = remoteSystem.createRating(session2.getUser().getEmail(), 6, "Guter Fahrer", session1.getId());
+	createRating = remoteSystem.createRating(session2.getUser().getEmail(),
+		6, "Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
 	Assert.assertEquals("Ungültiges Rating 6", createRating.getMessage());
+    }
+
+    @Test
+    public void cTestCreateGetRatingsSuccess() {
+	// session1 mit keinen Bewertungen
+	RatingResponse ratings = remoteSystem.getRatings(session1.getUser()
+		.getEmail());
+	Assert.assertEquals(ReturnCode.OK, ratings.getReturnCode());
+	Assert.assertEquals(0, ratings.getRatings().size());
+
+	// session2 mit einer Bewertungen aus Testfal a
+	ratings = remoteSystem.getRatings(session2.getUser().getEmail());
+	Assert.assertEquals(ReturnCode.OK, ratings.getReturnCode());
+	Assert.assertEquals(1, ratings.getRatings().size());
+	Assert.assertEquals(4, ratings.getRatings().get(0).getRating());
+	Assert.assertEquals("Guter Fahrer", ratings.getRatings().get(0)
+		.getNotice());
+    }
+
+    @Test
+    public void cTestCreateGetRatingsFailed() {
+	// ungültiger Benutzer
+	RatingResponse ratings = remoteSystem.getRatings("nichtvorhanden");
+	Assert.assertEquals(ReturnCode.ERROR, ratings.getReturnCode());
     }
 }

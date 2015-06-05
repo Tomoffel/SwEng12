@@ -29,7 +29,8 @@ import de.shelp.util.UserDtoAssembler;
 @Stateless
 public class UserIntegration {
 
-    private static final Logger LOGGER = Logger.getLogger(UserIntegration.class);
+    private static final Logger LOGGER = Logger
+	    .getLogger(UserIntegration.class);
 
     /**
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
@@ -51,11 +52,14 @@ public class UserIntegration {
 	    if (user == null) {
 		user = this.dao.createUser(password, email);
 		ShelpSession session = dao.createSession(user);
-		LOGGER.info("Benutzer " + user + " erfolgreich angelegt. Session=" + session);
+		LOGGER.info("Benutzer " + user
+			+ " erfolgreich angelegt. Session=" + session);
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
-		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon " + user);
-		throw new UserNotExistEcxeption(ReturnCode.ERROR, "Registrierung fehlgeschlag. Benutzername schon vergeben.");
+		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon "
+			+ user);
+		throw new UserNotExistEcxeption(ReturnCode.ERROR,
+			"Registrierung fehlgeschlag. Benutzername schon vergeben.");
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -73,8 +77,11 @@ public class UserIntegration {
 		LOGGER.info("Login erfolgreich. Session=" + session);
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
-		LOGGER.info("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + email);
-		throw new InvalidLoginException("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username=" + email);
+		LOGGER.info("Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username="
+			+ email);
+		throw new InvalidLoginException(
+			"Login fehlgeschlagen, da Benutzer unbekannt oder Passwort falsch. username="
+				+ email);
 	    }
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -87,8 +94,11 @@ public class UserIntegration {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
 	    if (!dao.closeSession(sessionId)) {
-		LOGGER.info("Logout nicht erfolgreich. Session " + sessionId + " existiert nicht.");
-		throw new SessionNotExistException("Logout nicht erfolgreich. Session " + sessionId + " existiert nicht.");
+		LOGGER.info("Logout nicht erfolgreich. Session " + sessionId
+			+ " existiert nicht.");
+		throw new SessionNotExistException(
+			"Logout nicht erfolgreich. Session " + sessionId
+				+ " existiert nicht.");
 	    } else {
 		LOGGER.info("Logout erfolgreich. Session=" + sessionId);
 	    }
@@ -110,6 +120,8 @@ public class UserIntegration {
 	}
 
 	response.setUserList(usersTO);
+	LOGGER.info(usersTO.size() + " Benutzer zu " + searchText
+		+ " gefunden.");
 
 	return response;
     }

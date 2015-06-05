@@ -1,13 +1,13 @@
 package de.shelp.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 public class User implements Serializable {
@@ -31,17 +31,8 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "recipientUser")
     private List<Friendship> recipients;
 
-    @Transient
-    private List<Friendship> friends;
-
     public User() {
 	super();
-	if (initiators != null) {
-	    this.friends.addAll(initiators);
-	}
-	if (recipients != null) {
-	    this.friends.addAll(recipients);
-	}
     }
 
     public User(String email, String password, Calendar creationDate) {
@@ -81,8 +72,7 @@ public class User implements Serializable {
     }
 
     public boolean isFriend(User user) {
-	// TODO implement function with friend list
-	return true;
+	return getFriends().contains(user);
     }
 
     public List<Tour> getTours() {
@@ -108,11 +98,8 @@ public class User implements Serializable {
 	result = prime * result
 		+ ((creationDate == null) ? 0 : creationDate.hashCode());
 	result = prime * result + ((email == null) ? 0 : email.hashCode());
-	result = prime * result + ((friends == null) ? 0 : friends.hashCode());
 	result = prime * result
 		+ ((password == null) ? 0 : password.hashCode());
-	result = prime * result + ((ratings == null) ? 0 : ratings.hashCode());
-	result = prime * result + ((tours == null) ? 0 : tours.hashCode());
 	return result;
     }
 
@@ -135,25 +122,10 @@ public class User implements Serializable {
 		return false;
 	} else if (!email.equals(other.email))
 	    return false;
-	if (friends == null) {
-	    if (other.friends != null)
-		return false;
-	} else if (!friends.equals(other.friends))
-	    return false;
 	if (password == null) {
 	    if (other.password != null)
 		return false;
 	} else if (!password.equals(other.password))
-	    return false;
-	if (ratings == null) {
-	    if (other.ratings != null)
-		return false;
-	} else if (!ratings.equals(other.ratings))
-	    return false;
-	if (tours == null) {
-	    if (other.tours != null)
-		return false;
-	} else if (!tours.equals(other.tours))
 	    return false;
 	return true;
     }
@@ -174,7 +146,26 @@ public class User implements Serializable {
 	this.recipients = recipients;
     }
 
-    public List<Friendship> getFriends() {
+    public List<Friendship> getFriendships() {
+	List<Friendship> friends = new ArrayList<Friendship>();
+	if (initiators != null) {
+	    friends.addAll(initiators);
+	}
+	if (recipients != null) {
+	    friends.addAll(recipients);
+	}
+	return friends;
+    }
+
+    public List<User> getFriends() {
+	List<User> friends = new ArrayList<User>();
+	for (Friendship friendship : initiators) {
+	    friends.add(friendship.getRecipientUser());
+	}
+	for (Friendship friendship : recipients) {
+	    friends.add(friendship.getInitiatorUser());
+	}
+
 	return friends;
     }
 

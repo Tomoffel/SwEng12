@@ -29,7 +29,7 @@ public class RequestDtoAssembler {
 	dto.setSourceUser(userDtoAssembler.makeDTO(request.getSourceUser()));
 	dto.setTargetUser(userDtoAssembler.makeDTO(request.getTargetUser()));
 	dto.setTour(tourDtoAssembler.makeDTO(request.getTour()));
-	dto.setUpdatedOn(request.getUpdatedOn());
+	dto.setUpdatedOn(request.getUpdatedOn().getTime());
 	// TODO add the wishlists
 	dto.setWishlist(null);
 

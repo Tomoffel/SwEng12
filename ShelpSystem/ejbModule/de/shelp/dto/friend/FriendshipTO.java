@@ -1,26 +1,24 @@
 package de.shelp.dto.friend;
 
-import java.util.Calendar;
-
 import de.shelp.dto.user.UserTO;
 import de.shelp.enums.FriendshipStatus;
 
 public class FriendshipTO {
 
-    private long id;
+    private int id;
     private UserTO initiatorUser;
     private UserTO recipientUser;
     private FriendshipStatus status;
-    private Calendar changedOn;
-    
+    private long changedOn;
+
     public FriendshipTO() {
     }
 
-    public long getId() {
+    public int getId() {
 	return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
 	this.id = id;
     }
 
@@ -48,11 +46,11 @@ public class FriendshipTO {
 	this.status = status;
     }
 
-    public Calendar getChangedOn() {
+    public long getChangedOn() {
 	return changedOn;
     }
 
-    public void setChangedOn(Calendar changedOn) {
+    public void setChangedOn(long changedOn) {
 	this.changedOn = changedOn;
     }
 

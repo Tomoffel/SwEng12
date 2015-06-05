@@ -2,12 +2,11 @@
 package de.shelp.integration;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -24,14 +23,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *       &lt;sequence>
  *         &lt;element name="approvalStatus" type="{http://integration.shelp.de/}approvalStatusTO" minOccurs="0"/>
  *         &lt;element name="capacity" type="{http://integration.shelp.de/}capacityTO" minOccurs="0"/>
- *         &lt;element name="deliveryConditions" type="{http://integration.shelp.de/}deliveryConditionTO" minOccurs="0"/>
+ *         &lt;element name="deliveryCondition" type="{http://integration.shelp.de/}deliveryConditionTO" minOccurs="0"/>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="location" type="{http://integration.shelp.de/}locationTO" minOccurs="0"/>
  *         &lt;element name="owner" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
- *         &lt;element name="paymentConditions" type="{http://integration.shelp.de/}paymentConditionTO" minOccurs="0"/>
+ *         &lt;element name="paymentCondition" type="{http://integration.shelp.de/}paymentConditionTO" minOccurs="0"/>
  *         &lt;element name="request" type="{http://integration.shelp.de/}requestTO" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="status" type="{http://integration.shelp.de/}tourStatus" minOccurs="0"/>
- *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="updatedOn" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -45,11 +44,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlType(name = "tourTO", propOrder = {
     "approvalStatus",
     "capacity",
-    "deliveryConditions",
+    "deliveryCondition",
     "id",
     "location",
     "owner",
-    "paymentConditions",
+    "paymentCondition",
     "request",
     "status",
     "time",
@@ -59,16 +58,17 @@ public class TourTO {
 
     protected ApprovalStatusTO approvalStatus;
     protected CapacityTO capacity;
-    protected DeliveryConditionTO deliveryConditions;
+    protected DeliveryConditionTO deliveryCondition;
     protected long id;
     protected LocationTO location;
     protected UserTO owner;
-    protected PaymentConditionTO paymentConditions;
+    protected PaymentConditionTO paymentCondition;
     @XmlElement(nillable = true)
     protected List<RequestTO> request;
     protected TourStatus status;
-    protected Date time;
-    protected Date updatedOn;
+    protected long time;
+    @XmlSchemaType(name = "dateTime")
+    protected XMLGregorianCalendar updatedOn;
 
     /**
      * Ruft den Wert der approvalStatus-Eigenschaft ab.
@@ -119,27 +119,27 @@ public class TourTO {
     }
 
     /**
-     * Ruft den Wert der deliveryConditions-Eigenschaft ab.
+     * Ruft den Wert der deliveryCondition-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link DeliveryConditionTO }
      *     
      */
-    public DeliveryConditionTO getDeliveryConditions() {
-        return deliveryConditions;
+    public DeliveryConditionTO getDeliveryCondition() {
+        return deliveryCondition;
     }
 
     /**
-     * Legt den Wert der deliveryConditions-Eigenschaft fest.
+     * Legt den Wert der deliveryCondition-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link DeliveryConditionTO }
      *     
      */
-    public void setDeliveryConditions(DeliveryConditionTO value) {
-        this.deliveryConditions = value;
+    public void setDeliveryCondition(DeliveryConditionTO value) {
+        this.deliveryCondition = value;
     }
 
     /**
@@ -207,27 +207,27 @@ public class TourTO {
     }
 
     /**
-     * Ruft den Wert der paymentConditions-Eigenschaft ab.
+     * Ruft den Wert der paymentCondition-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link PaymentConditionTO }
      *     
      */
-    public PaymentConditionTO getPaymentConditions() {
-        return paymentConditions;
+    public PaymentConditionTO getPaymentCondition() {
+        return paymentCondition;
     }
 
     /**
-     * Legt den Wert der paymentConditions-Eigenschaft fest.
+     * Legt den Wert der paymentCondition-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link PaymentConditionTO }
      *     
      */
-    public void setPaymentConditions(PaymentConditionTO value) {
-        this.paymentConditions = value;
+    public void setPaymentCondition(PaymentConditionTO value) {
+        this.paymentCondition = value;
     }
 
     /**
@@ -286,24 +286,16 @@ public class TourTO {
     /**
      * Ruft den Wert der time-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
     /**
      * Legt den Wert der time-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public void setTime(Date value) {
+    public void setTime(long value) {
         this.time = value;
     }
 
@@ -315,7 +307,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public Date getUpdatedOn() {
+    public XMLGregorianCalendar getUpdatedOn() {
         return updatedOn;
     }
 
@@ -327,7 +319,7 @@ public class TourTO {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setUpdatedOn(Date value) {
+    public void setUpdatedOn(XMLGregorianCalendar value) {
         this.updatedOn = value;
     }
 

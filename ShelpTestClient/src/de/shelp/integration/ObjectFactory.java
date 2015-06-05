@@ -24,17 +24,18 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _AcceptFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "acceptFriendshipResponse");
-    private final static QName _SessionNotExistException_QNAME = new QName("http://integration.shelp.de/", "SessionNotExistException");
-    private final static QName _GetFriendsResponse_QNAME = new QName("http://integration.shelp.de/", "getFriendsResponse");
-    private final static QName _DeniedFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "deniedFriendshipResponse");
-    private final static QName _AddFriend_QNAME = new QName("http://integration.shelp.de/", "addFriend");
-    private final static QName _DeleteFriendshipResponse_QNAME = new QName("http://integration.shelp.de/", "deleteFriendshipResponse");
-    private final static QName _AddFriendResponse_QNAME = new QName("http://integration.shelp.de/", "addFriendResponse");
-    private final static QName _GetFriends_QNAME = new QName("http://integration.shelp.de/", "getFriends");
-    private final static QName _DeleteFriendship_QNAME = new QName("http://integration.shelp.de/", "deleteFriendship");
-    private final static QName _DeniedFriendship_QNAME = new QName("http://integration.shelp.de/", "deniedFriendship");
-    private final static QName _AcceptFriendship_QNAME = new QName("http://integration.shelp.de/", "acceptFriendship");
+    private final static QName _CreateTourResponse_QNAME = new QName("http://integration.shelp.de/", "createTourResponse");
+    private final static QName _GetTourResponse_QNAME = new QName("http://integration.shelp.de/", "getTourResponse");
+    private final static QName _SearchToursResponse_QNAME = new QName("http://integration.shelp.de/", "searchToursResponse");
+    private final static QName _DeleteTourResponse_QNAME = new QName("http://integration.shelp.de/", "deleteTourResponse");
+    private final static QName _CreateTour_QNAME = new QName("http://integration.shelp.de/", "createTour");
+    private final static QName _GetRequestsOfTourResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTourResponse");
+    private final static QName _GetUpdatedTours_QNAME = new QName("http://integration.shelp.de/", "getUpdatedTours");
+    private final static QName _DeleteTour_QNAME = new QName("http://integration.shelp.de/", "deleteTour");
+    private final static QName _GetTour_QNAME = new QName("http://integration.shelp.de/", "getTour");
+    private final static QName _SearchTours_QNAME = new QName("http://integration.shelp.de/", "searchTours");
+    private final static QName _GetUpdatedToursResponse_QNAME = new QName("http://integration.shelp.de/", "getUpdatedToursResponse");
+    private final static QName _GetRequestsOfTour_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTour");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.shelp.integration
@@ -44,91 +45,115 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetFriendsResponse }
+     * Create an instance of {@link GetUpdatedTours }
      * 
      */
-    public GetFriendsResponse createGetFriendsResponse() {
-        return new GetFriendsResponse();
+    public GetUpdatedTours createGetUpdatedTours() {
+        return new GetUpdatedTours();
     }
 
     /**
-     * Create an instance of {@link DeniedFriendshipResponse }
+     * Create an instance of {@link GetTour }
      * 
      */
-    public DeniedFriendshipResponse createDeniedFriendshipResponse() {
-        return new DeniedFriendshipResponse();
+    public GetTour createGetTour() {
+        return new GetTour();
     }
 
     /**
-     * Create an instance of {@link AcceptFriendshipResponse }
+     * Create an instance of {@link DeleteTour }
      * 
      */
-    public AcceptFriendshipResponse createAcceptFriendshipResponse() {
-        return new AcceptFriendshipResponse();
+    public DeleteTour createDeleteTour() {
+        return new DeleteTour();
     }
 
     /**
-     * Create an instance of {@link SessionNotExistException }
+     * Create an instance of {@link SearchToursResponse }
      * 
      */
-    public SessionNotExistException createSessionNotExistException() {
-        return new SessionNotExistException();
+    public SearchToursResponse createSearchToursResponse() {
+        return new SearchToursResponse();
     }
 
     /**
-     * Create an instance of {@link GetFriends }
+     * Create an instance of {@link GetTourResponse }
      * 
      */
-    public GetFriends createGetFriends() {
-        return new GetFriends();
+    public GetTourResponse createGetTourResponse() {
+        return new GetTourResponse();
     }
 
     /**
-     * Create an instance of {@link DeniedFriendship }
+     * Create an instance of {@link CreateTourResponse }
      * 
      */
-    public DeniedFriendship createDeniedFriendship() {
-        return new DeniedFriendship();
+    public CreateTourResponse createCreateTourResponse() {
+        return new CreateTourResponse();
     }
 
     /**
-     * Create an instance of {@link DeleteFriendship }
+     * Create an instance of {@link DeleteTourResponse }
      * 
      */
-    public DeleteFriendship createDeleteFriendship() {
-        return new DeleteFriendship();
+    public DeleteTourResponse createDeleteTourResponse() {
+        return new DeleteTourResponse();
     }
 
     /**
-     * Create an instance of {@link AcceptFriendship }
+     * Create an instance of {@link GetRequestsOfTourResponse }
      * 
      */
-    public AcceptFriendship createAcceptFriendship() {
-        return new AcceptFriendship();
+    public GetRequestsOfTourResponse createGetRequestsOfTourResponse() {
+        return new GetRequestsOfTourResponse();
     }
 
     /**
-     * Create an instance of {@link DeleteFriendshipResponse }
+     * Create an instance of {@link CreateTour }
      * 
      */
-    public DeleteFriendshipResponse createDeleteFriendshipResponse() {
-        return new DeleteFriendshipResponse();
+    public CreateTour createCreateTour() {
+        return new CreateTour();
     }
 
     /**
-     * Create an instance of {@link AddFriend }
+     * Create an instance of {@link GetUpdatedToursResponse }
      * 
      */
-    public AddFriend createAddFriend() {
-        return new AddFriend();
+    public GetUpdatedToursResponse createGetUpdatedToursResponse() {
+        return new GetUpdatedToursResponse();
     }
 
     /**
-     * Create an instance of {@link AddFriendResponse }
+     * Create an instance of {@link GetRequestsOfTour }
      * 
      */
-    public AddFriendResponse createAddFriendResponse() {
-        return new AddFriendResponse();
+    public GetRequestsOfTour createGetRequestsOfTour() {
+        return new GetRequestsOfTour();
+    }
+
+    /**
+     * Create an instance of {@link SearchTours }
+     * 
+     */
+    public SearchTours createSearchTours() {
+        return new SearchTours();
+    }
+
+    /**
+     * Create an instance of {@link LocationTO }
+     * 
+     */
+    public LocationTO createLocationTO() {
+        return new LocationTO();
+    }
+
+    /**
+     * Create an instance of {@link WishlistTO }
+     * 
+     */
+    public WishlistTO createWishlistTO() {
+        return new WishlistTO();
     }
 
     /**
@@ -140,19 +165,43 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link FriendshipTO }
+     * Create an instance of {@link TourTO }
      * 
      */
-    public FriendshipTO createFriendshipTO() {
-        return new FriendshipTO();
+    public TourTO createTourTO() {
+        return new TourTO();
     }
 
     /**
-     * Create an instance of {@link FriendsResponse }
+     * Create an instance of {@link ApprovalStatusTO }
      * 
      */
-    public FriendsResponse createFriendsResponse() {
-        return new FriendsResponse();
+    public ApprovalStatusTO createApprovalStatusTO() {
+        return new ApprovalStatusTO();
+    }
+
+    /**
+     * Create an instance of {@link DeliveryConditionTO }
+     * 
+     */
+    public DeliveryConditionTO createDeliveryConditionTO() {
+        return new DeliveryConditionTO();
+    }
+
+    /**
+     * Create an instance of {@link ToursResponse }
+     * 
+     */
+    public ToursResponse createToursResponse() {
+        return new ToursResponse();
+    }
+
+    /**
+     * Create an instance of {@link PaymentConditionTO }
+     * 
+     */
+    public PaymentConditionTO createPaymentConditionTO() {
+        return new PaymentConditionTO();
     }
 
     /**
@@ -164,102 +213,143 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptFriendshipResponse }{@code >}}
+     * Create an instance of {@link TourResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptFriendshipResponse")
-    public JAXBElement<AcceptFriendshipResponse> createAcceptFriendshipResponse(AcceptFriendshipResponse value) {
-        return new JAXBElement<AcceptFriendshipResponse>(_AcceptFriendshipResponse_QNAME, AcceptFriendshipResponse.class, null, value);
+    public TourResponse createTourResponse() {
+        return new TourResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SessionNotExistException }{@code >}}
+     * Create an instance of {@link RequestsResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "SessionNotExistException")
-    public JAXBElement<SessionNotExistException> createSessionNotExistException(SessionNotExistException value) {
-        return new JAXBElement<SessionNotExistException>(_SessionNotExistException_QNAME, SessionNotExistException.class, null, value);
+    public RequestsResponse createRequestsResponse() {
+        return new RequestsResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetFriendsResponse }{@code >}}
+     * Create an instance of {@link RequestTO }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getFriendsResponse")
-    public JAXBElement<GetFriendsResponse> createGetFriendsResponse(GetFriendsResponse value) {
-        return new JAXBElement<GetFriendsResponse>(_GetFriendsResponse_QNAME, GetFriendsResponse.class, null, value);
+    public RequestTO createRequestTO() {
+        return new RequestTO();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeniedFriendshipResponse }{@code >}}
+     * Create an instance of {@link CapacityTO }
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deniedFriendshipResponse")
-    public JAXBElement<DeniedFriendshipResponse> createDeniedFriendshipResponse(DeniedFriendshipResponse value) {
-        return new JAXBElement<DeniedFriendshipResponse>(_DeniedFriendshipResponse_QNAME, DeniedFriendshipResponse.class, null, value);
+    public CapacityTO createCapacityTO() {
+        return new CapacityTO();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddFriend }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "addFriend")
-    public JAXBElement<AddFriend> createAddFriend(AddFriend value) {
-        return new JAXBElement<AddFriend>(_AddFriend_QNAME, AddFriend.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTourResponse")
+    public JAXBElement<CreateTourResponse> createCreateTourResponse(CreateTourResponse value) {
+        return new JAXBElement<CreateTourResponse>(_CreateTourResponse_QNAME, CreateTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFriendshipResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteFriendshipResponse")
-    public JAXBElement<DeleteFriendshipResponse> createDeleteFriendshipResponse(DeleteFriendshipResponse value) {
-        return new JAXBElement<DeleteFriendshipResponse>(_DeleteFriendshipResponse_QNAME, DeleteFriendshipResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTourResponse")
+    public JAXBElement<GetTourResponse> createGetTourResponse(GetTourResponse value) {
+        return new JAXBElement<GetTourResponse>(_GetTourResponse_QNAME, GetTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddFriendResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link SearchToursResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "addFriendResponse")
-    public JAXBElement<AddFriendResponse> createAddFriendResponse(AddFriendResponse value) {
-        return new JAXBElement<AddFriendResponse>(_AddFriendResponse_QNAME, AddFriendResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchToursResponse")
+    public JAXBElement<SearchToursResponse> createSearchToursResponse(SearchToursResponse value) {
+        return new JAXBElement<SearchToursResponse>(_SearchToursResponse_QNAME, SearchToursResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetFriends }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getFriends")
-    public JAXBElement<GetFriends> createGetFriends(GetFriends value) {
-        return new JAXBElement<GetFriends>(_GetFriends_QNAME, GetFriends.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTourResponse")
+    public JAXBElement<DeleteTourResponse> createDeleteTourResponse(DeleteTourResponse value) {
+        return new JAXBElement<DeleteTourResponse>(_DeleteTourResponse_QNAME, DeleteTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteFriendship }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTour }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteFriendship")
-    public JAXBElement<DeleteFriendship> createDeleteFriendship(DeleteFriendship value) {
-        return new JAXBElement<DeleteFriendship>(_DeleteFriendship_QNAME, DeleteFriendship.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTour")
+    public JAXBElement<CreateTour> createCreateTour(CreateTour value) {
+        return new JAXBElement<CreateTour>(_CreateTour_QNAME, CreateTour.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeniedFriendship }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTourResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deniedFriendship")
-    public JAXBElement<DeniedFriendship> createDeniedFriendship(DeniedFriendship value) {
-        return new JAXBElement<DeniedFriendship>(_DeniedFriendship_QNAME, DeniedFriendship.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTourResponse")
+    public JAXBElement<GetRequestsOfTourResponse> createGetRequestsOfTourResponse(GetRequestsOfTourResponse value) {
+        return new JAXBElement<GetRequestsOfTourResponse>(_GetRequestsOfTourResponse_QNAME, GetRequestsOfTourResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptFriendship }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedTours }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptFriendship")
-    public JAXBElement<AcceptFriendship> createAcceptFriendship(AcceptFriendship value) {
-        return new JAXBElement<AcceptFriendship>(_AcceptFriendship_QNAME, AcceptFriendship.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedTours")
+    public JAXBElement<GetUpdatedTours> createGetUpdatedTours(GetUpdatedTours value) {
+        return new JAXBElement<GetUpdatedTours>(_GetUpdatedTours_QNAME, GetUpdatedTours.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTour }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTour")
+    public JAXBElement<DeleteTour> createDeleteTour(DeleteTour value) {
+        return new JAXBElement<DeleteTour>(_DeleteTour_QNAME, DeleteTour.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetTour }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTour")
+    public JAXBElement<GetTour> createGetTour(GetTour value) {
+        return new JAXBElement<GetTour>(_GetTour_QNAME, GetTour.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link SearchTours }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchTours")
+    public JAXBElement<SearchTours> createSearchTours(SearchTours value) {
+        return new JAXBElement<SearchTours>(_SearchTours_QNAME, SearchTours.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedToursResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedToursResponse")
+    public JAXBElement<GetUpdatedToursResponse> createGetUpdatedToursResponse(GetUpdatedToursResponse value) {
+        return new JAXBElement<GetUpdatedToursResponse>(_GetUpdatedToursResponse_QNAME, GetUpdatedToursResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTour }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTour")
+    public JAXBElement<GetRequestsOfTour> createGetRequestsOfTour(GetRequestsOfTour value) {
+        return new JAXBElement<GetRequestsOfTour>(_GetRequestsOfTour_QNAME, GetRequestsOfTour.class, null, value);
     }
 
 }

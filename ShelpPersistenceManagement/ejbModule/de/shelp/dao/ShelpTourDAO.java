@@ -40,16 +40,30 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     }
 
     @Override
-    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Capacity capacity,
-	    Date startTime, Date endTime, User currentUser) {
+    public List<Tour> search(ApprovalStatus approvalStatus, Location location,
+	    Capacity capacity, Date startTime, Date endTime, User currentUser) {
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 	CriteriaQuery<Tour> criteriaQuery = criteriaBuilder
 		.createQuery(Tour.class);
 	Root<Tour> tour = criteriaQuery.from(Tour.class);
 
 	List<Tour> searchedTours = new ArrayList<Tour>();
-	// TODO get friends of current user and get their active tours with
-	// friends_only state
+
+	// Geht alle Freunde durch und filtert nach den Fahrten die den Ansprüchen gerecht werden
+	List<User> friends = currentUser.getFriends();
+	for (User friend : friends) {
+	    List<Tour> tours = friend.getTours();
+	    for (Tour tourOfUser : tours) {
+		if (tourOfUser.getApprovalStatus().getDescription()
+			.equals("Nur Freunde")
+			&& location.equals(tourOfUser.getLocation())
+			&& capacity.equals(tourOfUser.getCapacity())
+			&& tourOfUser.getTime().after(startTime)
+			&& tourOfUser.getTime().before(endTime)) {
+		    searchedTours.add(tourOfUser);
+		}
+	    }
+	}
 
 	// TODO den String Alle sinnvoll auslagern
 	if (approvalStatus.getDescription().equals("Alle")) {
@@ -59,8 +73,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 			    startTime, endTime), criteriaBuilder.equal(
 			    tour.<ApprovalStatus> get("approvalStatus"),
 			    approvalStatus), criteriaBuilder.equal(
-				    tour.<Capacity> get("capacity"),
-				    capacity)));
+			    tour.<Capacity> get("capacity"), capacity)));
 	    criteriaQuery.select(tour);
 	    criteriaQuery.where(andClause);
 	    searchedTours.addAll(em.createQuery(criteriaQuery).getResultList());
@@ -71,7 +84,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 
     @Override
     public List<Tour> searchNear(ApprovalStatus approvalStatus,
-	    Location location, Capacity capacity, Date startTime, Date endTime, User currentUser) {
+	    Location location, Capacity capacity, Date startTime, Date endTime,
+	    User currentUser) {
 	// Get all locations, filter by zipcode of given location
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 	CriteriaQuery<Location> criteriaQuery = criteriaBuilder
@@ -88,8 +102,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	List<Tour> resultList = new ArrayList<Tour>();
 
 	for (Location locationSearch : locationList) {
-	    resultList.addAll(search(approvalStatus, locationSearch, capacity, startTime,
-		    endTime, currentUser));
+	    resultList.addAll(search(approvalStatus, locationSearch, capacity,
+		    startTime, endTime, currentUser));
 	}
 
 	return resultList;

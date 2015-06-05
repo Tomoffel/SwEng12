@@ -25,7 +25,7 @@ public class ShelpFriendDAO implements ShelpFriendDAOLocal {
 
     @Override
     public void deleteFriendship(Friendship friendship) {
-	 em.remove(friendship);
+	em.remove(friendship);
     }
 
 }

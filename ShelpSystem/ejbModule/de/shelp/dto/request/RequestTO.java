@@ -1,7 +1,5 @@
 package de.shelp.dto.request;
 
-import java.util.Calendar;
-
 import de.shelp.dto.tour.TourTO;
 import de.shelp.dto.user.UserTO;
 import de.shelp.enums.RequestStatus;
@@ -14,7 +12,7 @@ public class RequestTO {
     private TourTO tour;
     private WishlistTO wishlist;
     private String notice;
-    private Calendar updatedOn;
+    private long updatedOn;
     private RequestStatus status;
 
     public long getId() {
@@ -65,11 +63,11 @@ public class RequestTO {
 	this.notice = notice;
     }
 
-    public Calendar getUpdatedOn() {
+    public long getUpdatedOn() {
 	return updatedOn;
     }
 
-    public void setUpdatedOn(Calendar updatedOn) {
+    public void setUpdatedOn(long updatedOn) {
 	this.updatedOn = updatedOn;
     }
 

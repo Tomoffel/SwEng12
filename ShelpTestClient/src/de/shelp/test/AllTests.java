@@ -9,7 +9,9 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  */
 @RunWith(Suite.class)
-@SuiteClasses({ UserIntegrationTest.class, StateIntegrationTest.class, TourIntegrationTest.class })
+@SuiteClasses({ UserIntegrationTest.class, StateIntegrationTest.class,
+	TourIntegrationTest.class, RatingIntegrationTest.class,
+	FriendIntegrationTest.class })
 public class AllTests {
 
 }

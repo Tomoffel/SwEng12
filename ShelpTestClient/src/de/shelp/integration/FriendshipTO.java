@@ -19,7 +19,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="changedOn" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="initiatorUser" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
  *         &lt;element name="recipientUser" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
  *         &lt;element name="status" type="{http://integration.shelp.de/}friendshipStatus" minOccurs="0"/>
@@ -43,7 +43,7 @@ public class FriendshipTO {
 
     @XmlSchemaType(name = "dateTime")
     protected XMLGregorianCalendar changedOn;
-    protected long id;
+    protected int id;
     protected UserTO initiatorUser;
     protected UserTO recipientUser;
     protected FriendshipStatus status;
@@ -76,7 +76,7 @@ public class FriendshipTO {
      * Ruft den Wert der id-Eigenschaft ab.
      * 
      */
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -84,7 +84,7 @@ public class FriendshipTO {
      * Legt den Wert der id-Eigenschaft fest.
      * 
      */
-    public void setId(long value) {
+    public void setId(int value) {
         this.id = value;
     }
 
