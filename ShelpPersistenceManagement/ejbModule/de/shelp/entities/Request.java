@@ -1,6 +1,7 @@
 package de.shelp.entities;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -8,8 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.OneToMany;
 
 import de.shelp.enums.RequestStatus;
 
@@ -25,9 +25,8 @@ public class Request {
     @ManyToOne
     private Tour tour;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Wishlist wishlist;
+    @OneToMany(mappedBy="owner")
+    private List <WishlistItem> wishes;
 
     private String notice;
     private Date updatedOn;
@@ -67,15 +66,16 @@ public class Request {
 	this.tour = tour;
     }
 
-    public Wishlist getWishlist() {
-	return wishlist;
-    }
 
-    public void setWishlist(Wishlist wishlist) {
-	this.wishlist = wishlist;
-    }
+    public List<WishlistItem> getWishes() {
+		return wishes;
+	}
 
-    public String getNotice() {
+	public void setWishes(List<WishlistItem> wishes) {
+		this.wishes = wishes;
+	}
+
+	public String getNotice() {
 	return notice;
     }
 

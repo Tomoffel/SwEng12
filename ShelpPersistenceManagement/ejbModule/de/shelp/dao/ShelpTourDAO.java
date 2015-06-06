@@ -146,4 +146,10 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	return em.find(DeliveryCondition.class, deliveryConditionId);
     }
 
+	@Override
+	public void saveTour(Tour tour) {
+		em.persist(tour);
+		
+	}
+
 }

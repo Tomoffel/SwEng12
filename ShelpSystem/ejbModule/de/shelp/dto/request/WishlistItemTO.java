@@ -1,23 +1,12 @@
-package de.shelp.entities;
+package de.shelp.dto.request;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+public class WishlistItemTO {
 
-@Entity
-public class WishlistItem {
-
-	@Id
-	@GeneratedValue
 	private int id;
 	private String text;
 	private boolean checked;
 
-	@ManyToOne
-	@JoinColumn(name = "owner_id")
-	private Request owner;
+	private RequestTO owner;
 
 	public int getId() {
 		return id;
@@ -43,11 +32,11 @@ public class WishlistItem {
 		this.checked = checked;
 	}
 
-	public Request getOwner() {
+	public RequestTO getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Request owner) {
+	public void setOwner(RequestTO owner) {
 		this.owner = owner;
 	}
 

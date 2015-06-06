@@ -36,4 +36,6 @@ public interface ShelpTourDAOLocal {
 
     public DeliveryCondition getDeliveryCondition(int deliveryConditionId);
 
+	public void saveTour(Tour tour);
+
 }
