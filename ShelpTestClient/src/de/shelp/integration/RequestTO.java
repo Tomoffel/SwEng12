@@ -1,11 +1,12 @@
 
 package de.shelp.integration;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -24,8 +25,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="status" type="{http://integration.shelp.de/}requestStatus" minOccurs="0"/>
  *         &lt;element name="targetUser" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
  *         &lt;element name="tour" type="{http://integration.shelp.de/}tourTO" minOccurs="0"/>
- *         &lt;element name="updatedOn" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
- *         &lt;element name="wishlist" type="{http://integration.shelp.de/}wishlistTO" minOccurs="0"/>
+ *         &lt;element name="updatedOn" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="wishes" type="{http://integration.shelp.de/}wishlistItemTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -43,7 +44,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "targetUser",
     "tour",
     "updatedOn",
-    "wishlist"
+    "wishes"
 })
 public class RequestTO {
 
@@ -53,9 +54,9 @@ public class RequestTO {
     protected RequestStatus status;
     protected UserTO targetUser;
     protected TourTO tour;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar updatedOn;
-    protected WishlistTO wishlist;
+    protected long updatedOn;
+    @XmlElement(nillable = true)
+    protected List<WishlistItemTO> wishes;
 
     /**
      * Ruft den Wert der id-Eigenschaft ab.
@@ -196,49 +197,46 @@ public class RequestTO {
     /**
      * Ruft den Wert der updatedOn-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public XMLGregorianCalendar getUpdatedOn() {
+    public long getUpdatedOn() {
         return updatedOn;
     }
 
     /**
      * Legt den Wert der updatedOn-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public void setUpdatedOn(XMLGregorianCalendar value) {
+    public void setUpdatedOn(long value) {
         this.updatedOn = value;
     }
 
     /**
-     * Ruft den Wert der wishlist-Eigenschaft ab.
+     * Gets the value of the wishes property.
      * 
-     * @return
-     *     possible object is
-     *     {@link WishlistTO }
-     *     
-     */
-    public WishlistTO getWishlist() {
-        return wishlist;
-    }
-
-    /**
-     * Legt den Wert der wishlist-Eigenschaft fest.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the wishes property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link WishlistTO }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getWishes().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link WishlistItemTO }
+     * 
+     * 
      */
-    public void setWishlist(WishlistTO value) {
-        this.wishlist = value;
+    public List<WishlistItemTO> getWishes() {
+        if (wishes == null) {
+            wishes = new ArrayList<WishlistItemTO>();
+        }
+        return this.wishes;
     }
 
 }

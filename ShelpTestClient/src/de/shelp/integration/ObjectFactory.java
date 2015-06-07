@@ -24,18 +24,16 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CreateTourResponse_QNAME = new QName("http://integration.shelp.de/", "createTourResponse");
-    private final static QName _GetTourResponse_QNAME = new QName("http://integration.shelp.de/", "getTourResponse");
-    private final static QName _SearchToursResponse_QNAME = new QName("http://integration.shelp.de/", "searchToursResponse");
-    private final static QName _DeleteTourResponse_QNAME = new QName("http://integration.shelp.de/", "deleteTourResponse");
-    private final static QName _CreateTour_QNAME = new QName("http://integration.shelp.de/", "createTour");
-    private final static QName _GetRequestsOfTourResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTourResponse");
-    private final static QName _GetUpdatedTours_QNAME = new QName("http://integration.shelp.de/", "getUpdatedTours");
-    private final static QName _DeleteTour_QNAME = new QName("http://integration.shelp.de/", "deleteTour");
-    private final static QName _GetTour_QNAME = new QName("http://integration.shelp.de/", "getTour");
-    private final static QName _SearchTours_QNAME = new QName("http://integration.shelp.de/", "searchTours");
-    private final static QName _GetUpdatedToursResponse_QNAME = new QName("http://integration.shelp.de/", "getUpdatedToursResponse");
-    private final static QName _GetRequestsOfTour_QNAME = new QName("http://integration.shelp.de/", "getRequestsOfTour");
+    private final static QName _GetUpdatedRequests_QNAME = new QName("http://integration.shelp.de/", "getUpdatedRequests");
+    private final static QName _AcceptRequest_QNAME = new QName("http://integration.shelp.de/", "acceptRequest");
+    private final static QName _DeleteRequest_QNAME = new QName("http://integration.shelp.de/", "deleteRequest");
+    private final static QName _CreateRequestResponse_QNAME = new QName("http://integration.shelp.de/", "createRequestResponse");
+    private final static QName _GetRequest_QNAME = new QName("http://integration.shelp.de/", "getRequest");
+    private final static QName _GetUpdatedRequestsResponse_QNAME = new QName("http://integration.shelp.de/", "getUpdatedRequestsResponse");
+    private final static QName _GetRequestResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestResponse");
+    private final static QName _AcceptRequestResponse_QNAME = new QName("http://integration.shelp.de/", "acceptRequestResponse");
+    private final static QName _DeleteRequestResponse_QNAME = new QName("http://integration.shelp.de/", "deleteRequestResponse");
+    private final static QName _CreateRequest_QNAME = new QName("http://integration.shelp.de/", "createRequest");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: de.shelp.integration
@@ -45,99 +43,83 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetUpdatedTours }
+     * Create an instance of {@link DeleteRequest }
      * 
      */
-    public GetUpdatedTours createGetUpdatedTours() {
-        return new GetUpdatedTours();
+    public DeleteRequest createDeleteRequest() {
+        return new DeleteRequest();
     }
 
     /**
-     * Create an instance of {@link GetTour }
+     * Create an instance of {@link AcceptRequest }
      * 
      */
-    public GetTour createGetTour() {
-        return new GetTour();
+    public AcceptRequest createAcceptRequest() {
+        return new AcceptRequest();
     }
 
     /**
-     * Create an instance of {@link DeleteTour }
+     * Create an instance of {@link GetUpdatedRequests }
      * 
      */
-    public DeleteTour createDeleteTour() {
-        return new DeleteTour();
+    public GetUpdatedRequests createGetUpdatedRequests() {
+        return new GetUpdatedRequests();
     }
 
     /**
-     * Create an instance of {@link SearchToursResponse }
+     * Create an instance of {@link DeleteRequestResponse }
      * 
      */
-    public SearchToursResponse createSearchToursResponse() {
-        return new SearchToursResponse();
+    public DeleteRequestResponse createDeleteRequestResponse() {
+        return new DeleteRequestResponse();
     }
 
     /**
-     * Create an instance of {@link GetTourResponse }
+     * Create an instance of {@link AcceptRequestResponse }
      * 
      */
-    public GetTourResponse createGetTourResponse() {
-        return new GetTourResponse();
+    public AcceptRequestResponse createAcceptRequestResponse() {
+        return new AcceptRequestResponse();
     }
 
     /**
-     * Create an instance of {@link CreateTourResponse }
+     * Create an instance of {@link CreateRequest }
      * 
      */
-    public CreateTourResponse createCreateTourResponse() {
-        return new CreateTourResponse();
+    public CreateRequest createCreateRequest() {
+        return new CreateRequest();
     }
 
     /**
-     * Create an instance of {@link DeleteTourResponse }
+     * Create an instance of {@link GetRequest }
      * 
      */
-    public DeleteTourResponse createDeleteTourResponse() {
-        return new DeleteTourResponse();
+    public GetRequest createGetRequest() {
+        return new GetRequest();
     }
 
     /**
-     * Create an instance of {@link GetRequestsOfTourResponse }
+     * Create an instance of {@link CreateRequestResponse }
      * 
      */
-    public GetRequestsOfTourResponse createGetRequestsOfTourResponse() {
-        return new GetRequestsOfTourResponse();
+    public CreateRequestResponse createCreateRequestResponse() {
+        return new CreateRequestResponse();
     }
 
     /**
-     * Create an instance of {@link CreateTour }
+     * Create an instance of {@link GetUpdatedRequestsResponse }
      * 
      */
-    public CreateTour createCreateTour() {
-        return new CreateTour();
+    public GetUpdatedRequestsResponse createGetUpdatedRequestsResponse() {
+        return new GetUpdatedRequestsResponse();
     }
 
     /**
-     * Create an instance of {@link GetUpdatedToursResponse }
+     * Create an instance of {@link GetRequestResponse }
      * 
      */
-    public GetUpdatedToursResponse createGetUpdatedToursResponse() {
-        return new GetUpdatedToursResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetRequestsOfTour }
-     * 
-     */
-    public GetRequestsOfTour createGetRequestsOfTour() {
-        return new GetRequestsOfTour();
-    }
-
-    /**
-     * Create an instance of {@link SearchTours }
-     * 
-     */
-    public SearchTours createSearchTours() {
-        return new SearchTours();
+    public GetRequestResponse createGetRequestResponse() {
+        return new GetRequestResponse();
     }
 
     /**
@@ -149,19 +131,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WishlistTO }
-     * 
-     */
-    public WishlistTO createWishlistTO() {
-        return new WishlistTO();
-    }
-
-    /**
      * Create an instance of {@link UserTO }
      * 
      */
     public UserTO createUserTO() {
         return new UserTO();
+    }
+
+    /**
+     * Create an instance of {@link WishlistItemTO }
+     * 
+     */
+    public WishlistItemTO createWishlistItemTO() {
+        return new WishlistItemTO();
     }
 
     /**
@@ -189,14 +171,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ToursResponse }
-     * 
-     */
-    public ToursResponse createToursResponse() {
-        return new ToursResponse();
-    }
-
-    /**
      * Create an instance of {@link PaymentConditionTO }
      * 
      */
@@ -213,19 +187,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TourResponse }
+     * Create an instance of {@link RequestResponse }
      * 
      */
-    public TourResponse createTourResponse() {
-        return new TourResponse();
-    }
-
-    /**
-     * Create an instance of {@link RequestsResponse }
-     * 
-     */
-    public RequestsResponse createRequestsResponse() {
-        return new RequestsResponse();
+    public RequestResponse createRequestResponse() {
+        return new RequestResponse();
     }
 
     /**
@@ -237,6 +203,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RequestsResponse }
+     * 
+     */
+    public RequestsResponse createRequestsResponse() {
+        return new RequestsResponse();
+    }
+
+    /**
      * Create an instance of {@link CapacityTO }
      * 
      */
@@ -245,111 +219,93 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTourResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedRequests }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTourResponse")
-    public JAXBElement<CreateTourResponse> createCreateTourResponse(CreateTourResponse value) {
-        return new JAXBElement<CreateTourResponse>(_CreateTourResponse_QNAME, CreateTourResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedRequests")
+    public JAXBElement<GetUpdatedRequests> createGetUpdatedRequests(GetUpdatedRequests value) {
+        return new JAXBElement<GetUpdatedRequests>(_GetUpdatedRequests_QNAME, GetUpdatedRequests.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetTourResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptRequest }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTourResponse")
-    public JAXBElement<GetTourResponse> createGetTourResponse(GetTourResponse value) {
-        return new JAXBElement<GetTourResponse>(_GetTourResponse_QNAME, GetTourResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptRequest")
+    public JAXBElement<AcceptRequest> createAcceptRequest(AcceptRequest value) {
+        return new JAXBElement<AcceptRequest>(_AcceptRequest_QNAME, AcceptRequest.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SearchToursResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteRequest }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchToursResponse")
-    public JAXBElement<SearchToursResponse> createSearchToursResponse(SearchToursResponse value) {
-        return new JAXBElement<SearchToursResponse>(_SearchToursResponse_QNAME, SearchToursResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteRequest")
+    public JAXBElement<DeleteRequest> createDeleteRequest(DeleteRequest value) {
+        return new JAXBElement<DeleteRequest>(_DeleteRequest_QNAME, DeleteRequest.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTourResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTourResponse")
-    public JAXBElement<DeleteTourResponse> createDeleteTourResponse(DeleteTourResponse value) {
-        return new JAXBElement<DeleteTourResponse>(_DeleteTourResponse_QNAME, DeleteTourResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createRequestResponse")
+    public JAXBElement<CreateRequestResponse> createCreateRequestResponse(CreateRequestResponse value) {
+        return new JAXBElement<CreateRequestResponse>(_CreateRequestResponse_QNAME, CreateRequestResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CreateTour }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequest }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createTour")
-    public JAXBElement<CreateTour> createCreateTour(CreateTour value) {
-        return new JAXBElement<CreateTour>(_CreateTour_QNAME, CreateTour.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequest")
+    public JAXBElement<GetRequest> createGetRequest(GetRequest value) {
+        return new JAXBElement<GetRequest>(_GetRequest_QNAME, GetRequest.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTourResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedRequestsResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTourResponse")
-    public JAXBElement<GetRequestsOfTourResponse> createGetRequestsOfTourResponse(GetRequestsOfTourResponse value) {
-        return new JAXBElement<GetRequestsOfTourResponse>(_GetRequestsOfTourResponse_QNAME, GetRequestsOfTourResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedRequestsResponse")
+    public JAXBElement<GetUpdatedRequestsResponse> createGetUpdatedRequestsResponse(GetUpdatedRequestsResponse value) {
+        return new JAXBElement<GetUpdatedRequestsResponse>(_GetUpdatedRequestsResponse_QNAME, GetUpdatedRequestsResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedTours }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedTours")
-    public JAXBElement<GetUpdatedTours> createGetUpdatedTours(GetUpdatedTours value) {
-        return new JAXBElement<GetUpdatedTours>(_GetUpdatedTours_QNAME, GetUpdatedTours.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestResponse")
+    public JAXBElement<GetRequestResponse> createGetRequestResponse(GetRequestResponse value) {
+        return new JAXBElement<GetRequestResponse>(_GetRequestResponse_QNAME, GetRequestResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteTour }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link AcceptRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteTour")
-    public JAXBElement<DeleteTour> createDeleteTour(DeleteTour value) {
-        return new JAXBElement<DeleteTour>(_DeleteTour_QNAME, DeleteTour.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "acceptRequestResponse")
+    public JAXBElement<AcceptRequestResponse> createAcceptRequestResponse(AcceptRequestResponse value) {
+        return new JAXBElement<AcceptRequestResponse>(_AcceptRequestResponse_QNAME, AcceptRequestResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetTour }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link DeleteRequestResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getTour")
-    public JAXBElement<GetTour> createGetTour(GetTour value) {
-        return new JAXBElement<GetTour>(_GetTour_QNAME, GetTour.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "deleteRequestResponse")
+    public JAXBElement<DeleteRequestResponse> createDeleteRequestResponse(DeleteRequestResponse value) {
+        return new JAXBElement<DeleteRequestResponse>(_DeleteRequestResponse_QNAME, DeleteRequestResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SearchTours }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CreateRequest }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "searchTours")
-    public JAXBElement<SearchTours> createSearchTours(SearchTours value) {
-        return new JAXBElement<SearchTours>(_SearchTours_QNAME, SearchTours.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedToursResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedToursResponse")
-    public JAXBElement<GetUpdatedToursResponse> createGetUpdatedToursResponse(GetUpdatedToursResponse value) {
-        return new JAXBElement<GetUpdatedToursResponse>(_GetUpdatedToursResponse_QNAME, GetUpdatedToursResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsOfTour }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsOfTour")
-    public JAXBElement<GetRequestsOfTour> createGetRequestsOfTour(GetRequestsOfTour value) {
-        return new JAXBElement<GetRequestsOfTour>(_GetRequestsOfTour_QNAME, GetRequestsOfTour.class, null, value);
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "createRequest")
+    public JAXBElement<CreateRequest> createCreateRequest(CreateRequest value) {
+        return new JAXBElement<CreateRequest>(_CreateRequest_QNAME, CreateRequest.class, null, value);
     }
 
 }

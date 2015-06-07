@@ -18,8 +18,6 @@ import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.request.RequestResponse;
 import de.shelp.dto.request.RequestTO;
 import de.shelp.dto.request.RequestsResponse;
-import de.shelp.dto.tour.TourTO;
-import de.shelp.dto.tour.ToursResponse;
 import de.shelp.entities.Request;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.Tour;

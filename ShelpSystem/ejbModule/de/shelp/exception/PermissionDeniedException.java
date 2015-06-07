@@ -8,7 +8,6 @@ public class PermissionDeniedException extends ShelpException {
 
     public PermissionDeniedException(String message) {
 	super(ReturnCode.PERMISSION_DENIED, message);
-	// TODO Auto-generated constructor stub
     }
 
 }
