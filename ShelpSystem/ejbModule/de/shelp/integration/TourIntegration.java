@@ -67,6 +67,12 @@ public class TourIntegration {
     @EJB
     private RequestDtoAssembler requestDtoAssembler;
 
+    /**
+     * EJB zur Beauftragung zum versenden von E-Mails
+     */
+    @EJB
+    private MailRequesterBean mailRequester;
+
     public ReturnCodeResponse createTour(int approvalStatusId, long locationId,
 	    int capacityId, int paymentConditionId, int deliveryConditionId,
 	    long time, int sessionId) {
@@ -161,15 +167,17 @@ public class TourIntegration {
 			+ tourId);
 	    }
 	    ShelpSession session = userDao.getSession(sessionId);
-	    if (!tour.getOwner().isFriend(session.getUser())) {
+	    if (!tour.getOwner().equals(session.getUser())) {
 		LOGGER.warn("Zugriff verweigert! " + session.getUser()
 			+ " ist nicht der Besitzer der Fahrt!");
 		throw new PermissionDeniedException("Zugriff verweigert! "
 			+ session.getUser()
 			+ " ist nicht der Besitzer der Fahrt!");
 	    }
-
+  
 	    tourDao.cancleTour(tour);
+	    LOGGER.info("Fahrte wurde abgesagt " + tour);
+	    mailRequester.printLetter("Fahrte wurde abgesagt " + tour);
 	} catch (TourNotExistException | PermissionDeniedException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());

@@ -234,6 +234,18 @@ public class TourIntegrationTest {
 	TourResponse tour = remoteSystem.getTour(500, session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, tour.getReturnCode());
     }
+    
+    @Test
+    public void fTestDeleteTour() {
+	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
+		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
+		calendarInOneDay.getTime().getTime(), calendarInThreeDays
+			.getTime().getTime(), true, session1.getId());
+	
+	ReturnCodeResponse tour = remoteSystem.deleteTour(searchTour.getTours().get(0).getId(), session1.getId());
+	Assert.assertEquals(ReturnCode.OK, tour.getReturnCode());
+    }
+
 
     // TODO test with friendship
     @Test
