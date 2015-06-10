@@ -90,7 +90,7 @@ public class RequestIntegration {
 	}
 
 	public ReturnCodeResponse createRequest(String targetUserId, long tourId,
-			List<String> wishes, String notice, int sessionId) {
+			String notice, int sessionId, String... wishes) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
 
@@ -139,10 +139,13 @@ public class RequestIntegration {
 				wishlistItems.add(item);
 			}
 			
+			//TODO transaktion
 			request.setWishes(wishlistItems);
 			daoRequest.createRequest(request);
 			tour.setUpdatedOn(new Date());
 			tourDao.saveTour(tour);
+			
+			LOGGER.info("Anfrage wurde gestellt.");
 		}
 
 		catch (ShelpException e) {

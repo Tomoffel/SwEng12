@@ -19,14 +19,6 @@ public class User implements Serializable {
 	private String password;
 	private Calendar creationDate;
 
-	public List<Request> getOwnRequests() {
-		return ownRequests;
-	}
-
-	public void setOwnRequests(List<Request> ownRequests) {
-		this.ownRequests = ownRequests;
-	}
-
 	@OneToMany(mappedBy = "sourceUser")
 	private List<Request> ownRequests;
 
@@ -179,5 +171,12 @@ public class User implements Serializable {
 
 		return friends;
 	}
-
+	
+	public List<Request> getOwnRequests() {
+	    return ownRequests;
+	}
+	
+	public void setOwnRequests(List<Request> ownRequests) {
+	    this.ownRequests = ownRequests;
+	}
 }

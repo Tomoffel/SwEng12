@@ -19,7 +19,9 @@ public class Request {
     @Id
     @GeneratedValue
     private long id;
+    @ManyToOne
     private User sourceUser;
+    @ManyToOne
     private User targetUser;
 
     @ManyToOne
