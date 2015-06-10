@@ -39,6 +39,7 @@ import de.shelp.integration.UserResponse;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RequestIntegrationTest {
 
+
     private static TourTO tour1 = new TourTO();
     private static TourTO tour2 = new TourTO();
     private static TourTO tour3 = new TourTO();
@@ -172,8 +173,30 @@ public class RequestIntegrationTest {
 
     @Test
     /*
-     * Erwarte, das TargetUser nicht existiert
-     */
+     * Testet, ob eine Anfrage für eine Tour erstellt werden kann. Erwartet, das sich keine Tour selbst zugewiesen werden kann.
+	 */
+    public void aTestCreateRequest() {
+	ToursResponse searchTour = tourIntegrationPort.searchTours(states
+		.get(0).getId(), locations.get(0).getId(), capacities.get(1)
+		.getId(), calendarInOneDay.getTime().getTime(),
+		calendarInThreeDays.getTime().getTime(), false, session1
+			.getId());
+
+	TourResponse tour = tourIntegrationPort.getTour(searchTour.getTours()
+		.get(0).getId(), session1.getId());
+
+	ArrayList<String> wishes = new ArrayList<String>();
+	wishes.add("Test");
+	
+	ReturnCodeResponse createRequest = remote.createRequest(session1.getUser().getEmail(), tour.getTour().getId(), "Kommentar", session1.getId(),wishes);
+
+	Assert.assertEquals(createRequest.getReturnCode(), ReturnCode.ERROR);
+    }
+    
+    @Test
+    /*
+     * Testet, ob eine Anfrage für eine Tour erstellt werden kann. Erwartet, das die TargetUser-ID nicht existiert.
+	 */
     public void bTestCreateRequest() {
 	ToursResponse searchTour = tourIntegrationPort.searchTours(states
 		.get(0).getId(), locations.get(0).getId(), capacities.get(1)
@@ -187,11 +210,49 @@ public class RequestIntegrationTest {
 	ArrayList<String> wishes = new ArrayList<String>();
 	wishes.add("Test");
 	
-	// oben musste noch der remote zugriff hinzugefügt werden (wie bei Tours nur für Request)
-	ReturnCodeResponse createRequest = remote.createRequest(session1.getUser().getEmail(), tour.getTour().getId(),
-		wishes, "Kommentar", session1.getId());
-
+	ReturnCodeResponse createRequest = remote.createRequest("omaErna@gibEsNicht.de", tour.getTour().getId(), "Kommentar", session1.getId(),wishes);
 	Assert.assertEquals(createRequest.getReturnCode(), ReturnCode.ERROR);
     }
 
+    @Test
+    /*
+     * Testet, ob eine Anfrage für eine Tour erstellt werden kann. Erwartet, das die Session-ID nicht existiert/ungültig ist.
+	 */
+    public void cTestCreateRequest() {
+	ToursResponse searchTour = tourIntegrationPort.searchTours(states
+		.get(0).getId(), locations.get(0).getId(), capacities.get(1)
+		.getId(), calendarInOneDay.getTime().getTime(),
+		calendarInThreeDays.getTime().getTime(), false, session1
+			.getId());
+
+	TourResponse tour = tourIntegrationPort.getTour(searchTour.getTours()
+		.get(0).getId(), session1.getId());
+
+	ArrayList<String> wishes = new ArrayList<String>();
+	wishes.add("Test");
+	
+	ReturnCodeResponse createRequest = remote.createRequest(session1.getUser().getEmail(), tour.getTour().getId(), "Kommentar", 453423434,wishes);
+	Assert.assertEquals(createRequest.getReturnCode(), ReturnCode.ERROR);
+    }
+    
+    @Test
+    /*
+     * Testet, ob eine Anfrage für eine Tour erstellt werden kann. Erwartet, das die Fahrt nicht existiert.
+	 */
+    public void dTestCreateRequest() {
+	ToursResponse searchTour = tourIntegrationPort.searchTours(states
+		.get(0).getId(), locations.get(0).getId(), capacities.get(1)
+		.getId(), calendarInOneDay.getTime().getTime(),
+		calendarInThreeDays.getTime().getTime(), false, session1
+			.getId());
+
+	TourResponse tour = tourIntegrationPort.getTour(searchTour.getTours()
+		.get(0).getId(), session1.getId());
+
+	ArrayList<String> wishes = new ArrayList<String>();
+	wishes.add("Test");
+	
+	ReturnCodeResponse createRequest = remote.createRequest("theresa@sennekamp.de", tour.getTour().getId()+1, "Kommentar", session1.getId(),wishes);
+	Assert.assertEquals(createRequest.getReturnCode(), ReturnCode.ERROR);
+    }
 }

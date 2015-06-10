@@ -65,6 +65,14 @@ public class RequestIntegration {
 	@EJB(beanName = "ShelpTourDAO", beanInterface = ShelpTourDAOLocal.class)
 	private ShelpTourDAOLocal tourDao;
 
+	
+	/**
+	 * Method to accept a request to
+	 * @param requestId
+	 * @param acceptedIds
+	 * @param sessionId
+	 * @return
+	 */
 	public ReturnCodeResponse acceptRequest(long requestId,
 			List<Integer> acceptedIds, int sessionId) {
 		
@@ -89,39 +97,52 @@ public class RequestIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to create a request
+	 * @param targetUserId
+	 * @param tourId
+	 * @param notice
+	 * @param sessionId
+	 * @param wishes
+	 * @return returnCodeResponse
+	 * @throws UserNotExistEcxeption 
+	 */
 	public ReturnCodeResponse createRequest(String targetUserId, long tourId,
-			String notice, int sessionId, String... wishes) {
+			String notice, int sessionId, String... wishes) throws UserNotExistEcxeption {
+		
+		//create empty response
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
-
-		ShelpSession session = daoUser.getSession(sessionId);
+		//check current Session
+		//ShelpSession session = daoUser.getSession(sessionId);
+		ShelpSession session = checkSession(sessionId);
+		
+		//get targetUser
 		User targetUser = daoUser.findUserByName(targetUserId);
+		
 		try {
+			//check parameter
 			if (targetUser == null) {
-				LOGGER.info("TargetUser existiert nicht.");
-				throw new UserNotExistEcxeption(ReturnCode.ERROR,
-						"TargetUser existiert nicht.");
-			}
-			if (session == null) {
-				LOGGER.info("Session-Id existiert nicht.");
-				throw new UserNotExistEcxeption(ReturnCode.ERROR,
-						"Session-Id existiert nicht.");
+				String message = "TargetUser existiert nicht.";
+				LOGGER.info(message);
+				throw new UserNotExistEcxeption(ReturnCode.ERROR,message);
 			}
 			if (targetUser.equals(session.getUser())) {
-				LOGGER.info("Sich selbst eine Anfrage senden ergibt doch keinen Sinn! "
-						+ session.getUser());
-				throw new ShelpException(ReturnCode.ERROR,
-						"Sich selbst eine Anfrage senden ergibt doch keinen Sinn!"
-								+ session.getUser());
+				String message = "Sich selbst eine Anfrage senden, ergibt doch garkeinen Sinn lieber " + session.getUser();
+				LOGGER.info(message);
+				throw new ShelpException(ReturnCode.ERROR,message);
 			}
 
+			//get current Tour
 			Tour tour = tourDao.getTour(tourId);
 
 			if (tour == null) {
-				LOGGER.info("Fahrt existiert nicht!");
-				throw new TourNotExistException("Fahrt existiert nicht!");
+				String message = "Fahrt existiert nicht";
+				LOGGER.info(message);
+				throw new TourNotExistException(message);
 			}
 			
+			//create request if parameter are ok
 			Request request = new Request();
 			request.setSourceUser(session.getUser());
 			request.setTargetUser(targetUser);
@@ -129,6 +150,7 @@ public class RequestIntegration {
 			request.setNotice(notice);
 			request.setUpdatedOn(new Date());
 			
+			//create list for wishlistitems
 			List<WishlistItem> wishlistItems = new ArrayList<WishlistItem>();
 			
 			for (String string : wishes) {
@@ -140,9 +162,16 @@ public class RequestIntegration {
 			}
 			
 			//TODO transaktion
+			//set created wishlist to request
 			request.setWishes(wishlistItems);
+			
+			//create request
 			daoRequest.createRequest(request);
+			
+			//update time for tour
 			tour.setUpdatedOn(new Date());
+			
+			//save tour
 			tourDao.saveTour(tour);
 			
 			LOGGER.info("Anfrage wurde gestellt.");
@@ -156,13 +185,22 @@ public class RequestIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to get Request
+	 * @param requestId
+	 * @param sessionId
+	 * @return requestResponse
+	 */
 	public RequestResponse getRequest(long requestId, int sessionId) {
 
+		//create empty response
 		RequestResponse response = new RequestResponse();
 
 		try {
+			//check request
 			Request request = checkRequest(sessionId, requestId, true);
 
+			//transform request
 			response.setRequestTO(requestDtoAssembler.makeDTO(request));
 			LOGGER.info("Anfrage wurde zurückgegeben.");
 
@@ -174,12 +212,22 @@ public class RequestIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to delete a request
+	 * @param requestId
+	 * @param sessionId
+	 * @return ReturnCodeResponse
+	 */
 	public ReturnCodeResponse deleteRequest(long requestId, int sessionId) {
+		
+		//create empty response
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
 		try {
+			//check request
 			Request request = checkRequest(sessionId, requestId, true);
 
+			//delete request
 			daoRequest.deleteRequest(request);
 			LOGGER.info("Anfrage wurde gelöscht.");
 
@@ -191,15 +239,21 @@ public class RequestIntegration {
 		return response;
 	}
 
-	public RequestsResponse getUpdatedRequests(int sessionId, long timestamp) {
+	/**
+	 * Method to get updated request
+	 * @param sessionId
+	 * @param timestamp
+	 * @return
+	 * @throws UserNotExistEcxeption 
+	 */
+	public RequestsResponse getUpdatedRequests(int sessionId, long timestamp) throws UserNotExistEcxeption {
 
+		//create empty respnose
 		RequestsResponse response = new RequestsResponse();
-
-		//TODO: Session Überprüfung in Helferfunction auslagern
 		
+		//check current session
+		ShelpSession session = checkSession(sessionId);
 		
-		
-		ShelpSession session = daoUser.getSession(sessionId);
 		// get all request of the user
 		List<Request> requests = session.getUser().getOwnRequests();
 
@@ -216,19 +270,27 @@ public class RequestIntegration {
 		return response;
 	}
 
+	/**
+	 * Helper-method to check request
+	 * @param sessionId
+	 * @param requestId
+	 * @param checkBoth
+	 * @return
+	 * @throws ShelpException
+	 */
 	private Request checkRequest(int sessionId, long requestId, boolean checkBoth)
 			throws ShelpException {
 
-		ShelpSession session = daoUser.getSession(sessionId);
-		if (session == null) {
-			LOGGER.info("Session nicht gültig.");
-			throw new SessionNotExistException("Session nicht gültig.");
-		}
-
+		//get current Session
+		ShelpSession session = checkSession(sessionId);
+		
+		//get user from session
 		User user = session.getUser();
 
+		//get current request
 		Request request = daoRequest.getRequestById(requestId);
 
+		//check request
 		if (request == null) {
 			LOGGER.info("Anfrage nicht gültig.");
 			throw new ShelpException(ReturnCode.ERROR,
@@ -247,6 +309,24 @@ public class RequestIntegration {
 					"Anfrage nicht erlaubt!");
 		}
 
+	}
+	/**
+	 * Helper-method to check current session
+	 * @param sessionId
+	 * @return
+	 * @throws UserNotExistEcxeption
+	 */
+	private ShelpSession checkSession(int sessionId) throws UserNotExistEcxeption {
+		
+		//get current Session
+		ShelpSession session = daoUser.getSession(sessionId);
+		
+		if (session == null) {
+			String message = "Session-Id existiert nicht.";
+			LOGGER.info(message);
+			throw new UserNotExistEcxeption(ReturnCode.ERROR,message);
+		}
+		return session;
 	}
 
 }
