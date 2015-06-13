@@ -26,6 +26,12 @@ import de.shelp.exception.ShelpException;
 import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.FriendDtoAssembler;
 
+/**
+ * Webservice class
+ * 
+ * @author anwender
+ *
+ */
 @WebService
 @WebContext(contextRoot = "/shelp")
 @Stateless
@@ -54,6 +60,12 @@ public class FriendIntegration {
 	@EJB
 	private FriendDtoAssembler dtoAssembler;
 
+	/**
+	 * Method to get Friends
+	 * 
+	 * @param sessionId
+	 * @return FriendsResponse
+	 */
 	public FriendsResponse getFriends(int sessionId) {
 		FriendsResponse response = new FriendsResponse();
 
@@ -87,16 +99,37 @@ public class FriendIntegration {
 
 	}
 
+	/**
+	 * Method to accept Friendship
+	 * 
+	 * @param friendshipId
+	 * @param sessionId
+	 * @return
+	 */
 	public ReturnCodeResponse acceptFriendship(int friendshipId, int sessionId) {
 		return changeFriendShip(friendshipId, FriendshipStatus.ACCEPT,
 				sessionId);
 	}
 
+	/**
+	 * Method to deny a friendship
+	 * 
+	 * @param friendshipId
+	 * @param sessionId
+	 * @return
+	 */
 	public ReturnCodeResponse deniedFriendship(int friendshipId, int sessionId) {
 		return changeFriendShip(friendshipId, FriendshipStatus.DENIED,
 				sessionId);
 	}
 
+	/**
+	 * Method to delete a Friendship
+	 * 
+	 * @param friendshipId
+	 * @param sessionId
+	 * @return
+	 */
 	public ReturnCodeResponse deleteFriendship(int friendshipId, int sessionId) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
 		try {
@@ -112,6 +145,14 @@ public class FriendIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to change a Friendship
+	 * 
+	 * @param friendshipId
+	 * @param status
+	 * @param sessionId
+	 * @return
+	 */
 	private ReturnCodeResponse changeFriendShip(int friendshipId,
 			FriendshipStatus status, int sessionId) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
@@ -134,6 +175,13 @@ public class FriendIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to add a friend
+	 * 
+	 * @param sessionId
+	 * @param friendId
+	 * @return
+	 */
 	public ReturnCodeResponse addFriend(int sessionId, String friendId) {
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
@@ -210,6 +258,15 @@ public class FriendIntegration {
 		return response;
 	}
 
+	/**
+	 * Method to check a Friendship
+	 * 
+	 * @param sessionId
+	 * @param friendshipId
+	 * @param checkChange
+	 * @return
+	 * @throws ShelpException
+	 */
 	private Friendship checkFriendship(int sessionId, int friendshipId,
 			boolean checkChange) throws ShelpException {
 
