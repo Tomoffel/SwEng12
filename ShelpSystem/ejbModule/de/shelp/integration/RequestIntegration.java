@@ -65,9 +65,9 @@ public class RequestIntegration {
 	@EJB(beanName = "ShelpTourDAO", beanInterface = ShelpTourDAOLocal.class)
 	private ShelpTourDAOLocal tourDao;
 
-	
 	/**
-	 * Method to accept a request to
+	 * Method to accept a request
+	 * 
 	 * @param requestId
 	 * @param acceptedIds
 	 * @param sessionId
@@ -75,7 +75,7 @@ public class RequestIntegration {
 	 */
 	public ReturnCodeResponse acceptRequest(long requestId,
 			List<Integer> acceptedIds, int sessionId) {
-		
+
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
 		try {
@@ -83,7 +83,7 @@ public class RequestIntegration {
 
 			List<WishlistItem> wishes = request.getWishes();
 			for (WishlistItem wishlistItem : wishes) {
-				if(acceptedIds.contains(wishlistItem.getId())) {
+				if (acceptedIds.contains(wishlistItem.getId())) {
 					wishlistItem.setChecked(true);
 				}
 			}
@@ -93,47 +93,50 @@ public class RequestIntegration {
 			response.setReturnCode(e.getErrorCode());
 			response.setMessage(e.getMessage());
 		}
-		
+
 		return response;
 	}
 
 	/**
 	 * Method to create a request
+	 * 
 	 * @param targetUserId
 	 * @param tourId
 	 * @param notice
 	 * @param sessionId
 	 * @param wishes
 	 * @return returnCodeResponse
-	 * @throws UserNotExistEcxeption 
+	 * @throws SessionNotExistException 
 	 */
 	public ReturnCodeResponse createRequest(String targetUserId, long tourId,
-			String notice, int sessionId, String... wishes) throws UserNotExistEcxeption {
-		
-		//create empty response
+			String notice, int sessionId, String... wishes) throws SessionNotExistException
+			{
+
+		// create empty response
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
-		//check current Session
-		//ShelpSession session = daoUser.getSession(sessionId);
+		// check current Session
+		// ShelpSession session = daoUser.getSession(sessionId);
 		ShelpSession session = checkSession(sessionId);
-		
-		//get targetUser
+
+		// get targetUser
 		User targetUser = daoUser.findUserByName(targetUserId);
-		
+
 		try {
-			//check parameter
+			// check parameter
 			if (targetUser == null) {
 				String message = "TargetUser existiert nicht.";
 				LOGGER.info(message);
-				throw new UserNotExistEcxeption(ReturnCode.ERROR,message);
+				throw new UserNotExistEcxeption(ReturnCode.ERROR, message);
 			}
 			if (targetUser.equals(session.getUser())) {
-				String message = "Sich selbst eine Anfrage senden, ergibt doch garkeinen Sinn lieber " + session.getUser();
+				String message = "Sich selbst eine Anfrage senden, ergibt doch garkeinen Sinn lieber "
+						+ session.getUser();
 				LOGGER.info(message);
-				throw new ShelpException(ReturnCode.ERROR,message);
+				throw new ShelpException(ReturnCode.ERROR, message);
 			}
 
-			//get current Tour
+			// get current Tour
 			Tour tour = tourDao.getTour(tourId);
 
 			if (tour == null) {
@@ -141,18 +144,18 @@ public class RequestIntegration {
 				LOGGER.info(message);
 				throw new TourNotExistException(message);
 			}
-			
-			//create request if parameter are ok
+
+			// create request if parameter are ok
 			Request request = new Request();
 			request.setSourceUser(session.getUser());
 			request.setTargetUser(targetUser);
 			request.setTour(tour);
 			request.setNotice(notice);
 			request.setUpdatedOn(new Date());
-			
-			//create list for wishlistitems
+
+			// create list for wishlistitems
 			List<WishlistItem> wishlistItems = new ArrayList<WishlistItem>();
-			
+
 			for (String string : wishes) {
 				WishlistItem item = new WishlistItem();
 				item.setText(string);
@@ -160,20 +163,20 @@ public class RequestIntegration {
 				item.setOwner(request);
 				wishlistItems.add(item);
 			}
-			
-			//TODO transaktion
-			//set created wishlist to request
+
+			// TODO transaktion
+			// set created wishlist to request
 			request.setWishes(wishlistItems);
-			
-			//create request
+
+			// create request
 			daoRequest.createRequest(request);
-			
-			//update time for tour
+
+			// update time for tour
 			tour.setUpdatedOn(new Date());
-			
-			//save tour
+
+			// save tour
 			tourDao.saveTour(tour);
-			
+
 			LOGGER.info("Anfrage wurde gestellt.");
 		}
 
@@ -187,20 +190,21 @@ public class RequestIntegration {
 
 	/**
 	 * Method to get Request
+	 * 
 	 * @param requestId
 	 * @param sessionId
 	 * @return requestResponse
 	 */
 	public RequestResponse getRequest(long requestId, int sessionId) {
 
-		//create empty response
+		// create empty response
 		RequestResponse response = new RequestResponse();
 
 		try {
-			//check request
+			// check request
 			Request request = checkRequest(sessionId, requestId, true);
 
-			//transform request
+			// transform request
 			response.setRequestTO(requestDtoAssembler.makeDTO(request));
 			LOGGER.info("Anfrage wurde zurückgegeben.");
 
@@ -214,20 +218,21 @@ public class RequestIntegration {
 
 	/**
 	 * Method to delete a request
+	 * 
 	 * @param requestId
 	 * @param sessionId
 	 * @return ReturnCodeResponse
 	 */
 	public ReturnCodeResponse deleteRequest(long requestId, int sessionId) {
-		
-		//create empty response
+
+		// create empty response
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
 		try {
-			//check request
+			// check request
 			Request request = checkRequest(sessionId, requestId, true);
 
-			//delete request
+			// delete request
 			daoRequest.deleteRequest(request);
 			LOGGER.info("Anfrage wurde gelöscht.");
 
@@ -241,28 +246,30 @@ public class RequestIntegration {
 
 	/**
 	 * Method to get updated request
+	 * 
 	 * @param sessionId
 	 * @param timestamp
 	 * @return
-	 * @throws UserNotExistEcxeption 
+	 * @throws SessionNotExistException 
 	 */
-	public RequestsResponse getUpdatedRequests(int sessionId, long timestamp) throws UserNotExistEcxeption {
+	public RequestsResponse getUpdatedRequests(int sessionId, long timestamp)
+			throws SessionNotExistException {
 
-		//create empty respnose
+		// create empty response
 		RequestsResponse response = new RequestsResponse();
-		
-		//check current session
+
+		// check current session
 		ShelpSession session = checkSession(sessionId);
-		
+
 		// get all request of the user
 		List<Request> requests = session.getUser().getOwnRequests();
 
 		List<RequestTO> resultList = new ArrayList<RequestTO>();
 		// check if tour has updated after timepoint
 		for (Request request : requests) {
-		    if (request.getUpdatedOn().after(new Date(timestamp))) {
-			resultList.add(requestDtoAssembler.makeDTO(request));
-		    }
+			if (request.getUpdatedOn().after(new Date(timestamp))) {
+				resultList.add(requestDtoAssembler.makeDTO(request));
+			}
 		}
 
 		response.setRequests(resultList);
@@ -272,34 +279,36 @@ public class RequestIntegration {
 
 	/**
 	 * Helper-method to check request
+	 * 
 	 * @param sessionId
 	 * @param requestId
 	 * @param checkBoth
 	 * @return
 	 * @throws ShelpException
 	 */
-	private Request checkRequest(int sessionId, long requestId, boolean checkBoth)
-			throws ShelpException {
+	private Request checkRequest(int sessionId, long requestId,
+			boolean checkBoth) throws ShelpException {
 
-		//get current Session
+		// get current Session
 		ShelpSession session = checkSession(sessionId);
-		
-		//get user from session
+
+		// get user from session
 		User user = session.getUser();
 
-		//get current request
+		// get current request
 		Request request = daoRequest.getRequestById(requestId);
 
-		//check request
+		// check request
 		if (request == null) {
 			LOGGER.info("Anfrage nicht gültig.");
 			throw new ShelpException(ReturnCode.ERROR,
 					"Anfrage existiert nicht!");
 		}
 
-		
-		if ((checkBoth &&(request.getTargetUser().equals(user)
-				|| request.getSourceUser().equals(user))) || !checkBoth && request.getTargetUser().equals(user)) {
+		if ((checkBoth && (request.getTargetUser().equals(user) || request
+				.getSourceUser().equals(user)))
+				|| !checkBoth
+				&& request.getTargetUser().equals(user)) {
 
 			return request;
 
@@ -310,21 +319,25 @@ public class RequestIntegration {
 		}
 
 	}
+
 	/**
 	 * Helper-method to check current session
+	 * 
 	 * @param sessionId
 	 * @return
 	 * @throws UserNotExistEcxeption
+	 * @throws SessionNotExistException 
 	 */
-	private ShelpSession checkSession(int sessionId) throws UserNotExistEcxeption {
-		
-		//get current Session
+	private ShelpSession checkSession(int sessionId)
+			throws SessionNotExistException {
+
+		// get current Session
 		ShelpSession session = daoUser.getSession(sessionId);
-		
+
 		if (session == null) {
 			String message = "Session-Id existiert nicht.";
 			LOGGER.info(message);
-			throw new UserNotExistEcxeption(ReturnCode.ERROR,message);
+			throw new SessionNotExistException(message);
 		}
 		return session;
 	}
