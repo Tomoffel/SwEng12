@@ -29,6 +29,7 @@ import de.shelp.exception.ShelpException;
 import de.shelp.exception.TourNotExistException;
 import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.RequestDtoAssembler;
+import de.shelp.util.ShelpHelper;
 
 @WebService
 @WebContext(contextRoot = "/shelp")
@@ -117,7 +118,8 @@ public class RequestIntegration {
 
 		// check current Session
 		// ShelpSession session = daoUser.getSession(sessionId);
-		ShelpSession session = checkSession(sessionId);
+		ShelpSession session = ShelpHelper.checkSession(sessionId);
+		//ShelpSession session = checkSession(sessionId);
 
 		// get targetUser
 		User targetUser = daoUser.findUserByName(targetUserId);
@@ -259,7 +261,8 @@ public class RequestIntegration {
 		RequestsResponse response = new RequestsResponse();
 
 		// check current session
-		ShelpSession session = checkSession(sessionId);
+		ShelpSession session = ShelpHelper.checkSession(sessionId);
+		//ShelpSession session = checkSession(sessionId);
 
 		// get all request of the user
 		List<Request> requests = session.getUser().getOwnRequests();
@@ -290,7 +293,8 @@ public class RequestIntegration {
 			boolean checkBoth) throws ShelpException {
 
 		// get current Session
-		ShelpSession session = checkSession(sessionId);
+		ShelpSession session = ShelpHelper.checkSession(sessionId);
+		//ShelpSession session = checkSession(sessionId);
 
 		// get user from session
 		User user = session.getUser();
@@ -328,6 +332,7 @@ public class RequestIntegration {
 	 * @throws UserNotExistEcxeption
 	 * @throws SessionNotExistException 
 	 */
+	/*
 	private ShelpSession checkSession(int sessionId)
 			throws SessionNotExistException {
 
@@ -341,5 +346,5 @@ public class RequestIntegration {
 		}
 		return session;
 	}
-
+*/
 }
