@@ -70,7 +70,7 @@ public class TourIntegration {
     private RequestDtoAssembler requestDtoAssembler;
 
     /**
-     * EJB zur Beauftragung zum versenden von E-Mails
+     * EJB zur Beauftragung zum Versenden von E-Mails
      */
     @EJB
     private MailRequesterBean mailRequester;
@@ -217,8 +217,9 @@ public class TourIntegration {
 	    }
 
 	    tourDao.cancleTour(tour);
-	    LOGGER.info("Fahrte wurde abgesagt " + tour);
-	    mailRequester.printLetter("Fahrte wurde abgesagt " + tour);
+	    String logMessage = "Fahrt wurde abgesagt " + tour;
+	    LOGGER.info(logMessage);
+	   // mailRequester.printLetter(logMessage);
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
