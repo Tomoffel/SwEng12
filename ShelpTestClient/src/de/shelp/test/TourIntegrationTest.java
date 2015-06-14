@@ -421,7 +421,7 @@ public class TourIntegrationTest {
     public void kTestGetUpdateRequestSuccess() {
 	ToursResponse updatedTours = remoteSystem.getUpdatedTours(
 		session2.getId(), new Date().getTime() - 5000);
-	Assert.assertEquals(4, updatedTours.getTours().size());
+	Assert.assertEquals(3, updatedTours.getTours().size());
     }
 
     @Test

@@ -317,10 +317,10 @@ public class FriendIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, friends.getReturnCode());
 	Assert.assertEquals(3, friends.getFriends().size());
 	Assert.assertEquals(FriendshipStatus.DENIED, friends.getFriends()
-		.get(0).getStatus());
+		.get(2).getStatus());
 	Assert.assertEquals(FriendshipStatus.ACCEPT, friends.getFriends()
-		.get(1).getStatus());
-	Assert.assertEquals(FriendshipStatus.ASKED, friends.getFriends().get(2)
+		.get(0).getStatus());
+	Assert.assertEquals(FriendshipStatus.ASKED, friends.getFriends().get(1)
 		.getStatus());
 
 	friends = remoteSystem.getFriends(session2.getId());
