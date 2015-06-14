@@ -35,13 +35,13 @@ public class RequestDtoAssembler {
 		dto.setTargetUser(userDtoAssembler.makeDTO(request.getTargetUser()));
 		dto.setTour(tourDtoAssembler.makeDTO(request.getTour()));
 		dto.setUpdatedOn(request.getUpdatedOn().getTime());
-		dto.setWishes(makeDTO(request.getWishes(), dto));
+		dto.setWishes(makeDTO(request.getWishes()));
+		dto.setStatus(request.getStatus());
 
 		return dto;
 	}
 
-	private List<WishlistItemTO> makeDTO(List<WishlistItem> wishes,
-			RequestTO wishlistTO) {
+	private List<WishlistItemTO> makeDTO(List<WishlistItem> wishes) {
 
 		List<WishlistItemTO> dto = new ArrayList<>();
 
@@ -49,7 +49,6 @@ public class RequestDtoAssembler {
 			WishlistItemTO wishlistItemTO = new WishlistItemTO();
 			wishlistItemTO.setId(wishlistItem.getId());
 			wishlistItemTO.setChecked(wishlistItem.isChecked());
-			wishlistItemTO.setOwner(wishlistTO);
 			wishlistItemTO.setText(wishlistItem.getText());
 			dto.add(wishlistItemTO);
 		}

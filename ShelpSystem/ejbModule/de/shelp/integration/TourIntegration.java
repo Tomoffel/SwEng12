@@ -27,9 +27,11 @@ import de.shelp.entities.Tour;
 import de.shelp.entities.User;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.PermissionDeniedException;
+import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
 import de.shelp.exception.TourNotExistException;
 import de.shelp.exception.TourNotValidException;
+import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.RequestDtoAssembler;
 import de.shelp.util.TourDtoAssembler;
 
@@ -156,6 +158,33 @@ public class TourIntegration {
 	return response;
     }
 
+    public ToursResponse getTours(int sessionId) {
+	ToursResponse response = new ToursResponse();
+	try {
+	    ShelpSession session = userDao.getSession(sessionId);
+	    if (session == null) {
+		String message = "Session-Id existiert nicht.";
+		LOGGER.info(message);
+		throw new SessionNotExistException(message);
+	    }
+
+	    List<Tour> tours = session.getUser().getTours();
+	    List<TourTO> dtoTours = new ArrayList<TourTO>();
+	    for (Tour tour : tours) {
+		dtoTours.add(tourDtoAssembler.makeDTO(tour));
+	    }
+
+	    LOGGER.info(tours.size() + " Fahrten wurden gefunden.");
+	    
+	    response.setTours(dtoTours);
+	} catch (SessionNotExistException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
+	}
+
+	return response;
+    }
+
     public ReturnCodeResponse deleteTour(long tourId, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 
@@ -174,7 +203,7 @@ public class TourIntegration {
 			+ session.getUser()
 			+ " ist nicht der Besitzer der Fahrt!");
 	    }
-  
+
 	    tourDao.cancleTour(tour);
 	    LOGGER.info("Fahrte wurde abgesagt " + tour);
 	    mailRequester.printLetter("Fahrte wurde abgesagt " + tour);

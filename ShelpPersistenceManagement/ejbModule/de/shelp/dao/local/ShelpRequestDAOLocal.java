@@ -3,6 +3,7 @@ package de.shelp.dao.local;
 import javax.ejb.Local;
 
 import de.shelp.entities.Request;
+import de.shelp.entities.WishlistItem;
 @Local
 public interface ShelpRequestDAOLocal {
 
@@ -11,5 +12,7 @@ public interface ShelpRequestDAOLocal {
 	void deleteRequest(Request request);
 
 	void createRequest(Request request);
+
+	void persistItem(WishlistItem item);
 
 }
