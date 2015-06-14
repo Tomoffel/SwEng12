@@ -11,7 +11,7 @@ public interface ShelpRequestDAOLocal {
 
 	void deleteRequest(Request request);
 
-	void createRequest(Request request);
+	void persistRequest(Request request);
 
 	void persistItem(WishlistItem item);
 

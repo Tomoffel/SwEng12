@@ -98,7 +98,7 @@ public class RequestIntegration {
 	    ArrayList<String> ids = new ArrayList<String>(
 		    Arrays.asList(acceptedIds.split("\n")));
 	    for (WishlistItem wishlistItem : wishes) {
-		if (ids.contains(wishlistItem.getId())) {
+		if (ids.contains(String.valueOf(wishlistItem.getId()))) {
 		    acceptOneItem = true;
 		    wishlistItem.setChecked(true);
 		    daoRequest.persistItem(wishlistItem);
@@ -118,7 +118,7 @@ public class RequestIntegration {
 
 	    LOGGER.info("Anfrage wurde auf den Status " + request.getStatus()
 		    + " gesetzt.");
-	    daoRequest.createRequest(request);
+	    daoRequest.persistRequest(request);
 
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -196,7 +196,7 @@ public class RequestIntegration {
 	    request.setWishes(wishlistItems);
 
 	    // create request
-	    daoRequest.createRequest(request);
+	    daoRequest.persistRequest(request);
 
 	    // update time for tour
 	    tour.setUpdatedOn(new Date());

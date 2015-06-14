@@ -2,6 +2,7 @@ package de.shelp.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -72,6 +73,7 @@ public class RequestIntegrationTest {
     private static RequestIntegration remote;
 
     private static List<String> wishes = new ArrayList<String>();
+    private static ShelpSessionTO session3;
 
     /**
      * Baut einmalig die Verbindung zum Server auf setzt wichtige
@@ -156,6 +158,14 @@ public class RequestIntegrationTest {
 		    "test123");
 	}
 	session2 = loginResponse.getSession();
+	
+	loginResponse = userIntegrationPort.regUser("jos@sennekamp.de",
+		"test123");
+	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
+	    loginResponse = userIntegrationPort.login("jos@sennekamp.de",
+		    "test123");
+	}
+	session3 = loginResponse.getSession();
 
 	tourIntegrationPort.createTour(tour1.getApprovalStatus().getId(), tour1
 		.getLocation().getId(), tour1.getCapacity().getId(), tour1
@@ -292,7 +302,7 @@ public class RequestIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, acceptRequest.getReturnCode());
 
 	requests = remote.getRequests(session2.getId());
-	request = requests2.get(0);
+	request = requests.getRequests().get(0);
 	id = request.getWishes().get(0);
 	Assert.assertEquals(true, id.isChecked());
 	Assert.assertEquals(RequestStatus.PARTLY_ACCEPT, request.getStatus());
@@ -312,7 +322,7 @@ public class RequestIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, acceptRequest.getReturnCode());
 
 	requests = remote.getRequests(session2.getId());
-	request = requests2.get(1);
+	request = requests.getRequests().get(1);
 	id = request.getWishes().get(0);
 	Assert.assertEquals(true, id.isChecked());
 	Assert.assertEquals(RequestStatus.ACCECPT, request.getStatus());
@@ -342,7 +352,7 @@ public class RequestIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, acceptRequest.getReturnCode());
 
 	requests = remote.getRequests(session1.getId());
-	request = requests2.get(1);
+	request = requests.getRequests().get(0);
 	Assert.assertEquals(RequestStatus.DENIED, request.getStatus());
     }
 
@@ -366,12 +376,67 @@ public class RequestIntegrationTest {
 	// Annahme von falscher Session
 	acceptRequest = remote.acceptRequest(request.getId(), "0\n1\n2\n",
 		session1.getId());
-	Assert.assertEquals(ReturnCode.ERROR, acceptRequest.getReturnCode());
-	
-	//Anfrage wurde schon angenommen / abgelehnt
+	Assert.assertEquals(ReturnCode.PERMISSION_DENIED,
+		acceptRequest.getReturnCode());
+
+	// Anfrage wurde schon angenommen / abgelehnt
 	acceptRequest = remote.acceptRequest(request.getId(), "0\n1\n2\n",
 		session2.getId());
 	Assert.assertEquals(ReturnCode.ERROR, acceptRequest.getReturnCode());
+    }
+
+    @Test
+    public void iTestGetUpdateRequestSuccess() {
+	RequestsResponse updatedRequests = remote.getUpdatedRequests(
+		session2.getId(), new Date().getTime() - 5000);
+	Assert.assertEquals(2, updatedRequests.getRequests().size());
+    }
+
+    @Test
+    public void jTestGetUpdateRequestFail() {
+	// Session existiert nicht
+	RequestsResponse updatedRequests = remote.getUpdatedRequests(5000,
+		new Date().getTime() - 5000);
+	Assert.assertEquals(ReturnCode.ERROR, updatedRequests.getReturnCode());
+    }
+
+    @Test
+    public void kTestDeleteRequestSuccess() {
+	RequestsResponse requests = remote.getRequests(session1.getId());
+	List<RequestTO> requests2 = requests.getRequests();
+
+	RequestTO request = requests2.get(0);
+
+	ReturnCodeResponse deleteRequest = remote.deleteRequest(
+		request.getId(), session1.getId());
+	Assert.assertEquals(ReturnCode.OK, deleteRequest.getReturnCode());
+
+	requests = remote.getRequests(session1.getId());
+	requests2 = requests.getRequests();
+	Assert.assertEquals(1, requests2.size());
+    }
+
+    @Test
+    public void lTestDeleteRequestFail() {
+	RequestsResponse requests = remote.getRequests(session1.getId());
+	List<RequestTO> requests2 = requests.getRequests();
+
+	RequestTO request = requests2.get(0);
+	
+	//request existiert nicht
+	ReturnCodeResponse deleteRequest = remote.deleteRequest(
+		5000, session1.getId());
+	Assert.assertEquals(ReturnCode.ERROR, deleteRequest.getReturnCode());
+	
+	//session existiert nicht
+	 deleteRequest = remote.deleteRequest(
+		request.getId(), 5000);
+	Assert.assertEquals(ReturnCode.ERROR, deleteRequest.getReturnCode());
+	
+	//session ist nich an der Anfrage beteiligt
+	 deleteRequest = remote.deleteRequest(
+		request.getId(), session3.getId());
+	Assert.assertEquals(ReturnCode.PERMISSION_DENIED, deleteRequest.getReturnCode());
     }
 
 }

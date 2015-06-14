@@ -25,7 +25,7 @@ public class ShelpRequestDAO implements ShelpRequestDAOLocal {
     }
 
     @Override
-    public void createRequest(Request request) {
+    public void persistRequest(Request request) {
 	em.persist(request);
 
     }
