@@ -4,7 +4,7 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <!-- Durch "java:jboss/datasources/ExampleDS" wird JBoss angewiesen, die integrierte HSQLDB,
          die als "Example Datasource" eingebunden ist, für die Persistenz der Applikation zu verwenden -->
-    <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
+    <jta-data-source>java:jboss/datasources/ShelpDB</jta-data-source>
     <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
         <!--Die Eigenschaft "hibernate.hbm2ddl.auto" legt fest, wie mit bereits 
@@ -14,6 +14,7 @@
             ändert, kann hier auch "update" gewählt werden, damit bleiben einmal
             angelegte Daten erhalten.  -->
         <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+        <property name="hibernate.show_sql" value="true"/>
     </properties>
 </persistence-unit>
 </persistence>

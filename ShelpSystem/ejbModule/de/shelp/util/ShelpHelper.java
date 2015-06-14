@@ -1,5 +1,6 @@
 package de.shelp.util;
 
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import org.jboss.logging.Logger;
@@ -11,6 +12,7 @@ import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.UserNotExistException;
 
 @Stateless
+@LocalBean
 public class ShelpHelper {
     private static final Logger LOGGER = Logger
 	    .getLogger(ShelpHelper.class);

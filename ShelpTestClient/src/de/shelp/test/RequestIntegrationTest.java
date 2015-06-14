@@ -406,6 +406,8 @@ public class RequestIntegrationTest {
 	RequestsResponse requests = remote.getRequests(session1.getId());
 	List<RequestTO> requests2 = requests.getRequests();
 
+	Assert.assertEquals(1, requests2.size());
+	
 	RequestTO request = requests2.get(0);
 
 	ReturnCodeResponse deleteRequest = remote.deleteRequest(
@@ -414,12 +416,12 @@ public class RequestIntegrationTest {
 
 	requests = remote.getRequests(session1.getId());
 	requests2 = requests.getRequests();
-	Assert.assertEquals(1, requests2.size());
+	Assert.assertEquals(0, requests2.size());
     }
 
     @Test
     public void lTestDeleteRequestFail() {
-	RequestsResponse requests = remote.getRequests(session1.getId());
+	RequestsResponse requests = remote.getRequests(session2.getId());
 	List<RequestTO> requests2 = requests.getRequests();
 
 	RequestTO request = requests2.get(0);

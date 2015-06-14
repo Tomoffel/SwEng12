@@ -101,7 +101,6 @@ public class RequestIntegration {
 		if (ids.contains(String.valueOf(wishlistItem.getId()))) {
 		    acceptOneItem = true;
 		    wishlistItem.setChecked(true);
-		    daoRequest.persistItem(wishlistItem);
 		} else {
 		    acceptAllItem = false;
 		}
@@ -188,7 +187,6 @@ public class RequestIntegration {
 		item.setChecked(false);
 		item.setOwner(request);
 		wishlistItems.add(item);
-		daoRequest.persistItem(item);
 	    }
 
 	    // TODO transaktion
@@ -249,7 +247,9 @@ public class RequestIntegration {
 	    List<Request> requests = session.getUser().getOwnRequests();
 	    List<RequestTO> dtoRequests = new ArrayList<RequestTO>();
 	    for (Request request : requests) {
-		dtoRequests.add(requestDtoAssembler.makeDTO(request));
+		if (!request.getStatus().equals(RequestStatus.REMOVED)) {
+		    dtoRequests.add(requestDtoAssembler.makeDTO(request));
+		}
 	    }
 
 	    LOGGER.info(requests.size() + " Anfragen gefunden.");

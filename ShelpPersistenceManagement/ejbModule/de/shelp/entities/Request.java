@@ -3,6 +3,7 @@ package de.shelp.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,7 +28,7 @@ public class Request {
     @ManyToOne
     private Tour tour;
 
-    @OneToMany(mappedBy="owner")
+    @OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
     private List <WishlistItem> wishes;
 
     private String notice;
