@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -33,14 +33,14 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class GetRequestsOfTour {
 
-    protected int arg0;
+    protected long arg0;
     protected int arg1;
 
     /**
      * Ruft den Wert der arg0-Eigenschaft ab.
      * 
      */
-    public int getArg0() {
+    public long getArg0() {
         return arg0;
     }
 
@@ -48,7 +48,7 @@ public class GetRequestsOfTour {
      * Legt den Wert der arg0-Eigenschaft fest.
      * 
      */
-    public void setArg0(int value) {
+    public void setArg0(long value) {
         this.arg0 = value;
     }
 

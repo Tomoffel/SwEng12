@@ -73,7 +73,10 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 			    startTime, endTime), criteriaBuilder.equal(
 			    tour.<ApprovalStatus> get("approvalStatus"),
 			    approvalStatus), criteriaBuilder.equal(
-			    tour.<Capacity> get("capacity"), capacity)));
+			    tour.<Capacity> get("capacity"), capacity),
+			    criteriaBuilder.equal(
+				    tour.<TourStatus> get("status"),
+				    TourStatus.PLANED)));
 	    criteriaQuery.select(tour);
 	    criteriaQuery.where(andClause);
 	    searchedTours.addAll(em.createQuery(criteriaQuery).getResultList());

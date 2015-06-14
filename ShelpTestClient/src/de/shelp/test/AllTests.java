@@ -10,8 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ UserIntegrationTest.class, StateIntegrationTest.class,
-	TourIntegrationTest.class, RatingIntegrationTest.class,
-	FriendIntegrationTest.class })
+	FriendIntegrationTest.class, RequestIntegrationTest.class,
+	TourIntegrationTest.class, RatingIntegrationTest.class, })
 public class AllTests {
 
 }

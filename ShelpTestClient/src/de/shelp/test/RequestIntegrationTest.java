@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -158,7 +159,7 @@ public class RequestIntegrationTest {
 		    "test123");
 	}
 	session2 = loginResponse.getSession();
-	
+
 	loginResponse = userIntegrationPort.regUser("jos@sennekamp.de",
 		"test123");
 	if (loginResponse.getReturnCode() == ReturnCode.ERROR) {
@@ -422,21 +423,32 @@ public class RequestIntegrationTest {
 	List<RequestTO> requests2 = requests.getRequests();
 
 	RequestTO request = requests2.get(0);
-	
-	//request existiert nicht
-	ReturnCodeResponse deleteRequest = remote.deleteRequest(
-		5000, session1.getId());
+
+	// request existiert nicht
+	ReturnCodeResponse deleteRequest = remote.deleteRequest(5000,
+		session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, deleteRequest.getReturnCode());
-	
-	//session existiert nicht
-	 deleteRequest = remote.deleteRequest(
-		request.getId(), 5000);
+
+	// session existiert nicht
+	deleteRequest = remote.deleteRequest(request.getId(), 5000);
 	Assert.assertEquals(ReturnCode.ERROR, deleteRequest.getReturnCode());
-	
-	//session ist nich an der Anfrage beteiligt
-	 deleteRequest = remote.deleteRequest(
-		request.getId(), session3.getId());
-	Assert.assertEquals(ReturnCode.PERMISSION_DENIED, deleteRequest.getReturnCode());
+
+	// session ist nich an der Anfrage beteiligt
+	deleteRequest = remote.deleteRequest(request.getId(), session3.getId());
+	Assert.assertEquals(ReturnCode.PERMISSION_DENIED,
+		deleteRequest.getReturnCode());
     }
 
+    @AfterClass
+    public static void deleteCreatedTest() {
+	ToursResponse tours = tourIntegrationPort.getTours(session1.getId());
+	for (TourTO tourTO : tours.getTours()) {
+	    tourIntegrationPort.deleteTour(tourTO.getId(), session1.getId());
+	}
+	tours = tourIntegrationPort.getTours(session2.getId());
+	for (TourTO tourTO : tours.getTours()) {
+	    tourIntegrationPort.deleteTour(tourTO.getId(), session2.getId());
+	}
+
+    }
 }

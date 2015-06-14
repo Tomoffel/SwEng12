@@ -16,7 +16,6 @@ import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.request.RequestTO;
 import de.shelp.dto.request.RequestsResponse;
-import de.shelp.dto.tour.TourResponse;
 import de.shelp.dto.tour.TourTO;
 import de.shelp.dto.tour.ToursResponse;
 import de.shelp.entities.ApprovalStatus;
@@ -93,6 +92,7 @@ public class TourIntegration {
 	    tour.setDeliveryCondition(tourDao
 		    .getDeliveryCondition(deliveryConditionId));
 	    tour.setTime(new Date(time));
+	    tour.setUpdatedOn(new Date());
 
 	    if (!tour.isValid()) {
 		LOGGER.warn("Es sind nicht alle Felder der Fahrt gefüllt.");
@@ -161,19 +161,19 @@ public class TourIntegration {
 	return response;
     }
 
-    public TourResponse getTour(long tourId, int sessionId) {
-	TourResponse response = new TourResponse();
-
-	try {
-	    response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(
-		    tourId, sessionId)));
-	} catch (ShelpException e) {
-	    response.setReturnCode(e.getErrorCode());
-	    response.setMessage(e.getMessage());
-	}
-
-	return response;
-    }
+    // public TourResponse getTour(long tourId, int sessionId) {
+    // TourResponse response = new TourResponse();
+    //
+    // try {
+    // response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(
+    // tourId, sessionId)));
+    // } catch (ShelpException e) {
+    // response.setReturnCode(e.getErrorCode());
+    // response.setMessage(e.getMessage());
+    // }
+    //
+    // return response;
+    // }
 
     public ToursResponse getTours(int sessionId) {
 	ToursResponse response = new ToursResponse();
@@ -252,11 +252,23 @@ public class TourIntegration {
 	return response;
     }
 
-    public RequestsResponse getRequestsOfTour(int tourId, int sessionId) {
+    public RequestsResponse getRequestsOfTour(long tourId, int sessionId) {
 	RequestsResponse response = new RequestsResponse();
 
 	try {
-	    Tour tour = this.getTourIntern(tourId, sessionId);
+	    Tour tour = tourDao.getTour(tourId);
+	    if (tour == null) {
+		LOGGER.warn("Fahrt existiert nicht: " + tourId);
+		throw new TourNotExistException("Fahrt existiert nicht: "
+			+ tourId);
+	    }
+	    ShelpSession session = helper.checkSession(sessionId, userDao);
+	    if (!tour.getOwner().equals(session.getUser())) {
+		LOGGER.warn("Zugriff verweigert! " + session.getUser()
+			+ " ist nicht der Besitzer der Fahrt.");
+		throw new PermissionDeniedException("Zugriff verweigert! " + session.getUser()
+			+ " ist nicht der Besitzer der Fahrt.");
+	    }
 	    response.setTour(tourDtoAssembler.makeDTO(tour));
 
 	    List<RequestTO> resultRequests = new ArrayList<RequestTO>();
@@ -273,25 +285,6 @@ public class TourIntegration {
 	}
 
 	return response;
-    }
-
-    private Tour getTourIntern(long tourId, int sessionId)
-	    throws ShelpException {
-	Tour tour = tourDao.getTour(tourId);
-	if (tour == null) {
-	    LOGGER.warn("Fahrt existiert nicht: " + tourId);
-	    throw new TourNotExistException("Fahrt existiert nicht: " + tourId);
-	}
-	ShelpSession session = helper.checkSession(sessionId, userDao);
-	if (tour.getApprovalStatus().equals(new ApprovalStatus("Nur Freunde"))
-		&& !tour.getOwner().isFriend(session.getUser())) {
-	    LOGGER.warn("Zugriff verweigert! " + session.getUser()
-		    + " ist kein Freund von " + tour.getOwner());
-	    throw new PermissionDeniedException("Zugriff verweigert! "
-		    + session.getUser() + " ist kein Freund von "
-		    + tour.getOwner());
-	}
-	return tour;
     }
 
 }
