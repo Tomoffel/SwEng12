@@ -20,6 +20,7 @@ import de.shelp.dto.tour.TourResponse;
 import de.shelp.dto.tour.TourTO;
 import de.shelp.dto.tour.ToursResponse;
 import de.shelp.entities.ApprovalStatus;
+import de.shelp.entities.Capacity;
 import de.shelp.entities.Location;
 import de.shelp.entities.Request;
 import de.shelp.entities.ShelpSession;
@@ -31,8 +32,8 @@ import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
 import de.shelp.exception.TourNotExistException;
 import de.shelp.exception.TourNotValidException;
-import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.RequestDtoAssembler;
+import de.shelp.util.ShelpHelper;
 import de.shelp.util.TourDtoAssembler;
 
 @WebService
@@ -75,6 +76,9 @@ public class TourIntegration {
     @EJB
     private MailRequesterBean mailRequester;
 
+    @EJB
+    private ShelpHelper helper;
+
     public ReturnCodeResponse createTour(int approvalStatusId, long locationId,
 	    int capacityId, int paymentConditionId, int deliveryConditionId,
 	    long time, int sessionId) {
@@ -96,7 +100,7 @@ public class TourIntegration {
 			"Es sind nicht alle Felder der Fahrt gefüllt.");
 	    }
 
-	    ShelpSession session = userDao.getSession(sessionId);
+	    ShelpSession session = helper.checkSession(sessionId, userDao);
 
 	    tour = tourDao.createTour(tour, session.getUser());
 
@@ -115,31 +119,44 @@ public class TourIntegration {
 	    int sessionId) {
 	ToursResponse response = new ToursResponse();
 
-	Location location = tourDao.getLocation(locationId);
-	User currentUser = userDao.getSession(sessionId).getUser();
+	try {
+	    Location location = tourDao.getLocation(locationId);
+	    User currentUser = helper.checkSession(sessionId, userDao)
+		    .getUser();
+	    ApprovalStatus approvalStatus = tourDao
+		    .getApprovalStatus(approvalStatusId);
+	    Capacity capacity = tourDao.getCapacity(capacityId);
 
-	List<Tour> tours = null;
-	if (directSearch) {
-	    LOGGER.info("Sucht nach Fahrten zu " + location.getDescription());
-	    tours = tourDao.search(tourDao.getApprovalStatus(approvalStatusId),
-		    location, tourDao.getCapacity(capacityId), new Date(
-			    startTime), new Date(endTime), currentUser);
-	} else {
-	    LOGGER.info("Sucht nach Fahrten in der Nähe von "
-		    + location.getDescription());
-	    tours = tourDao.searchNear(
-		    tourDao.getApprovalStatus(approvalStatusId), location,
-		    tourDao.getCapacity(capacityId), new Date(startTime),
-		    new Date(endTime), currentUser);
+	    if (location == null || approvalStatus == null || capacity == null) {
+		LOGGER.warn("Suche ist nicht vollständig");
+		throw new ShelpException(ReturnCode.ERROR,
+			"Suche ist nicht vollständig.");
+	    }
+
+	    List<Tour> tours = null;
+	    if (directSearch) {
+		LOGGER.info("Sucht nach Fahrten zu "
+			+ location.getDescription());
+		tours = tourDao.search(approvalStatus, location, capacity,
+			new Date(startTime), new Date(endTime), currentUser);
+	    } else {
+		LOGGER.info("Sucht nach Fahrten in der Nähe von "
+			+ location.getDescription());
+		tours = tourDao.searchNear(approvalStatus, location, capacity,
+			new Date(startTime), new Date(endTime), currentUser);
+	    }
+	    LOGGER.info(tours.size() + " Fahrt(en) gefunden");
+
+	    List<TourTO> responseList = new ArrayList<TourTO>();
+	    for (Tour tour : tours) {
+		responseList.add(tourDtoAssembler.makeDTO(tour));
+	    }
+
+	    response.setTours(responseList);
+	} catch (ShelpException ex) {
+	    response.setReturnCode(ex.getErrorCode());
+	    response.setMessage(ex.getMessage());
 	}
-	LOGGER.info(tours.size() + " Fahrt(en) gefunden");
-
-	List<TourTO> responseList = new ArrayList<TourTO>();
-	for (Tour tour : tours) {
-	    responseList.add(tourDtoAssembler.makeDTO(tour));
-	}
-
-	response.setTours(responseList);
 
 	return response;
     }
@@ -150,7 +167,7 @@ public class TourIntegration {
 	try {
 	    response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(
 		    tourId, sessionId)));
-	} catch (TourNotExistException | PermissionDeniedException e) {
+	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
 	}
@@ -161,12 +178,7 @@ public class TourIntegration {
     public ToursResponse getTours(int sessionId) {
 	ToursResponse response = new ToursResponse();
 	try {
-	    ShelpSession session = userDao.getSession(sessionId);
-	    if (session == null) {
-		String message = "Session-Id existiert nicht.";
-		LOGGER.info(message);
-		throw new SessionNotExistException(message);
-	    }
+	    ShelpSession session = helper.checkSession(sessionId, userDao);
 
 	    List<Tour> tours = session.getUser().getTours();
 	    List<TourTO> dtoTours = new ArrayList<TourTO>();
@@ -175,7 +187,7 @@ public class TourIntegration {
 	    }
 
 	    LOGGER.info(tours.size() + " Fahrten wurden gefunden.");
-	    
+
 	    response.setTours(dtoTours);
 	} catch (SessionNotExistException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -195,7 +207,7 @@ public class TourIntegration {
 		throw new TourNotExistException("Fahrt existiert nicht: "
 			+ tourId);
 	    }
-	    ShelpSession session = userDao.getSession(sessionId);
+	    ShelpSession session = helper.checkSession(sessionId, userDao);
 	    if (!tour.getOwner().equals(session.getUser())) {
 		LOGGER.warn("Zugriff verweigert! " + session.getUser()
 			+ " ist nicht der Besitzer der Fahrt!");
@@ -207,7 +219,7 @@ public class TourIntegration {
 	    tourDao.cancleTour(tour);
 	    LOGGER.info("Fahrte wurde abgesagt " + tour);
 	    mailRequester.printLetter("Fahrte wurde abgesagt " + tour);
-	} catch (TourNotExistException | PermissionDeniedException e) {
+	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
 	}
@@ -218,19 +230,24 @@ public class TourIntegration {
     public ToursResponse getUpdatedTours(int sessionId, long timepoint) {
 	ToursResponse response = new ToursResponse();
 
-	ShelpSession session = userDao.getSession(sessionId);
-	// get all tours of the user
-	List<Tour> tours = session.getUser().getTours();
+	try {
+	    ShelpSession session = helper.checkSession(sessionId, userDao);
+	    // get all tours of the user
+	    List<Tour> tours = session.getUser().getTours();
 
-	List<TourTO> resultList = new ArrayList<TourTO>();
-	// check if tour has updated after timepoint
-	for (Tour tour : tours) {
-	    if (tour.getUpdatedOn().after(new Date(timepoint))) {
-		resultList.add(tourDtoAssembler.makeDTO(tour));
+	    List<TourTO> resultList = new ArrayList<TourTO>();
+	    // check if tour has updated after timepoint
+	    for (Tour tour : tours) {
+		if (tour.getUpdatedOn().after(new Date(timepoint))) {
+		    resultList.add(tourDtoAssembler.makeDTO(tour));
+		}
 	    }
-	}
 
-	response.setTours(resultList);
+	    response.setTours(resultList);
+	} catch (ShelpException e) {
+	    response.setReturnCode(e.getErrorCode());
+	    response.setMessage(e.getMessage());
+	}
 
 	return response;
     }
@@ -250,7 +267,7 @@ public class TourIntegration {
 	    }
 
 	    response.setRequests(resultRequests);
-	} catch (TourNotExistException | PermissionDeniedException e) {
+	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
 	}
@@ -259,13 +276,13 @@ public class TourIntegration {
     }
 
     private Tour getTourIntern(long tourId, int sessionId)
-	    throws TourNotExistException, PermissionDeniedException {
+	    throws ShelpException {
 	Tour tour = tourDao.getTour(tourId);
 	if (tour == null) {
 	    LOGGER.warn("Fahrt existiert nicht: " + tourId);
 	    throw new TourNotExistException("Fahrt existiert nicht: " + tourId);
 	}
-	ShelpSession session = userDao.getSession(sessionId);
+	ShelpSession session = helper.checkSession(sessionId, userDao);
 	if (tour.getApprovalStatus().equals(new ApprovalStatus("Nur Freunde"))
 		&& !tour.getOwner().isFriend(session.getUser())) {
 	    LOGGER.warn("Zugriff verweigert! " + session.getUser()

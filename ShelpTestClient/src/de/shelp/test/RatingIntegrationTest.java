@@ -75,7 +75,7 @@ public class RatingIntegrationTest {
 	createRating = remoteSystem.createRating("nichtvorhanden", 4,
 		"Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("TargetUser existiert nicht.",
+	Assert.assertEquals("Benutzer nichtvorhanden existiert nicht.",
 		createRating.getMessage());
 
 	// eigene bewertung nicht möglich

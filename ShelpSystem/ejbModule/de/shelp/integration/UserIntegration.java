@@ -17,11 +17,10 @@ import de.shelp.dto.user.UserTO;
 import de.shelp.dto.user.UsersResponse;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
-import de.shelp.enums.ReturnCode;
 import de.shelp.exception.InvalidLoginException;
 import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
-import de.shelp.exception.UserNotExistEcxeption;
+import de.shelp.exception.UserNotExistException;
 import de.shelp.util.UserDtoAssembler;
 
 @WebService
@@ -44,7 +43,7 @@ public class UserIntegration {
      */
     @EJB
     private UserDtoAssembler dtoAssembler;
-
+    
     public UserResponse regUser(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
@@ -58,7 +57,7 @@ public class UserIntegration {
 	    } else {
 		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon "
 			+ user);
-		throw new UserNotExistEcxeption(ReturnCode.ERROR,
+		throw new UserNotExistException(
 			"Registrierung fehlgeschlag. Benutzername schon vergeben.");
 	    }
 	} catch (ShelpException e) {

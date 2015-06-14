@@ -20,8 +20,8 @@ import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
 import de.shelp.enums.ReturnCode;
 import de.shelp.exception.ShelpException;
-import de.shelp.exception.UserNotExistEcxeption;
 import de.shelp.util.RatingDtoAssembler;
+import de.shelp.util.ShelpHelper;
 
 @WebService
 @WebContext(contextRoot = "/shelp")
@@ -48,19 +48,17 @@ public class RatingIntegration {
     @EJB
     private RatingDtoAssembler dtoAssembler;
 
+    @EJB
+    private ShelpHelper helper;
+
     private static final Logger LOGGER = Logger
 	    .getLogger(RatingIntegration.class);
 
     public RatingResponse getRatings(String userName) {
 	RatingResponse response = new RatingResponse();
 
-	User user = daoUser.findUserByName(userName);
 	try {
-	    if (user == null) {
-		LOGGER.info("User " + userName + " existiert nicht.");
-		throw new UserNotExistEcxeption(ReturnCode.ERROR, "User "
-			+ userName + " existiert nicht.");
-	    }
+	    User user = helper.checkUser(userName, daoUser);
 
 	    List<Rating> ratings = user.getRatings();
 
@@ -72,7 +70,8 @@ public class RatingIntegration {
 	    response.setRatings(ratingsTO);
 
 	    LOGGER.info("Es wurde(n) " + ratingsTO.size()
-		    + " Bewertung(en) für den Benutzer " + userName + " gefunden.");
+		    + " Bewertung(en) für den Benutzer " + userName
+		    + " gefunden.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
@@ -85,28 +84,21 @@ public class RatingIntegration {
 	    String notice, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 
-	ShelpSession session = daoUser.getSession(sessionId);
-	User targetUser = daoUser.findUserByName(targetUserId);
 	try {
-	    if (targetUser == null) {
-		LOGGER.info("TargetUser existiert nicht.");
-		throw new UserNotExistEcxeption(ReturnCode.ERROR,
-			"TargetUser existiert nicht.");
-	    }
-	    if (session == null) {
-		LOGGER.info("Session-Id existiert nicht.");
-		throw new UserNotExistEcxeption(ReturnCode.ERROR,
-			"Session-Id existiert nicht.");
-	    }
-	    if(targetUser.equals(session.getUser())) {
-		LOGGER.info("Man darf sich nicht selbst bewerten " + session.getUser());
+	    ShelpSession session = helper.checkSession(sessionId, daoUser);
+	    User targetUser = helper.checkUser(targetUserId, daoUser);
+
+	    if (targetUser.equals(session.getUser())) {
+		LOGGER.info("Man darf sich nicht selbst bewerten "
+			+ session.getUser());
 		throw new ShelpException(ReturnCode.ERROR,
-			"Man darf sich nicht selbst bewerten " + session.getUser());
+			"Man darf sich nicht selbst bewerten "
+				+ session.getUser());
 	    }
-	    if(rating < 1 || rating > 5) {
+	    if (rating < 1 || rating > 5) {
 		LOGGER.info("Ungültiges Rating " + rating);
-		throw new ShelpException(ReturnCode.ERROR,
-			"Ungültiges Rating " + rating);
+		throw new ShelpException(ReturnCode.ERROR, "Ungültiges Rating "
+			+ rating);
 	    }
 
 	    Rating newRating = new Rating();
@@ -117,8 +109,9 @@ public class RatingIntegration {
 
 	    daoRating.createRating(newRating);
 
-	    LOGGER.info("Benutzer " + session.getUser() + " hat " + targetUser + " mit " + rating + " Sternen bewertet.");
-	    
+	    LOGGER.info("Benutzer " + session.getUser() + " hat " + targetUser
+		    + " mit " + rating + " Sternen bewertet.");
+
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());

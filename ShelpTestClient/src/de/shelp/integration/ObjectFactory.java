@@ -24,13 +24,13 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _GetRequestsResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestsResponse");
     private final static QName _GetUpdatedRequests_QNAME = new QName("http://integration.shelp.de/", "getUpdatedRequests");
     private final static QName _AcceptRequest_QNAME = new QName("http://integration.shelp.de/", "acceptRequest");
     private final static QName _DeleteRequest_QNAME = new QName("http://integration.shelp.de/", "deleteRequest");
+    private final static QName _GetRequests_QNAME = new QName("http://integration.shelp.de/", "getRequests");
     private final static QName _CreateRequestResponse_QNAME = new QName("http://integration.shelp.de/", "createRequestResponse");
-    private final static QName _GetRequest_QNAME = new QName("http://integration.shelp.de/", "getRequest");
     private final static QName _GetUpdatedRequestsResponse_QNAME = new QName("http://integration.shelp.de/", "getUpdatedRequestsResponse");
-    private final static QName _GetRequestResponse_QNAME = new QName("http://integration.shelp.de/", "getRequestResponse");
     private final static QName _AcceptRequestResponse_QNAME = new QName("http://integration.shelp.de/", "acceptRequestResponse");
     private final static QName _DeleteRequestResponse_QNAME = new QName("http://integration.shelp.de/", "deleteRequestResponse");
     private final static QName _CreateRequest_QNAME = new QName("http://integration.shelp.de/", "createRequest");
@@ -40,6 +40,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link GetRequests }
+     * 
+     */
+    public GetRequests createGetRequests() {
+        return new GetRequests();
     }
 
     /**
@@ -67,6 +75,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetRequestsResponse }
+     * 
+     */
+    public GetRequestsResponse createGetRequestsResponse() {
+        return new GetRequestsResponse();
+    }
+
+    /**
      * Create an instance of {@link DeleteRequestResponse }
      * 
      */
@@ -91,14 +107,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetRequest }
-     * 
-     */
-    public GetRequest createGetRequest() {
-        return new GetRequest();
-    }
-
-    /**
      * Create an instance of {@link CreateRequestResponse }
      * 
      */
@@ -112,14 +120,6 @@ public class ObjectFactory {
      */
     public GetUpdatedRequestsResponse createGetUpdatedRequestsResponse() {
         return new GetUpdatedRequestsResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetRequestResponse }
-     * 
-     */
-    public GetRequestResponse createGetRequestResponse() {
-        return new GetRequestResponse();
     }
 
     /**
@@ -171,6 +171,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link RequestsResponse }
+     * 
+     */
+    public RequestsResponse createRequestsResponse() {
+        return new RequestsResponse();
+    }
+
+    /**
+     * Create an instance of {@link RequestTO }
+     * 
+     */
+    public RequestTO createRequestTO() {
+        return new RequestTO();
+    }
+
+    /**
+     * Create an instance of {@link CapacityTO }
+     * 
+     */
+    public CapacityTO createCapacityTO() {
+        return new CapacityTO();
+    }
+
+    /**
      * Create an instance of {@link PaymentConditionTO }
      * 
      */
@@ -187,35 +211,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RequestResponse }
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestsResponse }{@code >}}
      * 
      */
-    public RequestResponse createRequestResponse() {
-        return new RequestResponse();
-    }
-
-    /**
-     * Create an instance of {@link RequestTO }
-     * 
-     */
-    public RequestTO createRequestTO() {
-        return new RequestTO();
-    }
-
-    /**
-     * Create an instance of {@link RequestsResponse }
-     * 
-     */
-    public RequestsResponse createRequestsResponse() {
-        return new RequestsResponse();
-    }
-
-    /**
-     * Create an instance of {@link CapacityTO }
-     * 
-     */
-    public CapacityTO createCapacityTO() {
-        return new CapacityTO();
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestsResponse")
+    public JAXBElement<GetRequestsResponse> createGetRequestsResponse(GetRequestsResponse value) {
+        return new JAXBElement<GetRequestsResponse>(_GetRequestsResponse_QNAME, GetRequestsResponse.class, null, value);
     }
 
     /**
@@ -246,6 +247,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequests }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequests")
+    public JAXBElement<GetRequests> createGetRequests(GetRequests value) {
+        return new JAXBElement<GetRequests>(_GetRequests_QNAME, GetRequests.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CreateRequestResponse }{@code >}}
      * 
      */
@@ -255,30 +265,12 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequest }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequest")
-    public JAXBElement<GetRequest> createGetRequest(GetRequest value) {
-        return new JAXBElement<GetRequest>(_GetRequest_QNAME, GetRequest.class, null, value);
-    }
-
-    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GetUpdatedRequestsResponse }{@code >}}
      * 
      */
     @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getUpdatedRequestsResponse")
     public JAXBElement<GetUpdatedRequestsResponse> createGetUpdatedRequestsResponse(GetUpdatedRequestsResponse value) {
         return new JAXBElement<GetUpdatedRequestsResponse>(_GetUpdatedRequestsResponse_QNAME, GetUpdatedRequestsResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetRequestResponse }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "http://integration.shelp.de/", name = "getRequestResponse")
-    public JAXBElement<GetRequestResponse> createGetRequestResponse(GetRequestResponse value) {
-        return new JAXBElement<GetRequestResponse>(_GetRequestResponse_QNAME, GetRequestResponse.class, null, value);
     }
 
     /**

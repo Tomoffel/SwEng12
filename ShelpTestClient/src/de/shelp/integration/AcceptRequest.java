@@ -1,11 +1,8 @@
 
 package de.shelp.integration;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -20,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}int" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -39,8 +36,7 @@ import javax.xml.bind.annotation.XmlType;
 public class AcceptRequest {
 
     protected long arg0;
-    @XmlElement(type = Integer.class)
-    protected List<Integer> arg1;
+    protected String arg1;
     protected int arg2;
 
     /**
@@ -60,32 +56,27 @@ public class AcceptRequest {
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Ruft den Wert der arg1-Eigenschaft ab.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the arg1 property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getArg1().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Integer }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public List<Integer> getArg1() {
-        if (arg1 == null) {
-            arg1 = new ArrayList<Integer>();
-        }
-        return this.arg1;
+    public String getArg1() {
+        return arg1;
+    }
+
+    /**
+     * Legt den Wert der arg1-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setArg1(String value) {
+        this.arg1 = value;
     }
 
     /**

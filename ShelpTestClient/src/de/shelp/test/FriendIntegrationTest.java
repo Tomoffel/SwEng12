@@ -102,7 +102,7 @@ public class FriendIntegrationTest {
 	// targetuser existiert nicht
 	addFriend = remoteSystem.addFriend(session1.getId(), "nicht vorhanden");
 	Assert.assertEquals(ReturnCode.ERROR, addFriend.getReturnCode());
-	Assert.assertEquals("TargetUser existiert nicht.",
+	Assert.assertEquals("Benutzer nicht vorhanden existiert nicht.",
 		addFriend.getMessage());
 
 	// eigene Freundschaft nicht möglich
