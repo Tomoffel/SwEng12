@@ -63,6 +63,12 @@ public class FriendIntegration {
     private ShelpHelper helper;
 
     /**
+     * EJB zur Beauftragung zum Versenden von E-Mails
+     */
+    @EJB
+    private MailRequesterBean mailRequester;
+
+    /**
      * Method to get Friends
      * 
      * @param sessionId
@@ -291,6 +297,13 @@ public class FriendIntegration {
 			    + " ist nicht an der Freundschaft " + friendshipId
 			    + " beteiligt!");
 	}
+	
+
+	String logMessage = "Freundschaft " + friendship
+		+ " wurde verändern. Status ist nun " + friendship.getStatus();
+	LOGGER.info(logMessage);
+	mailRequester.printLetter(logMessage, friendship.getRecipientUser().getEmail());
+	mailRequester.printLetter(logMessage, friendship.getInitiatorUser().getEmail());
 	return friendship;
 
     }

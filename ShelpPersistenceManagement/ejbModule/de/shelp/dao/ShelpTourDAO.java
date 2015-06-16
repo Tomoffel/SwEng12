@@ -34,7 +34,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     @Override
     public Tour createTour(Tour tour, User user) {
 	tour.setOwner(user);
-	tour.setStatus(TourStatus.PLANED);
+	tour.setStatus(TourStatus.PLANNED);
 	em.persist(tour);
 	return tour;
     }
@@ -76,7 +76,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 			    tour.<Capacity> get("capacity"), capacity),
 			    criteriaBuilder.equal(
 				    tour.<TourStatus> get("status"),
-				    TourStatus.PLANED)));
+				    TourStatus.PLANNED)), criteriaBuilder
+		    .notEqual(tour.<User> get("owner"), currentUser));
 	    criteriaQuery.select(tour);
 	    criteriaQuery.where(andClause);
 	    searchedTours.addAll(em.createQuery(criteriaQuery).getResultList());
@@ -119,7 +120,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 
     @Override
     public void cancleTour(Tour tour) {
-	tour.setStatus(TourStatus.CANCLED);
+	tour.setStatus(TourStatus.CANCELLED);
 	em.persist(tour);
     }
 
@@ -155,7 +156,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 
     @Override
     public void realiseTour(Tour tour) {
-	tour.setStatus(TourStatus.REALISED);
+	tour.setStatus(TourStatus.CLOSED);
 	saveTour(tour);
     }
 
@@ -167,7 +168,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	Root<Tour> tour = criteriaQuery.from(Tour.class);
 	criteriaQuery.select(tour);
 	criteriaQuery.where(criteriaBuilder.equal(
-		tour.<TourStatus> get("status"), TourStatus.PLANED));
+		tour.<TourStatus> get("status"), TourStatus.PLANNED));
 	return em.createQuery(criteriaQuery).getResultList();
     }
 

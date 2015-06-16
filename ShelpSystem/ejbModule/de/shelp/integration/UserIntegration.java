@@ -2,6 +2,8 @@ package de.shelp.integration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,6 +19,7 @@ import de.shelp.dto.user.UserTO;
 import de.shelp.dto.user.UsersResponse;
 import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
+import de.shelp.enums.ReturnCode;
 import de.shelp.exception.InvalidLoginException;
 import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.ShelpException;
@@ -43,16 +46,30 @@ public class UserIntegration {
      */
     @EJB
     private UserDtoAssembler dtoAssembler;
-    
+
+    /**
+     * EJB zur Beauftragung zum Versenden von E-Mails
+     */
+    @EJB
+    private MailRequesterBean mailRequester;
+
     public UserResponse regUser(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
+	    if (!checkEMail(email)) {
+		LOGGER.warn("E-Mail nicht gültig.");
+		throw new ShelpException(ReturnCode.ERROR,
+			"E-Mail nicht gültig.");
+	    }
+
 	    User user = this.dao.findUserByName(email);
 	    if (user == null) {
 		user = this.dao.createUser(password, email);
 		ShelpSession session = dao.createSession(user);
-		LOGGER.info("Benutzer " + user
-			+ " erfolgreich angelegt. Session=" + session);
+		String logMessage = "Benutzer " + user
+			+ " erfolgreich angelegt.";
+		LOGGER.info(logMessage);
+		mailRequester.printLetter(logMessage, email);
 		response.setSession(dtoAssembler.makeDTO(session));
 	    } else {
 		LOGGER.info("Registrierung fehlgeschlag. Benutzername existiert schon "
@@ -123,5 +140,14 @@ public class UserIntegration {
 		+ " gefunden.");
 
 	return response;
+    }
+
+    private boolean checkEMail(String email) {
+	String emailPattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@"
+		+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
+	Pattern pattern = Pattern.compile(emailPattern);
+	Matcher matcher = pattern.matcher(email);
+	return matcher.matches();
     }
 }

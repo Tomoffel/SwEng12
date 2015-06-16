@@ -2,6 +2,6 @@ package de.shelp.enums;
 
 public enum RequestStatus {
 
-    ASKED, ACCECPT, PARTLY_ACCEPT, DENIED, REMOVED
+    ASKED, ACCEPT, PARTLY_ACCEPT, DENIED, REMOVED
     
 }

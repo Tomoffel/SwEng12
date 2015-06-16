@@ -32,13 +32,15 @@ public class MailRequesterBean {
      * this causes the letter to be processed and printed.
      * 
      * @param letter
+     * @param email
      */
-    public void printLetter(String letter) {
+    public void printLetter(String letter, String email) {
 	try (JMSContext context = jmsFactory
 		.createContext(JMSContext.AUTO_ACKNOWLEDGE)) {
 	    TextMessage message = context.createTextMessage();
 	    message.setStringProperty("DocType", "Letter");
-	    message.setText(letter);
+	    message.setText(letter + ";" + email);
+
 	    context.createProducer().send(mailQueue, message);
 	} catch (JMSException e) {
 	    LOGGER.error("Fehler beim E-Mail verschicken", e);

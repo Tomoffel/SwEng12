@@ -234,6 +234,7 @@ public class TourIntegration {
 	    }
 
 	    response.setTours(resultList);
+	    LOGGER.info(resultList.size() + " aktualisierte Fahrten gefunden.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());

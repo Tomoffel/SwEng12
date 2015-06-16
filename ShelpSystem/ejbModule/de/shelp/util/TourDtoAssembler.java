@@ -30,6 +30,12 @@ public class TourDtoAssembler {
      */
     @EJB
     private UserDtoAssembler userDtoAssembler;
+    
+    /**
+     * EJB zur Erzeugung von DataTransferObjects
+     */
+    @EJB
+    private RequestDtoAssembler requestDtoAssembler;
 
     public TourTO makeDTO(Tour tour) {
 	TourTO dto = new TourTO();
@@ -62,6 +68,7 @@ public class TourDtoAssembler {
 	    dto.setTargetUser(userDtoAssembler.makeDTO(request.getTargetUser()));
 	    dto.setUpdated(request.isUpdated());
 	    dto.setStatus(request.getStatus());
+	    dto.setWishes(requestDtoAssembler.makeDTO(request.getWishes()));
 	    dtos.add(dto);
 	}
 

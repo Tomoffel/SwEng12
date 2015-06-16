@@ -64,7 +64,7 @@ public class ShelpSchedules {
     }
 
     // Jede Stunde einmal
-    @Schedule(hour = "*", minute = "0,30")
+    @Schedule(hour = "*", minute = "0,5,10,15,20,25,30,35,40,45,50,55")
     public void relaisedTours() {
 	List<Tour> tours = tourDao.getOpenTours();
 	LOGGER.info(tours.size()

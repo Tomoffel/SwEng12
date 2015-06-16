@@ -84,7 +84,7 @@ public class RequestIntegration {
      * @param sessionId
      * @return
      */
-	public ReturnCodeResponse acceptRequest(long requestId, String acceptedIds,
+    public ReturnCodeResponse acceptRequest(long requestId, String acceptedIds,
 	    int sessionId) {
 
 	ReturnCodeResponse response = new ReturnCodeResponse();
@@ -117,13 +117,19 @@ public class RequestIntegration {
 	    if (!acceptOneItem) {
 		request.setStatus(RequestStatus.DENIED);
 	    } else if (acceptAllItem) {
-		request.setStatus(RequestStatus.ACCECPT);
+		request.setStatus(RequestStatus.ACCEPT);
 	    } else {
 		request.setStatus(RequestStatus.PARTLY_ACCEPT);
 	    }
 
-	    LOGGER.info("Anfrage wurde auf den Status " + request.getStatus()
-		    + " gesetzt.");
+	    String logMessage = "Die Anfrage zur Fahrt "
+		    + request.getTour().getLocation()
+		    + " wurde auf den Status " + request.getStatus()
+		    + " gesetzt.";
+	    LOGGER.info(logMessage);
+	    mailRequester.printLetter(logMessage, request.getSourceUser()
+		    .getEmail());
+
 	    daoRequest.persistRequest(request);
 
 	} catch (ShelpException e) {
@@ -209,12 +215,10 @@ public class RequestIntegration {
 	    // save tour
 	    tourDao.saveTour(tour);
 
-	    String logMessage = "Anfrage wurde gestellt.";
+	    String logMessage = "Zu der Fahrt " + tour.getLocation() + " ("
+		    + tour.getId() + ") wurde eine Anfrage gestellt.";
 	    LOGGER.info(logMessage);
-	    logMessage = logMessage + ";" + session.getUser().getEmail();
-	    LOGGER.info("xxx");
-	    LOGGER.info(logMessage);
-	    mailRequester.printLetter(logMessage);
+	    mailRequester.printLetter(logMessage, tour.getOwner().getEmail());
 
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
@@ -307,6 +311,7 @@ public class RequestIntegration {
 		}
 	    }
 	    response.setRequests(resultList);
+	    LOGGER.info(requests.size() + " aktualisierte Anfragen gefunden.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
