@@ -34,7 +34,7 @@ public class RequestDtoAssembler {
 		dto.setSourceUser(userDtoAssembler.makeDTO(request.getSourceUser()));
 		dto.setTargetUser(userDtoAssembler.makeDTO(request.getTargetUser()));
 		dto.setTour(tourDtoAssembler.makeDTO(request.getTour()));
-		dto.setUpdatedOn(request.getUpdatedOn().getTime());
+		dto.setUpdated(request.isUpdated());
 		dto.setWishes(makeDTO(request.getWishes()));
 		dto.setStatus(request.getStatus());
 

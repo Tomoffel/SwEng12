@@ -2,7 +2,6 @@ package de.shelp.integration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -105,7 +104,7 @@ public class RequestIntegration {
 		    acceptAllItem = false;
 		}
 	    }
-	    request.setUpdatedOn(new Date());
+	    request.setUpdated(true);
 
 	    if (!acceptOneItem) {
 		request.setStatus(RequestStatus.DENIED);
@@ -173,7 +172,7 @@ public class RequestIntegration {
 	    request.setTargetUser(targetUser);
 	    request.setTour(tour);
 	    request.setNotice(notice);
-	    request.setUpdatedOn(new Date());
+	    request.setUpdated(false);
 	    request.setStatus(RequestStatus.ASKED);
 
 	    // create list for wishlistitems
@@ -197,7 +196,7 @@ public class RequestIntegration {
 	    daoRequest.persistRequest(request);
 
 	    // update time for tour
-	    tour.setUpdatedOn(new Date());
+	    tour.setUpdated(true);
 
 	    // save tour
 	    tourDao.saveTour(tour);
@@ -299,7 +298,7 @@ public class RequestIntegration {
      * @return
      * @throws SessionNotExistException
      */
-    public RequestsResponse getUpdatedRequests(int sessionId, long timestamp) {
+    public RequestsResponse getUpdatedRequests(int sessionId) {
 
 	// create empty response
 	RequestsResponse response = new RequestsResponse();
@@ -311,10 +310,13 @@ public class RequestIntegration {
 	    List<Request> requests = session.getUser().getOwnRequests();
 
 	    List<RequestTO> resultList = new ArrayList<RequestTO>();
-	    // check if tour has updated after timepoint
+	    // check if tour has updated 
 	    for (Request request : requests) {
-		if (request.getUpdatedOn().after(new Date(timestamp))) {
+		if (request.isUpdated()) {
+		    // request aufnehmen und wieder als nicht aktualisiert abspeichern
 		    resultList.add(requestDtoAssembler.makeDTO(request));
+		    request.setUpdated(false);
+		    daoRequest.persistRequest(request);
 		}
 	    }
 	    response.setRequests(resultList);

@@ -92,7 +92,7 @@ public class TourIntegration {
 	    tour.setDeliveryCondition(tourDao
 		    .getDeliveryCondition(deliveryConditionId));
 	    tour.setTime(new Date(time));
-	    tour.setUpdatedOn(new Date());
+	    tour.setUpdated(false);
 
 	    if (!tour.isValid()) {
 		LOGGER.warn("Es sind nicht alle Felder der Fahrt gefüllt.");
@@ -227,7 +227,7 @@ public class TourIntegration {
 	return response;
     }
 
-    public ToursResponse getUpdatedTours(int sessionId, long timepoint) {
+    public ToursResponse getUpdatedTours(int sessionId) {
 	ToursResponse response = new ToursResponse();
 
 	try {
@@ -238,8 +238,11 @@ public class TourIntegration {
 	    List<TourTO> resultList = new ArrayList<TourTO>();
 	    // check if tour has updated after timepoint
 	    for (Tour tour : tours) {
-		if (tour.getUpdatedOn().after(new Date(timepoint))) {
+		if (tour.isUpdated()) {
+		    // tour aufnehmen und wieder als nicht aktualisiert abspeichern
 		    resultList.add(tourDtoAssembler.makeDTO(tour));
+		    tour.setUpdated(false);
+		    tourDao.saveTour(tour);
 		}
 	    }
 
