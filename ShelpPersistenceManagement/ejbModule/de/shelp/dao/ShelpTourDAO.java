@@ -49,7 +49,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 
 	List<Tour> searchedTours = new ArrayList<Tour>();
 
-	// Geht alle Freunde durch und filtert nach den Fahrten die den Ansprüchen gerecht werden
+	// Geht alle Freunde durch und filtert nach den Fahrten die den
+	// Ansprüchen gerecht werden
 	List<User> friends = currentUser.getFriends();
 	for (User friend : friends) {
 	    List<Tour> tours = friend.getTours();
@@ -65,7 +66,6 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	    }
 	}
 
-	// TODO den String Alle sinnvoll auslagern
 	if (approvalStatus.getDescription().equals("Alle")) {
 	    Predicate andClause = criteriaBuilder.and(criteriaBuilder.equal(
 		    tour.<Location> get("location"), location), criteriaBuilder
@@ -148,10 +148,27 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	return em.find(DeliveryCondition.class, deliveryConditionId);
     }
 
-	@Override
-	public void saveTour(Tour tour) {
-		em.persist(tour);
-		
-	}
+    @Override
+    public void saveTour(Tour tour) {
+	em.persist(tour);
+    }
+
+    @Override
+    public void realiseTour(Tour tour) {
+	tour.setStatus(TourStatus.REALISED);
+	saveTour(tour);
+    }
+
+    @Override
+    public List<Tour> getOpenTours() {
+	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	CriteriaQuery<Tour> criteriaQuery = criteriaBuilder
+		.createQuery(Tour.class);
+	Root<Tour> tour = criteriaQuery.from(Tour.class);
+	criteriaQuery.select(tour);
+	criteriaQuery.where(criteriaBuilder.equal(
+		tour.<TourStatus> get("status"), TourStatus.PLANED));
+	return em.createQuery(criteriaQuery).getResultList();
+    }
 
 }

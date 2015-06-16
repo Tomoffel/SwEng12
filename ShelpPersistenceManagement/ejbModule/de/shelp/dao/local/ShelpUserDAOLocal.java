@@ -21,7 +21,10 @@ public interface ShelpUserDAOLocal {
     public List<User> searchUsers(String searchText);
 
     public ShelpSession getSession(int sessionId);
+    
+    public List<ShelpSession> getSessions();
 
     public void updateSession(ShelpSession session);
+
 
 }

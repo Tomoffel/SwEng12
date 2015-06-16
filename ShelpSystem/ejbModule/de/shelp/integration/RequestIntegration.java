@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.jws.WebService;
 
 import org.jboss.logging.Logger;
@@ -64,7 +66,6 @@ public class RequestIntegration {
     @EJB
     private MailRequesterBean mailRequester;
 
-    
     /**
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
      * Injection gefüllt.
@@ -144,6 +145,7 @@ public class RequestIntegration {
      * @return returnCodeResponse
      * @throws SessionNotExistException
      */
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public ReturnCodeResponse createRequest(long tourId, String notice,
 	    int sessionId, String wishes) {
 
@@ -195,7 +197,6 @@ public class RequestIntegration {
 		wishlistItems.add(item);
 	    }
 
-	    // TODO transaktion
 	    // set created wishlist to request
 	    request.setWishes(wishlistItems);
 
@@ -207,8 +208,7 @@ public class RequestIntegration {
 
 	    // save tour
 	    tourDao.saveTour(tour);
-	    
-	    
+
 	    String logMessage = "Anfrage wurde gestellt.";
 	    LOGGER.info(logMessage);
 	    logMessage = logMessage + ";" + session.getUser().getEmail();
@@ -294,10 +294,11 @@ public class RequestIntegration {
 	    List<Request> requests = session.getUser().getOwnRequests();
 
 	    List<RequestTO> resultList = new ArrayList<RequestTO>();
-	    // check if tour has updated 
+	    // check if tour has updated
 	    for (Request request : requests) {
 		if (request.isUpdated()) {
-		    // request aufnehmen und wieder als nicht aktualisiert abspeichern
+		    // request aufnehmen und wieder als nicht aktualisiert
+		    // abspeichern
 		    resultList.add(requestDtoAssembler.makeDTO(request));
 		    request.setUpdated(false);
 		    daoRequest.persistRequest(request);

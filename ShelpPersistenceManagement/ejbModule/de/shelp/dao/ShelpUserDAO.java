@@ -37,7 +37,7 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
-    public User createUser( String password, String email) {
+    public User createUser(String password, String email) {
 	User user = new User(email, password, new GregorianCalendar());
 	em.persist(user);
 	return user;
@@ -56,10 +56,12 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     @Override
     public List<User> searchUsers(String searchText) {
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-	CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+	CriteriaQuery<User> criteriaQuery = criteriaBuilder
+		.createQuery(User.class);
 	Root<User> user = criteriaQuery.from(User.class);
 	criteriaQuery.select(user);
-	criteriaQuery.where(criteriaBuilder.like(user.<String> get("email"), "%" + searchText + "%"));
+	criteriaQuery.where(criteriaBuilder.like(user.<String> get("email"),
+		"%" + searchText + "%"));
 	return em.createQuery(criteriaQuery).getResultList();
     }
 
@@ -70,9 +72,20 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     }
 
     @Override
+    public List<ShelpSession> getSessions() {
+	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	CriteriaQuery<ShelpSession> criteriaQuery = criteriaBuilder
+		.createQuery(ShelpSession.class);
+	Root<ShelpSession> session = criteriaQuery.from(ShelpSession.class);
+	criteriaQuery.select(session);
+	return em.createQuery(criteriaQuery).getResultList();
+    }
+
+    @Override
     public void updateSession(ShelpSession session) {
 	session.setUpdatedOn(new Date());
 	em.persist(session);
     }
+
 
 }

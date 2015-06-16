@@ -1,5 +1,6 @@
 package de.shelp.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -316,12 +317,15 @@ public class FriendIntegrationTest {
 	FriendsResponse friends = remoteSystem.getFriends(session1.getId());
 	Assert.assertEquals(ReturnCode.OK, friends.getReturnCode());
 	Assert.assertEquals(3, friends.getFriends().size());
-	Assert.assertEquals(FriendshipStatus.DENIED, friends.getFriends()
-		.get(0).getStatus());
-	Assert.assertEquals(FriendshipStatus.ACCEPT, friends.getFriends()
-		.get(1).getStatus());
-	Assert.assertEquals(FriendshipStatus.ASKED, friends.getFriends().get(2)
-		.getStatus());
+
+	List<FriendshipStatus> friendshipStates = new ArrayList<FriendshipStatus>();
+	friendshipStates.add(friends.getFriends().get(0).getStatus());
+	friendshipStates.add(friends.getFriends().get(1).getStatus());
+	friendshipStates.add(friends.getFriends().get(2).getStatus());
+
+	Assert.assertTrue(friendshipStates.contains(FriendshipStatus.DENIED));
+	Assert.assertTrue(friendshipStates.contains(FriendshipStatus.ACCEPT));
+	Assert.assertTrue(friendshipStates.contains(FriendshipStatus.ASKED));
 
 	friends = remoteSystem.getFriends(session2.getId());
 	Assert.assertEquals(ReturnCode.OK, friends.getReturnCode());

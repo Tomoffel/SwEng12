@@ -18,9 +18,12 @@ public interface ShelpTourDAOLocal {
 
     public Tour createTour(Tour tour, User user);
 
-    public List<Tour> search(ApprovalStatus approvalStatus, Location location, Capacity capacity, Date startDate, Date endDate, User currentUser);
+    public List<Tour> search(ApprovalStatus approvalStatus, Location location,
+	    Capacity capacity, Date startDate, Date endDate, User currentUser);
 
-    public List<Tour> searchNear(ApprovalStatus approvalStatus, Location location, Capacity capacity, Date startTime, Date endTime, User currentUser);
+    public List<Tour> searchNear(ApprovalStatus approvalStatus,
+	    Location location, Capacity capacity, Date startTime, Date endTime,
+	    User currentUser);
 
     public Tour getTour(long tourId);
 
@@ -36,6 +39,10 @@ public interface ShelpTourDAOLocal {
 
     public DeliveryCondition getDeliveryCondition(int deliveryConditionId);
 
-	public void saveTour(Tour tour);
+    public void saveTour(Tour tour);
+
+    public void realiseTour(Tour tour);
+
+    public List<Tour> getOpenTours();
 
 }

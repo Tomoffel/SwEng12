@@ -23,15 +23,15 @@ public class Friendship {
 
     @ManyToOne
     private User recipientUser;
-    
+
     @Enumerated(EnumType.ORDINAL)
     private FriendshipStatus status;
-    
+
     private Date changeOn;
 
     public Friendship() {
     }
-    
+
     public int getFriendshipHash() {
 	return initiatorUser.hashCode() + recipientUser.hashCode();
     }
@@ -78,6 +78,12 @@ public class Friendship {
 
     public static long getSerialversionuid() {
 	return serialVersionUID;
+    }
+
+    @Override
+    public String toString() {
+	return "Freundschaft zwischen " + initiatorUser + " und "
+		+ recipientUser;
     }
 
 }

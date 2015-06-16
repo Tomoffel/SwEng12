@@ -1,11 +1,17 @@
 package de.shelp.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import de.shelp.dao.local.ShelpFriendDAOLocal;
 import de.shelp.entities.Friendship;
+import de.shelp.enums.FriendshipStatus;
 
 @Stateless
 public class ShelpFriendDAO implements ShelpFriendDAOLocal {
@@ -26,6 +32,19 @@ public class ShelpFriendDAO implements ShelpFriendDAOLocal {
     @Override
     public void deleteFriendship(Friendship friendship) {
 	em.remove(friendship);
+    }
+
+    @Override
+    public List<Friendship> getDeniedFriendships() {
+	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+	CriteriaQuery<Friendship> criteriaQuery = criteriaBuilder
+		.createQuery(Friendship.class);
+	Root<Friendship> friendship = criteriaQuery.from(Friendship.class);
+	criteriaQuery.select(friendship);
+	criteriaQuery.where(criteriaBuilder.equal(
+		friendship.<FriendshipStatus> get("status"),
+		FriendshipStatus.DENIED));
+	return em.createQuery(criteriaQuery).getResultList();
     }
 
 }
