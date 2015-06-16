@@ -14,7 +14,7 @@ public class UserDtoAssembler {
 	ShelpSessionTO dto = new ShelpSessionTO();
 	dto.setId(shelpSession.getId());
 	dto.setUser(makeDTO(shelpSession.getUser()));
-	dto.setCreationOn(shelpSession.getCreationOn());
+	dto.setUpdatedOn(shelpSession.getUpdatedOn());
 	return dto;
     }
 

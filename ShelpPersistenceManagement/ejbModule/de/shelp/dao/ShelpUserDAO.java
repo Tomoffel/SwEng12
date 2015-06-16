@@ -1,5 +1,6 @@
 package de.shelp.dao;
 
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -66,6 +67,12 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
     public ShelpSession getSession(int sessionId) {
 	ShelpSession session = em.find(ShelpSession.class, sessionId);
 	return session;
+    }
+
+    @Override
+    public void updateSession(ShelpSession session) {
+	session.setUpdatedOn(new Date());
+	em.persist(session);
     }
 
 }

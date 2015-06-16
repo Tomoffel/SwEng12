@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="status" type="{http://integration.shelp.de/}requestStatus" minOccurs="0"/>
  *         &lt;element name="targetUser" type="{http://integration.shelp.de/}userTO" minOccurs="0"/>
  *         &lt;element name="tour" type="{http://integration.shelp.de/}tourTO" minOccurs="0"/>
- *         &lt;element name="updatedOn" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="updated" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *         &lt;element name="wishes" type="{http://integration.shelp.de/}wishlistItemTO" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -43,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
     "status",
     "targetUser",
     "tour",
-    "updatedOn",
+    "updated",
     "wishes"
 })
 public class RequestTO {
@@ -54,7 +54,7 @@ public class RequestTO {
     protected RequestStatus status;
     protected UserTO targetUser;
     protected TourTO tour;
-    protected long updatedOn;
+    protected boolean updated;
     @XmlElement(nillable = true)
     protected List<WishlistItemTO> wishes;
 
@@ -195,19 +195,19 @@ public class RequestTO {
     }
 
     /**
-     * Ruft den Wert der updatedOn-Eigenschaft ab.
+     * Ruft den Wert der updated-Eigenschaft ab.
      * 
      */
-    public long getUpdatedOn() {
-        return updatedOn;
+    public boolean isUpdated() {
+        return updated;
     }
 
     /**
-     * Legt den Wert der updatedOn-Eigenschaft fest.
+     * Legt den Wert der updated-Eigenschaft fest.
      * 
      */
-    public void setUpdatedOn(long value) {
-        this.updatedOn = value;
+    public void setUpdated(boolean value) {
+        this.updated = value;
     }
 
     /**

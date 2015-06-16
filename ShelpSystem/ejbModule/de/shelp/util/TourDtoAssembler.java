@@ -45,7 +45,7 @@ public class TourDtoAssembler {
 	dto.setId(tour.getId());
 	dto.setOwner(dtoAssembler.makeDTO(tour.getOwner()));
 	dto.setStatus(tour.getStatus());
-	dto.setUpdatedOn(tour.getUpdatedOn());
+	dto.setUpdated(tour.isUpdated());
 	dto.setRequest(makeDTO(tour.getRequest()));
 
 	return dto;
@@ -60,7 +60,7 @@ public class TourDtoAssembler {
 	    dto.setNotice(request.getNotice());
 	    dto.setSourceUser(userDtoAssembler.makeDTO(request.getSourceUser()));
 	    dto.setTargetUser(userDtoAssembler.makeDTO(request.getTargetUser()));
-	    dto.setUpdatedOn(request.getUpdatedOn().getTime());
+	    dto.setUpdated(request.isUpdated());
 	    dto.setStatus(request.getStatus());
 	    dtos.add(dto);
 	}

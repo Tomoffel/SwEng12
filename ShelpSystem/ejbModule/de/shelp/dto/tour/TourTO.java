@@ -1,6 +1,5 @@
 package de.shelp.dto.tour;
 
-import java.util.Date;
 import java.util.List;
 
 import de.shelp.dto.request.RequestTO;
@@ -23,7 +22,7 @@ public class TourTO {
     private long time;
     private List<RequestTO> request;
     private UserTO owner;
-    private Date updatedOn;
+    private boolean updated;
     private TourStatus status;
 
     public long getId() {
@@ -90,12 +89,12 @@ public class TourTO {
 	this.owner = owner;
     }
 
-    public Date getUpdatedOn() {
-	return updatedOn;
+    public boolean isUpdated() {
+        return updated;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
-	this.updatedOn = updatedOn;
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 
     public List<RequestTO> getRequest() {

@@ -120,7 +120,6 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     @Override
     public void cancleTour(Tour tour) {
 	tour.setStatus(TourStatus.CANCLED);
-	tour.setUpdatedOn(new Date());
 	em.persist(tour);
     }
 

@@ -1,12 +1,12 @@
 package de.shelp.dto.user;
 
-import java.util.Calendar;
+import java.util.Date;
 
 public class ShelpSessionTO {
 
     private int id;
     private UserTO user;
-    private Calendar creationOn;
+    private Date updatedOn;
 
     public int getId() {
 	return id;
@@ -24,12 +24,12 @@ public class ShelpSessionTO {
 	this.user = user;
     }
 
-    public Calendar getCreationOn() {
-	return creationOn;
+    public Date getUpdatedOn() {
+	return updatedOn;
     }
 
-    public void setCreationOn(Calendar creationOn) {
-	this.creationOn = creationOn;
+    public void setUpdatedOn(Date updatedOn) {
+	this.updatedOn = updatedOn;
     }
 
     @Override

@@ -53,7 +53,7 @@ public class Tour {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    private Date updatedOn;
+    private boolean updated;
     private Date time;
 
     public long getId() {
@@ -120,12 +120,12 @@ public class Tour {
 	this.owner = owner;
     }
 
-    public Date getUpdatedOn() {
-	return updatedOn;
+    public boolean isUpdated() {
+        return updated;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
-	this.updatedOn = updatedOn;
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 
     public List<Request> getRequest() {

@@ -22,4 +22,6 @@ public interface ShelpUserDAOLocal {
 
     public ShelpSession getSession(int sessionId);
 
+    public void updateSession(ShelpSession session);
+
 }

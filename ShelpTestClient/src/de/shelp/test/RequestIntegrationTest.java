@@ -2,7 +2,6 @@ package de.shelp.test;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -389,15 +388,14 @@ public class RequestIntegrationTest {
     @Test
     public void iTestGetUpdateRequestSuccess() {
 	RequestsResponse updatedRequests = remote.getUpdatedRequests(
-		session2.getId(), new Date().getTime() - 5000);
+		session2.getId());
 	Assert.assertEquals(2, updatedRequests.getRequests().size());
     }
 
     @Test
     public void jTestGetUpdateRequestFail() {
 	// Session existiert nicht
-	RequestsResponse updatedRequests = remote.getUpdatedRequests(5000,
-		new Date().getTime() - 5000);
+	RequestsResponse updatedRequests = remote.getUpdatedRequests(5000);
 	Assert.assertEquals(ReturnCode.ERROR, updatedRequests.getReturnCode());
     }
 

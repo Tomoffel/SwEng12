@@ -1,7 +1,6 @@
 package de.shelp.entities;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,14 +16,14 @@ public class ShelpSession {
     private int id;
     @OneToOne
     private User user;
-    private Calendar creationOn;
+    private Date updatedOn;
 
     public ShelpSession() {
     }
 
     public ShelpSession(User user) {
 	this.user = user;
-	this.creationOn = new GregorianCalendar();
+	this.updatedOn = new Date();
     }
 
     public int getId() {
@@ -43,12 +42,12 @@ public class ShelpSession {
 	this.user = user;
     }
 
-    public Calendar getCreationOn() {
-	return creationOn;
+    public Date getUpdatedOn() {
+        return updatedOn;
     }
 
-    public void setCreationOn(Calendar creationOn) {
-	this.creationOn = creationOn;
+    public void setUpdatedOn(Date updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package de.shelp.entities;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,7 +31,7 @@ public class Request {
     private List <WishlistItem> wishes;
 
     private String notice;
-    private Date updatedOn;
+    private boolean updated;
 
     @Enumerated(EnumType.ORDINAL)
     private RequestStatus status;
@@ -86,12 +85,12 @@ public class Request {
 	this.notice = notice;
     }
 
-    public Date getUpdatedOn() {
-	return updatedOn;
+    public boolean isUpdated() {
+        return updated;
     }
 
-    public void setUpdatedOn(Date updatedOn) {
-	this.updatedOn = updatedOn;
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 
     public RequestStatus getStatus() {
