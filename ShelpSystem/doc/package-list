@@ -1,0 +1,10 @@
+de.shelp.dto
+de.shelp.dto.friend
+de.shelp.dto.rating
+de.shelp.dto.request
+de.shelp.dto.state
+de.shelp.dto.tour
+de.shelp.dto.user
+de.shelp.exception
+de.shelp.integration
+de.shelp.util

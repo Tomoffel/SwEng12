@@ -59,6 +59,13 @@ public class RequestIntegration {
     private RequestDtoAssembler requestDtoAssembler;
 
     /**
+     * EJB zur Beauftragung zum Versenden von E-Mails
+     */
+    @EJB
+    private MailRequesterBean mailRequester;
+
+    
+    /**
      * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
      * Injection gefüllt.
      */
@@ -200,8 +207,13 @@ public class RequestIntegration {
 
 	    // save tour
 	    tourDao.saveTour(tour);
+	    
+	    
+	    String logMessage = "Anfrage wurde gestellt.";
+	    LOGGER.info(logMessage);
+	    logMessage = logMessage + ";" + session.getUser().getEmail();
+	    mailRequester.printLetter(logMessage);
 
-	    LOGGER.info("Anfrage wurde gestellt.");
 	} catch (ShelpException e) {
 	    response.setReturnCode(e.getErrorCode());
 	    response.setMessage(e.getMessage());
