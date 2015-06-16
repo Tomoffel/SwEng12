@@ -1,6 +1,5 @@
 package de.shelp.dto.tour;
 
-import java.util.Date;
 import java.util.List;
 
 import de.shelp.dto.request.RequestTO;

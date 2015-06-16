@@ -160,21 +160,7 @@ public class TourIntegration {
 
 	return response;
     }
-
-    // public TourResponse getTour(long tourId, int sessionId) {
-    // TourResponse response = new TourResponse();
-    //
-    // try {
-    // response.setTour(tourDtoAssembler.makeDTO(this.getTourIntern(
-    // tourId, sessionId)));
-    // } catch (ShelpException e) {
-    // response.setReturnCode(e.getErrorCode());
-    // response.setMessage(e.getMessage());
-    // }
-    //
-    // return response;
-    // }
-
+    
     public ToursResponse getTours(int sessionId) {
 	ToursResponse response = new ToursResponse();
 	try {

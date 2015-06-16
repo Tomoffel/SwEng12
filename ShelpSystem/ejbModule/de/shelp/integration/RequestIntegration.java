@@ -222,34 +222,6 @@ public class RequestIntegration {
 	return response;
     }
 
-    /**
-     * Method to get Request
-     * 
-     * @param requestId
-     * @param sessionId
-     * @return requestResponse
-     */
-    // public RequestResponse getRequest(long requestId, int sessionId) {
-    //
-    // // create empty response
-    // RequestResponse response = new RequestResponse();
-    //
-    // try {
-    // // check request
-    // Request request = checkRequest(sessionId, requestId, true);
-    //
-    // // transform request
-    // response.setRequestTO(requestDtoAssembler.makeDTO(request));
-    // LOGGER.info("Anfrage wurde zurückgegeben.");
-    //
-    // } catch (ShelpException e) {
-    // response.setReturnCode(e.getErrorCode());
-    // response.setMessage(e.getMessage());
-    // }
-    //
-    // return response;
-    // }
-
     public RequestsResponse getRequests(int sessionId) {
 	RequestsResponse response = new RequestsResponse();
 	try {

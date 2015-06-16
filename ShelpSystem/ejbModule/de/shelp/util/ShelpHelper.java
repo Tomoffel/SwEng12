@@ -14,8 +14,7 @@ import de.shelp.exception.UserNotExistException;
 @Stateless
 @LocalBean
 public class ShelpHelper {
-    private static final Logger LOGGER = Logger
-	    .getLogger(ShelpHelper.class);
+    private static final Logger LOGGER = Logger.getLogger(ShelpHelper.class);
 
     /**
      * Helper-method to check current session
@@ -28,13 +27,17 @@ public class ShelpHelper {
 	    throws SessionNotExistException {
 
 	// get current Session
-	ShelpSession session =dao.getSession(sessionId);
+	ShelpSession session = dao.getSession(sessionId);
 
 	if (session == null) {
 	    String message = "Session-Id existiert nicht.";
 	    LOGGER.info(message);
 	    throw new SessionNotExistException(message);
 	}
+	
+	//Session hat etwas getan und muss aktualisiert werden
+	dao.updateSession(session);
+
 	return session;
     }
 
@@ -45,7 +48,8 @@ public class ShelpHelper {
      * @return valid session
      * @throws SessionNotExistException
      */
-    public User checkUser(String userId, ShelpUserDAOLocal dao) throws UserNotExistException {
+    public User checkUser(String userId, ShelpUserDAOLocal dao)
+	    throws UserNotExistException {
 
 	// get current Session
 	User user = dao.findUserByName(userId);
@@ -57,5 +61,6 @@ public class ShelpHelper {
 	}
 	return user;
     }
+
 
 }

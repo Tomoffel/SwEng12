@@ -6,9 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -31,7 +29,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="request" type="{http://integration.shelp.de/}requestTO" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="status" type="{http://integration.shelp.de/}tourStatus" minOccurs="0"/>
  *         &lt;element name="time" type="{http://www.w3.org/2001/XMLSchema}long"/>
- *         &lt;element name="updatedOn" type="{http://www.w3.org/2001/XMLSchema}dateTime" minOccurs="0"/>
+ *         &lt;element name="updated" type="{http://www.w3.org/2001/XMLSchema}boolean"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -52,7 +50,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "request",
     "status",
     "time",
-    "updatedOn"
+    "updated"
 })
 public class TourTO {
 
@@ -67,8 +65,7 @@ public class TourTO {
     protected List<RequestTO> request;
     protected TourStatus status;
     protected long time;
-    @XmlSchemaType(name = "dateTime")
-    protected XMLGregorianCalendar updatedOn;
+    protected boolean updated;
 
     /**
      * Ruft den Wert der approvalStatus-Eigenschaft ab.
@@ -300,27 +297,19 @@ public class TourTO {
     }
 
     /**
-     * Ruft den Wert der updatedOn-Eigenschaft ab.
+     * Ruft den Wert der updated-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public XMLGregorianCalendar getUpdatedOn() {
-        return updatedOn;
+    public boolean isUpdated() {
+        return updated;
     }
 
     /**
-     * Legt den Wert der updatedOn-Eigenschaft fest.
+     * Legt den Wert der updated-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public void setUpdatedOn(XMLGregorianCalendar value) {
-        this.updatedOn = value;
+    public void setUpdated(boolean value) {
+        this.updated = value;
     }
 
 }

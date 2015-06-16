@@ -1,7 +1,6 @@
 package de.shelp.test;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -349,7 +348,8 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, tours.getReturnCode());
 	List<TourTO> tours2 = tours.getTours();
 	Assert.assertEquals(4, tours2.size());
-	Assert.assertEquals(locations.get(5).getDescription(), tours2.get(2).getLocation().getDescription());
+	Assert.assertEquals(locations.get(5).getDescription(), tours2.get(2)
+		.getLocation().getDescription());
     }
 
     @Test
@@ -416,19 +416,18 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.PERMISSION_DENIED,
 		requestsOfTour.getReturnCode());
     }
-    
+
     @Test
     public void kTestGetUpdateRequestSuccess() {
-	ToursResponse updatedTours = remoteSystem.getUpdatedTours(
-		session2.getId(), new Date().getTime() - 5000);
-	Assert.assertEquals(3, updatedTours.getTours().size());
+	ToursResponse updatedTours = remoteSystem.getUpdatedTours(session2
+		.getId());
+	Assert.assertEquals(1, updatedTours.getTours().size());
     }
 
     @Test
     public void TestGetUpdateRequestFail() {
 	// Session existiert nicht
-	ToursResponse updatedTours = remoteSystem.getUpdatedTours(
-		5000, new Date().getTime() - 5000);
+	ToursResponse updatedTours = remoteSystem.getUpdatedTours(5000);
 	Assert.assertEquals(ReturnCode.ERROR, updatedTours.getReturnCode());
     }
 }

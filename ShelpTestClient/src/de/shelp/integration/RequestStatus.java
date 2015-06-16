@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="ACCECPT"/>
  *     &lt;enumeration value="PARTLY_ACCEPT"/>
  *     &lt;enumeration value="DENIED"/>
+ *     &lt;enumeration value="REMOVED"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -29,7 +30,8 @@ public enum RequestStatus {
     ASKED,
     ACCECPT,
     PARTLY_ACCEPT,
-    DENIED;
+    DENIED,
+    REMOVED;
 
     public String value() {
         return name();

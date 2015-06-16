@@ -1,6 +1,5 @@
 package de.shelp.dto.user;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class ShelpSessionTO {
