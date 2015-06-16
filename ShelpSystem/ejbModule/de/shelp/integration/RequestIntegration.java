@@ -84,7 +84,7 @@ public class RequestIntegration {
      * @param sessionId
      * @return
      */
-    public ReturnCodeResponse acceptRequest(long requestId, String acceptedIds,
+	public ReturnCodeResponse acceptRequest(long requestId, String acceptedIds,
 	    int sessionId) {
 
 	ReturnCodeResponse response = new ReturnCodeResponse();
@@ -212,6 +212,8 @@ public class RequestIntegration {
 	    String logMessage = "Anfrage wurde gestellt.";
 	    LOGGER.info(logMessage);
 	    logMessage = logMessage + ";" + session.getUser().getEmail();
+	    LOGGER.info("xxx");
+	    LOGGER.info(logMessage);
 	    mailRequester.printLetter(logMessage);
 
 	} catch (ShelpException e) {
