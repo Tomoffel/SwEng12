@@ -54,16 +54,60 @@ public class DataBuilder {
 	em.persist(new Location(location5, plz5));
 	em.persist(new Location(location6, plz6));
 
+	CriteriaQuery<ApprovalStatus> criteriaAs = em.getCriteriaBuilder()
+		.createQuery(ApprovalStatus.class);
+	criteriaAs.select(criteriaAs.from(ApprovalStatus.class));
+	List<ApprovalStatus> resultListAs = em.createQuery(criteriaAs)
+		.getResultList();
+	for (Iterator<ApprovalStatus> iterator = resultListAs.iterator(); iterator
+		.hasNext();) {
+	    ApprovalStatus status = iterator.next();
+	    em.remove(status);
+	}
+	LOGGER.info("Alle ApprovalStatusse entfernt. Erstelle Anfangsstatusse");
 	em.persist(new ApprovalStatus(approvalStatusAll));
 	em.persist(new ApprovalStatus(approvalStatusFriend));
 
+	CriteriaQuery<Capacity> criteriaCa = em.getCriteriaBuilder()
+		.createQuery(Capacity.class);
+	criteriaCa.select(criteriaCa.from(Capacity.class));
+	List<Capacity> resultListCa = em.createQuery(criteriaCa)
+		.getResultList();
+	for (Iterator<Capacity> iterator = resultListCa.iterator(); iterator
+		.hasNext();) {
+	    Capacity cap = iterator.next();
+	    em.remove(cap);
+	}
+	LOGGER.info("Alle Kapazitäten entfernt. Erstelle Anfangskapazitäten");
 	em.persist(new Capacity(smallTrunk));
 	em.persist(new Capacity(middleTrunk));
 	em.persist(new Capacity(hugeTrunk));
-	
+
+	CriteriaQuery<DeliveryCondition> criteriaDc = em.getCriteriaBuilder()
+		.createQuery(DeliveryCondition.class);
+	criteriaDc.select(criteriaDc.from(DeliveryCondition.class));
+	List<DeliveryCondition> resultListDc = em.createQuery(criteriaDc)
+		.getResultList();
+	for (Iterator<DeliveryCondition> iterator = resultListDc.iterator(); iterator
+		.hasNext();) {
+	    DeliveryCondition dc = iterator.next();
+	    em.remove(dc);
+	}
+	LOGGER.info("Alle Lieferbedingungen entfernt. Erstelle Anfangsbedingungen");
 	em.persist(new DeliveryCondition(bring));
 	em.persist(new DeliveryCondition(pickup));
-	
+
+	CriteriaQuery<PaymentCondition> criteriaPc = em.getCriteriaBuilder()
+		.createQuery(PaymentCondition.class);
+	criteriaPc.select(criteriaPc.from(PaymentCondition.class));
+	List<PaymentCondition> resultListPc = em.createQuery(criteriaPc)
+		.getResultList();
+	for (Iterator<PaymentCondition> iterator = resultListPc.iterator(); iterator
+		.hasNext();) {
+	    PaymentCondition pc = iterator.next();
+	    em.remove(pc);
+	}
+	LOGGER.info("Alle Bezahlbedingungen entfernt. Erstelle Anfangsbedingungen");
 	em.persist(new PaymentCondition(cash));
 	em.persist(new PaymentCondition(cashInAdvance));
 	em.persist(new PaymentCondition(paypal));
