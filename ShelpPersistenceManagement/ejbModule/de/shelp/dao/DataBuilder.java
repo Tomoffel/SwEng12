@@ -12,8 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 
-import org.jboss.logging.Logger;
-
 import de.shelp.entities.ApprovalStatus;
 import de.shelp.entities.Capacity;
 import de.shelp.entities.DeliveryCondition;
