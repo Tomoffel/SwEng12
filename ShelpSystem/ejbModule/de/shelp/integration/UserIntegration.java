@@ -1,6 +1,7 @@
 package de.shelp.integration;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,6 +27,20 @@ import de.shelp.exception.ShelpException;
 import de.shelp.exception.UserNotExistException;
 import de.shelp.util.UserDtoAssembler;
 
+/**
+ * Webservice der alle nötigen Methoden zur Benutzer-/Sessionverwaltung
+ * bereitstellt. Über die Schnittstelle können Benutzer angelegt
+ * {@link #regUser(String, String)}, eingeloggt {@link #login(String, String)},
+ * ausgeloggt {@link #logout(int)} und gesucht {@link #searchUsers(String)}
+ * werden.
+ * 
+ * <br>
+ * Jeder Schritt wird über die Logausgabe dokumentiert. Außerdem werden alle
+ * Entitäten vor der Rückgabe in Data Transfer Objekte umgewandelt.
+ * 
+ * @author Jos Werner
+ *
+ */
 @WebService
 @WebContext(contextRoot = "/shelp")
 @Stateless
@@ -35,14 +50,14 @@ public class UserIntegration {
 	    .getLogger(UserIntegration.class);
 
     /**
-     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-     * Injection gefüllt.
+     * EJB zur Abfrage von Datensätzen der Benutzer. Referenz auf die EJB wird
+     * per Dependency Injection gefüllt.
      */
     @EJB(beanName = "ShelpUserDAO", beanInterface = ShelpUserDAOLocal.class)
     private ShelpUserDAOLocal dao;
 
     /**
-     * EJB zur Erzeugung von DataTransferObjects
+     * EJB zur Erzeugung von DataTransferObjects der Benutzer
      */
     @EJB
     private UserDtoAssembler dtoAssembler;
@@ -53,10 +68,27 @@ public class UserIntegration {
     @EJB
     private MailRequesterBean mailRequester;
 
+    /**
+     * Schnittstelle die genutzt werden kann um einen neuen Benutzer (
+     * {@link User}) zu registrieren. Das Passwort sollte verschlüsselt an den
+     * Server verschickt werden. Es wird geprüft ob die E-Mailadresse gültig ist
+     * und ob der Benutzer schon existiert. Sollte dies der Fall sein wird der
+     * {@link ReturnCode} ERROR zurückgegeben. Kann der Benutzer angelegt werden
+     * wird direkt eine neue {@link ShelpSession} für den Benutzer angelegt und
+     * auf der Datenbank abgespeichert.
+     * 
+     * @param email
+     *            - die E-Mailadresse des neuen Benutzers
+     * @param password
+     *            - das verschlüsselte Passwort des neuen Benutzers
+     * @return einen {@link UserResponse} mit der neuen Session und
+     *         {@link ReturnCode} OK oder {@link ReturnCode} ERROR +
+     *         Fehlermeldung
+     */
     public UserResponse regUser(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
-	    if (!checkEMail(email)) {
+	    if (!validEMail(email)) {
 		LOGGER.warn("E-Mail nicht gültig.");
 		throw new ShelpException(ReturnCode.ERROR,
 			"E-Mail nicht gültig.");
@@ -84,6 +116,21 @@ public class UserIntegration {
 	return response;
     }
 
+    /**
+     * Schnittstelle um einen existierenden Benutzer ({@link User}) einzuloggen.
+     * Es wird geprüft ob der Benutzer existiert und ob das Passwort mit dem
+     * Passwort des Benutzer übereinstimmt. Falls nicht wird der
+     * {@link ReturnCode} ERROR zurückgegeben. Kann der Benutzer erfolgreich
+     * eingeloggt werden, wird eine neue {@link ShelpSession} angelegt und in
+     * der Datenbank abgespeichert.
+     * 
+     * @param email
+     *            - E-Mail des einzuloggenden Benutzers
+     * @param password
+     *            - Passwort des einzuloggenden Benutzers
+     * @return {@link UserResponse} mit der neuen Session und {@link ReturnCode}
+     *         OK oder {@link ReturnCode} ERROR + Fehlermeldung
+     */
     public UserResponse login(String email, String password) {
 	UserResponse response = new UserResponse();
 	try {
@@ -106,6 +153,18 @@ public class UserIntegration {
 	return response;
     }
 
+    /**
+     * Schnittstelle um einen eingeloggten Benutzer ({@link User}) auszuloggen.
+     * Prüft ob die SessionId existiert und gibt {@link ReturnCode} ERROR zurück
+     * falls nicht. Andernfalls wird die {@link ShelpSession} aus der Datenbank
+     * gelöscht.
+     * 
+     * @param sessionId
+     *            - Id der Session die ausgeloggt werden soll
+     * 
+     * @return einen {@link ReturnCodeResponse} mit {@link ReturnCode} OK oder
+     *         ERROR + Fehlermeldung
+     */
     public ReturnCodeResponse logout(int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
@@ -125,6 +184,16 @@ public class UserIntegration {
 	return response;
     }
 
+    /**
+     * Schnittstelle um nach Benutzern zu suchen. Der Suchtext kann dabei an
+     * einer beliebige Stelle in der E-Mail vorkommen. Ein leerer Suchtext gibt
+     * alle Benutzer zurück.
+     * 
+     * @param searchText
+     *            - Text nach dem gesucht werden soll
+     * @return einen {@link UsersResponse} mit {@link ReturnCode} OK und allen
+     *         gefundenen Benutzern
+     */
     public UsersResponse searchUsers(String searchText) {
 	UsersResponse response = new UsersResponse();
 
@@ -142,7 +211,17 @@ public class UserIntegration {
 	return response;
     }
 
-    private boolean checkEMail(String email) {
+    /**
+     * Interne Methode die überprüft ob eine E-Mail gültig ist. Überprüft wird
+     * ein mit einem Regex-Ausdruck der die meisten gängigen E-Mailadressen
+     * abfängt.
+     * 
+     * @param email
+     *            - die E-Mailadresse die geprüft weden soll
+     * 
+     * @return true wenn die Adresse gültig ist, sonst false
+     */
+    private boolean validEMail(String email) {
 	String emailPattern = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*@"
 		+ "(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
 

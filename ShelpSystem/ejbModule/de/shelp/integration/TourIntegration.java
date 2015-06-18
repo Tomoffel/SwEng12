@@ -44,9 +44,9 @@ import de.shelp.util.TourDtoAssembler;
  * {@link #deleteTour(long, int)} werden. Außerdem können alle Fahrten
  * {@link #getTours(int)}, alle aktualisierten Fahrten
  * {@link #getUpdatedTours(int)} einer Session und die Anfragen einer Fahrt
- * {@link #getRequestsOfTour(long, int)} abgefragt werden.
- * <br>
- * Jeder Schritt wird über die Logausgabe kommentiert 
+ * {@link #getRequestsOfTour(long, int)} abgefragt werden. <br>
+ * Jeder Schritt wird über die Logausgabe dokumentiert. Außerdem werden alle
+ * Entitäten vor der Rückgabe in Data Transfer Objekte umgewandelt.
  * 
  * @author Jos Werner
  *
