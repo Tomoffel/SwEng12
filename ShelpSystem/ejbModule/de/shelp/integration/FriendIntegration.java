@@ -26,7 +26,7 @@ import de.shelp.util.FriendDtoAssembler;
 import de.shelp.util.ShelpHelper;
 
 /**
- * Webservice class
+ * Webservice-Schnittstelle zur Behandlung von Freundschaften
  * 
  * @author anwender
  *
@@ -69,9 +69,9 @@ public class FriendIntegration {
     private MailRequesterBean mailRequester;
 
     /**
-     * Method to get Friends
+     * Gibt aktuelle Freunde zurück
      * 
-     * @param sessionId
+     * @param sessionId Aktuelle SessionId
      * @return FriendsResponse
      */
     public FriendsResponse getFriends(int sessionId) {
@@ -103,10 +103,10 @@ public class FriendIntegration {
     }
 
     /**
-     * Method to accept Friendship
+     * Akzeptiert eine Freundschaft
      * 
-     * @param friendshipId
-     * @param sessionId
+     * @param friendshipId ID der Freundschaft
+     * @param sessionId Aktuelle SessionID
      * @return
      */
     public ReturnCodeResponse acceptFriendship(int friendshipId, int sessionId) {
@@ -115,7 +115,7 @@ public class FriendIntegration {
     }
 
     /**
-     * Method to deny a friendship
+     * Lehnt eine Freundschaft ab
      * 
      * @param friendshipId
      * @param sessionId
@@ -127,7 +127,7 @@ public class FriendIntegration {
     }
 
     /**
-     * Method to delete a Friendship
+     * Löscht eine Freundschaft
      * 
      * @param friendshipId
      * @param sessionId
@@ -149,7 +149,7 @@ public class FriendIntegration {
     }
 
     /**
-     * Method to change a Friendship
+     * Ändert eine Freundschaft
      * 
      * @param friendshipId
      * @param status
@@ -179,7 +179,7 @@ public class FriendIntegration {
     }
 
     /**
-     * Method to add a friend
+     * Fügt einen neuen Freund hinzu
      * 
      * @param sessionId
      * @param friendId
