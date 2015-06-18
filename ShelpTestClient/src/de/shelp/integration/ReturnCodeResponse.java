@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlType;
     "returnCode"
 })
 @XmlSeeAlso({
-    RequestsResponse.class
+    RatingResponse.class
 })
 public class ReturnCodeResponse {
 

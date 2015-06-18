@@ -318,7 +318,7 @@ public class TourIntegrationTest {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
 		.getId(), locations.get(0).getId(), capacities.get(1).getId(),
 		calendarInOneDay.getTime().getTime(), calendarInThreeDays
-			.getTime().getTime(), true, session1.getId());
+			.getTime().getTime(), true, session2.getId());
 
 	ReturnCodeResponse tour = remoteSystem.deleteTour(searchTour.getTours()
 		.get(0).getId(), session1.getId());
@@ -371,7 +371,7 @@ public class TourIntegrationTest {
 				.getId(), calendarInOneDay.getTime().getTime(),
 			calendarInThreeDays.getTime().getTime(), true, session2
 				.getId());
-	Assert.assertEquals(1, searchTour.getTours().size());
+	Assert.assertEquals(2, searchTour.getTours().size());
 
 	TourTO tour = searchTour.getTours().get(0);
 	remote.createRequest(tour.getId(), "Test1", session2.getId(),
@@ -397,7 +397,7 @@ public class TourIntegrationTest {
 				.getId(), calendarInOneDay.getTime().getTime(),
 			calendarInThreeDays.getTime().getTime(), true, session2
 				.getId());
-	Assert.assertEquals(1, searchTour.getTours().size());
+	Assert.assertEquals(2, searchTour.getTours().size());
 
 	TourTO tour = searchTour.getTours().get(0);
 

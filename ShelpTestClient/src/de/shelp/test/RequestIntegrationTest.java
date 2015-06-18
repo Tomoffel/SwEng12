@@ -201,7 +201,7 @@ public class RequestIntegrationTest {
 		.searchTours(states.get(0).getId(),
 			tour1.getLocation().getId(), tour1.getCapacity()
 				.getId(), calendarInOneDay.getTime().getTime(),
-			calendarInThreeDays.getTime().getTime(), true, session1
+			calendarInThreeDays.getTime().getTime(), true, session2
 				.getId());
 	Assert.assertEquals(1, searchTour.getTours().size());
 	TourTO tour = searchTour.getTours().get(0);
@@ -223,7 +223,7 @@ public class RequestIntegrationTest {
 		.searchTours(states.get(0).getId(),
 			tour1.getLocation().getId(), tour1.getCapacity()
 				.getId(), calendarInOneDay.getTime().getTime(),
-			calendarInThreeDays.getTime().getTime(), true, session1
+			calendarInThreeDays.getTime().getTime(), true, session2
 				.getId());
 	Assert.assertEquals(1, searchTour.getTours().size());
 	TourTO tour = searchTour.getTours().get(0);
@@ -325,7 +325,7 @@ public class RequestIntegrationTest {
 	request = requests.getRequests().get(1);
 	id = request.getWishes().get(0);
 	Assert.assertEquals(true, id.isChecked());
-	Assert.assertEquals(RequestStatus.ACCECPT, request.getStatus());
+	Assert.assertEquals(RequestStatus.ACCEPT, request.getStatus());
     }
 
     @Test
@@ -334,7 +334,7 @@ public class RequestIntegrationTest {
 		.searchTours(states.get(0).getId(),
 			tour3.getLocation().getId(), tour3.getCapacity()
 				.getId(), calendarInOneDay.getTime().getTime(),
-			calendarInThreeDays.getTime().getTime(), true, session2
+			calendarInThreeDays.getTime().getTime(), true, session1
 				.getId());
 	Assert.assertEquals(1, searchTour.getTours().size());
 

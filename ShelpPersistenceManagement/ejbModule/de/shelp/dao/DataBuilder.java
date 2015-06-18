@@ -1,5 +1,6 @@
 package de.shelp.dao;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import de.shelp.entities.PaymentCondition;
 @Singleton
 public class DataBuilder {
 
-    private static final Logger LOGGER = Logger.getLogger(DataBuilder.class);
 
     @PersistenceContext
     EntityManager em;
@@ -36,24 +36,37 @@ public class DataBuilder {
 
     @PostConstruct
     private void init() {
+	List<String> desc = new ArrayList<String>();
+
 	CriteriaQuery<Location> criteria = em.getCriteriaBuilder().createQuery(
 		Location.class);
 	criteria.select(criteria.from(Location.class));
 	List<Location> resultList = em.createQuery(criteria).getResultList();
 	for (Iterator<Location> iterator = resultList.iterator(); iterator
 		.hasNext();) {
-	    Location location = iterator.next();
-	    em.remove(location);
+	    desc.add(iterator.next().getDescription());
 	}
-	LOGGER.info("Alle Locations entfernt. Erstelle Anfangslocations");
 
-	em.persist(new Location(location1, plz1));
-	em.persist(new Location(location2, plz2));
-	em.persist(new Location(location3, plz3));
-	em.persist(new Location(location4, plz4));
-	em.persist(new Location(location5, plz5));
-	em.persist(new Location(location6, plz6));
+	if (!desc.contains(location1)) {
+	    em.persist(new Location(location1, plz1));
+	}
+	if (!desc.contains(location2)) {
+	    em.persist(new Location(location2, plz2));
+	}
+	if (!desc.contains(location3)) {
+	    em.persist(new Location(location3, plz3));
+	}
+	if (!desc.contains(location4)) {
+	    em.persist(new Location(location4, plz4));
+	}
+	if (!desc.contains(location5)) {
+	    em.persist(new Location(location5, plz5));
+	}
+	if (!desc.contains(location6)) {
+	    em.persist(new Location(location6, plz6));
+	}
 
+	desc.clear();
 	CriteriaQuery<ApprovalStatus> criteriaAs = em.getCriteriaBuilder()
 		.createQuery(ApprovalStatus.class);
 	criteriaAs.select(criteriaAs.from(ApprovalStatus.class));
@@ -61,13 +74,16 @@ public class DataBuilder {
 		.getResultList();
 	for (Iterator<ApprovalStatus> iterator = resultListAs.iterator(); iterator
 		.hasNext();) {
-	    ApprovalStatus status = iterator.next();
-	    em.remove(status);
+	    desc.add(iterator.next().getDescription());
 	}
-	LOGGER.info("Alle ApprovalStatusse entfernt. Erstelle Anfangsstatusse");
-	em.persist(new ApprovalStatus(approvalStatusAll));
-	em.persist(new ApprovalStatus(approvalStatusFriend));
+	if (!desc.contains(approvalStatusAll)) {
+	    em.persist(new ApprovalStatus(approvalStatusAll));
+	}
+	if (!desc.contains(approvalStatusFriend)) {
+	    em.persist(new ApprovalStatus(approvalStatusFriend));
+	}
 
+	desc.clear();
 	CriteriaQuery<Capacity> criteriaCa = em.getCriteriaBuilder()
 		.createQuery(Capacity.class);
 	criteriaCa.select(criteriaCa.from(Capacity.class));
@@ -75,14 +91,20 @@ public class DataBuilder {
 		.getResultList();
 	for (Iterator<Capacity> iterator = resultListCa.iterator(); iterator
 		.hasNext();) {
-	    Capacity cap = iterator.next();
-	    em.remove(cap);
+	    desc.add(iterator.next().getDescription());
 	}
-	LOGGER.info("Alle Kapazitäten entfernt. Erstelle Anfangskapazitäten");
-	em.persist(new Capacity(smallTrunk));
-	em.persist(new Capacity(middleTrunk));
-	em.persist(new Capacity(hugeTrunk));
 
+	if (!desc.contains(smallTrunk)) {
+	    em.persist(new Capacity(smallTrunk));
+	}
+	if (!desc.contains(middleTrunk)) {
+	    em.persist(new Capacity(middleTrunk));
+	}
+	if (!desc.contains(hugeTrunk)) {
+	    em.persist(new Capacity(hugeTrunk));
+	}
+
+	desc.clear();
 	CriteriaQuery<DeliveryCondition> criteriaDc = em.getCriteriaBuilder()
 		.createQuery(DeliveryCondition.class);
 	criteriaDc.select(criteriaDc.from(DeliveryCondition.class));
@@ -90,13 +112,16 @@ public class DataBuilder {
 		.getResultList();
 	for (Iterator<DeliveryCondition> iterator = resultListDc.iterator(); iterator
 		.hasNext();) {
-	    DeliveryCondition dc = iterator.next();
-	    em.remove(dc);
+	    desc.add(iterator.next().getDescription());
 	}
-	LOGGER.info("Alle Lieferbedingungen entfernt. Erstelle Anfangsbedingungen");
-	em.persist(new DeliveryCondition(bring));
-	em.persist(new DeliveryCondition(pickup));
+	if (!desc.contains(bring)) {
+	    em.persist(new DeliveryCondition(bring));
+	}
+	if (!desc.contains(pickup)) {
+	    em.persist(new DeliveryCondition(pickup));
+	}
 
+	desc.clear();
 	CriteriaQuery<PaymentCondition> criteriaPc = em.getCriteriaBuilder()
 		.createQuery(PaymentCondition.class);
 	criteriaPc.select(criteriaPc.from(PaymentCondition.class));
@@ -104,13 +129,18 @@ public class DataBuilder {
 		.getResultList();
 	for (Iterator<PaymentCondition> iterator = resultListPc.iterator(); iterator
 		.hasNext();) {
-	    PaymentCondition pc = iterator.next();
-	    em.remove(pc);
+	    desc.add(iterator.next().getDescription());
 	}
-	LOGGER.info("Alle Bezahlbedingungen entfernt. Erstelle Anfangsbedingungen");
-	em.persist(new PaymentCondition(cash));
-	em.persist(new PaymentCondition(cashInAdvance));
-	em.persist(new PaymentCondition(paypal));
+
+	if (!desc.contains(cash)) {
+	    em.persist(new PaymentCondition(cash));
+	}
+	if (!desc.contains(cashInAdvance)) {
+	    em.persist(new PaymentCondition(cashInAdvance));
+	}
+	if (!desc.contains(paypal)) {
+	    em.persist(new PaymentCondition(paypal));
+	}
 
     }
 

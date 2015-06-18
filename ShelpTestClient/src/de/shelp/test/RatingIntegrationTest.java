@@ -58,7 +58,7 @@ public class RatingIntegrationTest {
     @Test
     public void aTestCreateRatingSuccess() {
 	ReturnCodeResponse createRating = remoteSystem.createRating(session2
-		.getUser().getEmail(), 4, "Guter Fahrer", session1.getId());
+		.getUser().getEmail(), 45, "Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.OK, createRating.getReturnCode());
     }
 
@@ -89,13 +89,13 @@ public class RatingIntegrationTest {
 	createRating = remoteSystem.createRating(session2.getUser().getEmail(),
 		0, "Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("Ungültiges Rating 0", createRating.getMessage());
+	Assert.assertEquals("Ungültiges Rating 0.0", createRating.getMessage());
 
 	// bewertung größer 5
 	createRating = remoteSystem.createRating(session2.getUser().getEmail(),
-		6, "Guter Fahrer", session1.getId());
+		60, "Guter Fahrer", session1.getId());
 	Assert.assertEquals(ReturnCode.ERROR, createRating.getReturnCode());
-	Assert.assertEquals("Ungültiges Rating 6", createRating.getMessage());
+	Assert.assertEquals("Ungültiges Rating 6.0", createRating.getMessage());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class RatingIntegrationTest {
 	ratings = remoteSystem.getRatings(session2.getUser().getEmail());
 	Assert.assertEquals(ReturnCode.OK, ratings.getReturnCode());
 	Assert.assertEquals(1, ratings.getRatings().size());
-	Assert.assertEquals(4, ratings.getRatings().get(0).getRating());
+	Assert.assertEquals(45, ratings.getRatings().get(0).getRating(), 0.01);
 	Assert.assertEquals("Guter Fahrer", ratings.getRatings().get(0)
 		.getNotice());
     }

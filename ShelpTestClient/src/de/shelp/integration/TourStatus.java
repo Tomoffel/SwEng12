@@ -13,9 +13,9 @@ import javax.xml.bind.annotation.XmlType;
  * <pre>
  * &lt;simpleType name="tourStatus">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="PLANED"/>
- *     &lt;enumeration value="CANCLED"/>
- *     &lt;enumeration value="REALISED"/>
+ *     &lt;enumeration value="PLANNED"/>
+ *     &lt;enumeration value="CANCELLED"/>
+ *     &lt;enumeration value="CLOSED"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum TourStatus {
 
-    PLANED,
-    CANCLED,
-    REALISED;
+    PLANNED,
+    CANCELLED,
+    CLOSED;
 
     public String value() {
         return name();

@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;simpleType name="requestStatus">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
  *     &lt;enumeration value="ASKED"/>
- *     &lt;enumeration value="ACCECPT"/>
+ *     &lt;enumeration value="ACCEPT"/>
  *     &lt;enumeration value="PARTLY_ACCEPT"/>
  *     &lt;enumeration value="DENIED"/>
  *     &lt;enumeration value="REMOVED"/>
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
 public enum RequestStatus {
 
     ASKED,
-    ACCECPT,
+    ACCEPT,
     PARTLY_ACCEPT,
     DENIED,
     REMOVED;
