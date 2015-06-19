@@ -29,6 +29,20 @@ import de.shelp.entities.Location;
 import de.shelp.entities.PaymentCondition;
 import de.shelp.util.StateDtoAssembler;
 
+/**
+ * Webservice der alle nötigen Methoden zur Listenabfrage bereitstellt. Über die
+ * Schnittstelle können die Liefermethoden {@link #getDeliveryConditions()},
+ * Bezahlmethoden {@link #getPaymentConditions()}, Orte {@link #getLocations()},
+ * Kapazitäten {@link #getCapacities()}, Freigabestatusse
+ * {@link #getApprovalStatus()} und alle Listen {@link #getAllLists()} abgefragt
+ * werden. <br>
+ *
+ * Jeder Schritt wird über die Logausgabe dokumentiert. Außerdem werden alle
+ * Entitäten vor der Rückgabe in Data Transfer Objekte umgewandelt.
+ * 
+ * @author Jos Werner
+ *
+ */
 @WebService
 @WebContext(contextRoot = "/shelp")
 @Stateless
@@ -38,18 +52,26 @@ public class StateIntegration {
 	    .getLogger(StateIntegration.class);
 
     /**
-     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-     * Injection gefüllt.
+     * EJB zur Abfrage von Datensätzen der Statusse. Referenz auf die EJB wird
+     * per Dependency Injection gefüllt.
      */
     @EJB(beanName = "ShelpStateDAO", beanInterface = ShelpStateDAOLocal.class)
     private ShelpStateDAOLocal dao;
 
     /**
-     * EJB zur Erzeugung von DataTransferObjects
+     * EJB zur Erzeugung von DataTransferObjects von Statussen
      */
     @EJB
     private StateDtoAssembler dtoAssembler;
 
+    /**
+     * Webservice um die in der Datenbank hinterlegten Freigabestatussen (
+     * {@link ApprovalStatus}) abzufragen. Standardmäßig sind "Nur Freunde" und
+     * "Alle" hinterlegt.
+     * 
+     * @return einen {@link ApprovalStatusResponse} mit den verfügbaren
+     *         Freigabestatussen
+     */
     public ApprovalStatusResponse getApprovalStatus() {
 	ApprovalStatusResponse response = new ApprovalStatusResponse();
 	LOGGER.info("Get approval status");
@@ -57,6 +79,12 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Webservice um die in der Datenbank hinterlegten Orte ({@link Location})
+     * abzufragen.
+     * 
+     * @return einen {@link LocationResponse} mit den verfügbaren Orten
+     */
     public LocationResponse getLocations() {
 	LocationResponse response = new LocationResponse();
 	LOGGER.info("Get all locations");
@@ -65,6 +93,13 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Webservice um die in der Datenbank hinterlegten Kapazitäten (
+     * {@link Capacity}) abzufragen. Standardmäßig sind "Großer Kofferraum",
+     * "Mittlerer Kofferraum" und "Kleiner Kofferraum" hinterlegt.
+     * 
+     * @return einen {@link CapacitiesResponse} mit den verfügbaren Kapazitäten
+     */
     public CapacitiesResponse getCapacities() {
 	CapacitiesResponse response = new CapacitiesResponse();
 	LOGGER.info("Get capacities");
@@ -72,6 +107,12 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Interne Methode um alle Kapazitäten ({@link Capacity}) aus der Datenbank
+     * zu holen und in DTO-Objekt umzuwandeln.
+     * 
+     * @return Liste mit den DTO-Objekten der Kapazitäten ({@link CapacityTO})
+     */
     private List<CapacityTO> getAllCapacitiesTO() {
 	List<Capacity> capacities = dao.getCapacities();
 
@@ -83,6 +124,14 @@ public class StateIntegration {
 	return capacitiesTO;
     }
 
+    /**
+     * Webservice um die in der Datenbank hinterlegten Bezahlmethoden (
+     * {@link PaymentCondition}) abzufragen. Standardmäßig sind "PayPal",
+     * "Barzahlung" und "Vorkasse" hinterlegt.
+     * 
+     * @return einen {@link PaymentConditionsResponse} mit den verfügbaren
+     *         Bezahlmethoden
+     */
     public PaymentConditionsResponse getPaymentConditions() {
 	PaymentConditionsResponse response = new PaymentConditionsResponse();
 	LOGGER.info("Get payment conditions");
@@ -90,6 +139,13 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Interne Methode um alle Bezahlbedingungen ({@link PaymentCondition}) aus
+     * der Datenbank zu holen und in DTO-Objekt umzuwandeln.
+     * 
+     * @return Liste mit den DTO-Objekten der Bezahlbedingungen (
+     *         {@link PaymentConditionTO})
+     */
     private List<PaymentConditionTO> getAllPaymentConditionsTO() {
 	List<PaymentCondition> conditions = dao.getPaymentConditions();
 
@@ -101,6 +157,14 @@ public class StateIntegration {
 	return conditionsTO;
     }
 
+    /**
+     * Webservice um die in der Datenbank hinterlegten Liefermethoden (
+     * {@link DeliveryCondition}) abzufragen. Standardmäßig sind "Abholen", und
+     * "Bringen" hinterlegt.
+     * 
+     * @return einen {@link DeliveryConditionResponse} mit den verfügbaren
+     *         Liefermethoden
+     */
     public DeliveryConditionResponse getDeliveryConditions() {
 	DeliveryConditionResponse response = new DeliveryConditionResponse();
 	LOGGER.info("Get delivery conditions");
@@ -108,6 +172,13 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Interne Methode um alle Liefermethoden ({@link DeliveryCondition}) aus
+     * der Datenbank zu holen und in DTO-Objekt umzuwandeln.
+     * 
+     * @return Liste mit den DTO-Objekten der Liefermethoden (
+     *         {@link DeliveryConditionTO})
+     */
     private List<DeliveryConditionTO> getAllDeliveryConditionsTO() {
 	List<DeliveryCondition> conditions = dao.getDeliveryConditions();
 
@@ -119,6 +190,13 @@ public class StateIntegration {
 	return conditionsTO;
     }
 
+    /**
+     * Schnittstelle um alle hinterlegten Listen abzufragen.
+     * 
+     * @return einen {@link AllListResponse} mit allen Listen (Orte,
+     *         Freigabestatusse, Kapazitäten, Bezahlbedingungen,
+     *         Lieferbedingungen)
+     */
     public AllListResponse getAllLists() {
 	LOGGER.info("Get all lists");
 
@@ -132,6 +210,12 @@ public class StateIntegration {
 	return response;
     }
 
+    /**
+     * Interne Methode um alle Orte ({@link Location}) aus der Datenbank zu
+     * holen und in DTO-Objekt umzuwandeln.
+     * 
+     * @return Liste mit den DTO-Objekten der Orte ({@link LocationTO})
+     */
     private List<LocationTO> getAllLocationsTO() {
 	List<Location> locations = dao.getLocations();
 
@@ -143,6 +227,13 @@ public class StateIntegration {
 	return locationsTO;
     }
 
+    /**
+     * Interne Methode um alle Freigabestatusse ({@link ApprovalStatus}) aus der
+     * Datenbank zu holen und in DTO-Objekt umzuwandeln.
+     * 
+     * @return Liste mit den DTO-Objekten der Freigabestatusse (
+     *         {@link ApprovalStatusTO})
+     */
     private List<ApprovalStatusTO> getAllApprovalStatesTO() {
 	List<ApprovalStatus> approvalStates = dao.getApprovalStates();
 
