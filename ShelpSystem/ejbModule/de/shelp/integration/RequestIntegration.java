@@ -33,8 +33,19 @@ import de.shelp.util.RequestDtoAssembler;
 import de.shelp.util.ShelpHelper;
 
 /**
- * @author anwender
- * Webservice-Schnittstelle für die Behandlung von Anfragen
+ * Webservice der alle notwendigen Methoden zur Anfrageverwaltung bereitstellt.
+ * Über die Schnittstellen können Anfrage akzeptiert
+ * {@link #acceptRequest(long, String, int)}, erstellt
+ * {@link #createRequest(long, String, int, String)}, und gelöscht werden
+ * {@link #deleteRequest(long, int)}. Zudem können alle Anfrage {@link
+ * getRequests(int) sowie alle aktualisierten Anfrage
+ * 
+ * @link #getUpdatedRequests(int)} abgefragt werden. Jeder Schritt wird über die
+ *       Logausgabe dokumentiert. Außerdem werden alle Entitäten vor der
+ *       Rückgabe in Data Transfer Objekte umgewandelt.
+ * 
+ * @author Thomas Sennekamp
+ * 
  *
  */
 @WebService
@@ -82,14 +93,25 @@ public class RequestIntegration {
 	private ShelpHelper helper;
 
 	/**
-	 * Akzeptiert eine Anfrage
+	 * Schnittstelle, die genutzt werden kann um eine Anfrage ({@link Request})
+	 * zu akzeptieren. Es wird zunächstgeprüft, ob die Anfrage und die mit ihr
+	 * verbundene Session gültig ist. Weiterhin wird geprüft, ob die Anfrage
+	 * bereits akzeptiert wurde. Anschließend wird überprüft, welche Einträge
+	 * der Wunschliste auf der Einkaufliste akzeptiert wurden und dem
+	 * entsprechend der Anfragestatus {@link RequestStatus} auf DENIED(alle
+	 * abgelehnt), ACCEPT(alle akzeptiert),PARTLY_ACCEPT(teilweise akzeptiert)
+	 * gesetzt. Abschließend wird die Anfrage inkl. neuem Status in der
+	 * Datenbank gespeichert sowie eine Mail an den entsprechenden Benutzer
+	 * gesendet.
 	 * 
 	 * @param requestId
-	 *            ID der Anfrage
+	 *            ID der Anfrage (muss in der Datenbank existieren)
 	 * @param acceptedIds
+	 *            IDs der akzeptierten Wunschliste-Einträge
 	 * @param sessionId
-	 *            Aktuelle SessionID
-	 * @return AntwortCode
+	 *            SessionId die die Fahrt anlegt (muss aktuell angemeldet sein)
+	 * @return einen {@link ReturnCodeResponse} der entweder den Status OK oder
+	 *         ERROR + Fehlernachricht beinhaltet
 	 */
 	public ReturnCodeResponse acceptRequest(long requestId, String acceptedIds,
 			int sessionId) {
@@ -148,14 +170,29 @@ public class RequestIntegration {
 	}
 
 	/**
-	 * Erstellt eine Anfrage
+	 * Schnittstelle die genutzt werden kann umd eine Anfrage zu erstellen. (
+	 * {@link Request}) Es wird zunächstgeprüft, ob die Anfrage und die mit ihr
+	 * verbundene Session gültig ist. Weiterhin wird geprüft, ob die verbundene
+	 * Tour ({@link Tour}) überhaupt existiert. Im Fehlerfall wird eine
+	 * Fehlermeldung geworfen. Als nächstes wird geprüft, ob eine Anfrage an
+	 * seine eigene Tour versucht wird, dies ist ebenfalls nicht erlaubt und
+	 * wird unterbunden. Anschließend wird die Anfrage erstellt und mit den
+	 * übergebenen Inhalten gefüllt und in der Datenbank gespeichert sowie eine
+	 * Status-Email an den Besitzer der Tour gesendet.
 	 * 
-	 * @param targetUserId UserID des Angefragten
-	 * @param tourId Aktuelle TourId
-	 * @param notice Notiz des Anfragenden
-	 * @param sessionId Aktuelle SessionID
-	 * @param wishes Einkaufswünsche
-	 * @return returnCodeResponse 
+	 * @param targetUserId
+	 *            UserID des Besitzer der Tour (muss in der Datenbank
+	 *            existieren)
+	 * @param tourId
+	 *            Aktuelle TourId (muss in der Datenbank existieren)
+	 * @param notice
+	 *            Notiz des Anfragenden (optional für den Benutzer)
+	 * @param sessionId
+	 *            Aktuelle SessionID (muss aktuell angemeldet sein)
+	 * @param wishes
+	 *            Liste mit Einkaufswünschen
+	 * @return einen {@link ReturnCodeResponse} der entweder den Status OK oder
+	 *         ERROR + Fehlernachricht beinhaltet
 	 * @throws SessionNotExistException
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -236,9 +273,16 @@ public class RequestIntegration {
 	}
 
 	/**
-	 * Gibt Anfragen zurück
+	 * Schnittstelle, die genutzt werden kann um Anfragen {@link Request})
+	 * abzufragen. Es wird zunächstgeprüft, ob die mit ihr verbundene Session
+	 * gültig ist und gibt {@link ReturnCode} ERROR zurück, falls nicht.
+	 * Anschließend werden alle eigenen, gültigen Anfragen {@link Request }
+	 * abgerufen und zurückgegeben.
+	 * 
 	 * @param sessionId
-	 * @return
+	 *            Aktuelle SessionID (muss aktuell angemeldet sein)
+	 * @return einen {@link ReturnCodeResponse} der entweder den Status OK oder
+	 *         ERROR + Fehlernachricht beinhaltet
 	 */
 	public RequestsResponse getRequests(int sessionId) {
 		RequestsResponse response = new RequestsResponse();
@@ -265,22 +309,28 @@ public class RequestIntegration {
 	}
 
 	/**
-	 * Löscht eine Anfrage
+	 * Schnittstelle, die genutzt werden kann um eine Anfrage zu löschen. Es
+	 * wird zunächstgeprüft, ob die Anfrage und die mit ihr verbundene Session
+	 * gültig ist und gibt {@link ReturnCode} ERROR zurück, falls nicht. Im
+	 * Erfolgsfall wird die Anfrage gelöscht.
 	 * 
-	 * @param requestId ID der zu löschenden Anfrage
-	 * @param sessionId Aktuelle SessionID
-	 * @return ReturnCodeResponse
+	 * @param requestId
+	 *            ID der zu löschenden Anfrage
+	 * @param sessionId
+	 *            Aktuelle SessionID (muss aktuell angemeldet sein)
+	 * @return einen {@link ReturnCodeResponse} der entweder den Status OK oder
+	 *         ERROR + Fehlernachricht beinhaltet
 	 */
 	public ReturnCodeResponse deleteRequest(long requestId, int sessionId) {
 
-		// create empty response
+		// Erstelle Antwortobjekt
 		ReturnCodeResponse response = new ReturnCodeResponse();
 
 		try {
-			// check request
+			// überprüfe Anfrage
 			Request request = checkRequest(sessionId, requestId, true);
 
-			// delete request
+			// lösche Anfrage
 			daoRequest.deleteRequest(request);
 			LOGGER.info("Anfrage wurde gelöscht.");
 
@@ -293,25 +343,32 @@ public class RequestIntegration {
 	}
 
 	/**
-	 * Gibt aktualisierte Anfrage zurück
+	 * Schnittstelle zur Abfrage von aktualisierten Anfragen. Es wird
+	 * zunächstgeprüft, ob die verbundene Session gültig ist und gibt
+	 * {@link ReturnCode} ERROR zurück, Anschließend werden die aktualiserten
+	 * Anfragen aus der Datenbank abgerufen und zurückgegeben. Zurückgelieferte
+	 * Anfragen werden als nicht aktualisiert markiert und wieder in der Datenbank
+	 * gespeichert.
 	 * 
-	 * @param sessionId Aktuelle Session Id
-	 * @return 
+	 * @param sessionId
+	 *            Aktuelle SessionID (muss aktuell angemeldet sein)
+	 * @return einen {@link ReturnCodeResponse} der entweder den Status OK oder
+	 *         ERROR + Fehlernachricht beinhaltet
 	 * @throws SessionNotExistException
 	 */
 	public RequestsResponse getUpdatedRequests(int sessionId) {
 
-		// create empty response
+		// Erstelle Antwortobjekt
 		RequestsResponse response = new RequestsResponse();
 		try {
-			// check current session
+			// überprüfe session
 			ShelpSession session = helper.checkSession(sessionId, daoUser);
 
-			// get all request of the user
+			// hole alle Anfragen des Benutzers
 			List<Request> requests = session.getUser().getOwnRequests();
 
 			List<RequestTO> resultList = new ArrayList<RequestTO>();
-			// check if tour has updated
+			// überprüfe, ob Tour als aktualisiert markiert ist
 			for (Request request : requests) {
 				if (request.isUpdated()) {
 					// request aufnehmen und wieder als nicht aktualisiert
@@ -332,27 +389,30 @@ public class RequestIntegration {
 	}
 
 	/**
-	 * Überprüft eine Anfrage auf Gültigkeit
+	 * Hilffunktion - Überprüft eine Anfrage auf Gültigkeit
 	 * 
-	 * @param sessionId Aktuelle SessionId
-	 * @param requestId ID der zu überprüfenden Anfrage
-	 * @param checkBoth Steuerparameter für die Überprüfung
+	 * @param sessionId
+	 *            Aktuelle SessionId
+	 * @param requestId
+	 *            ID der zu überprüfenden Anfrage
+	 * @param checkBoth
+	 *            Steuerparameter für die Überprüfung
 	 * @return
 	 * @throws ShelpException
 	 */
 	private Request checkRequest(int sessionId, long requestId,
 			boolean checkBoth) throws ShelpException {
 
-		// get current Session
+		// hole aktuelle session
 		ShelpSession session = helper.checkSession(sessionId, daoUser);
 
-		// get user from session
+		// hole aktuellen user
 		User user = session.getUser();
 
-		// get current request
+		// hole aktuelle anfrage
 		Request request = daoRequest.getRequestById(requestId);
 
-		// check request
+		// überprüfe Anfrage
 		if (request == null) {
 			LOGGER.info("Anfrage nicht gültig.");
 			throw new ShelpException(ReturnCode.ERROR,
