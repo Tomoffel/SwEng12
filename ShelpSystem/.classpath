@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="ejbModule"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_25">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Java1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -12,9 +12,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="E:/eclipse_fh/wildfly-8.2.0/modules/system/layers/base/org/jboss/ws/api/main/jbossws-api-1.0.2.Final.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse_fh/wildfly-8.2.0/modules/system/layers/base/org/jboss/logging/main/jboss-logging-3.1.4.GA.jar"/>
-	<classpathentry kind="lib" path="E:/eclipse_fh/wildfly-8.2.0/bin/client/jboss-client.jar"/>
+	<classpathentry kind="lib" path="C:/Users/anwender/Desktop/Studium/4.Semester/SEng/eclipse/wildfly-8.2.0.Final/modules/system/layers/base/org/jboss/ws/api/main/jbossws-api-1.0.2.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/anwender/Desktop/Studium/4.Semester/SEng/eclipse/wildfly-8.2.0.Final/modules/system/layers/base/org/jboss/logging/main/jboss-logging-3.1.4.GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/anwender/Desktop/Studium/4.Semester/SEng/eclipse/wildfly-8.2.0.Final/bin/client/jboss-client.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ShelpPersistenceManagement"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="build/classes"/>
