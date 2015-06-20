@@ -61,7 +61,7 @@ public class TourIntegration {
 	    .getLogger(TourIntegration.class);
 
     /**
-     * EJB zur Abfrage von Datensätzen der Fahren. Referenz auf die EJB wird per
+     * EJB zur Abfrage von Datensätzen der Fahrten. Referenz auf die EJB wird per
      * Dependency Injection gefüllt.
      */
     @EJB(beanName = "ShelpTourDAO", beanInterface = ShelpTourDAOLocal.class)

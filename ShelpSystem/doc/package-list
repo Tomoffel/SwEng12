@@ -7,4 +7,5 @@ de.shelp.dto.tour
 de.shelp.dto.user
 de.shelp.exception
 de.shelp.integration
+de.shelp.schedules
 de.shelp.util

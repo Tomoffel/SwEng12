@@ -12,7 +12,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import de.shelp.enums.RequestStatus;
+import de.shelp.enums.TourStatus;
 
+/**
+ * Entität die einen Anfrage respräsentiert. Umfasst eine Id, den Ersteller (
+ * {@link User}), den Empfänger ({@link User}), eine Fahrt ({@link Tour}), eine
+ * Liste mit Wünschen {@link WishlistItem}, eine Beschreibung, einen Status (
+ * {@link TourStatus}) und ein Flag zum setzen ob die Fahrt geändert wurde.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Entity
 public class Request {
 
@@ -27,8 +37,8 @@ public class Request {
     @ManyToOne
     private Tour tour;
 
-    @OneToMany(mappedBy="owner", cascade = CascadeType.ALL)
-    private List <WishlistItem> wishes;
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<WishlistItem> wishes;
 
     private String notice;
     private boolean updated;
@@ -68,16 +78,15 @@ public class Request {
 	this.tour = tour;
     }
 
-
     public List<WishlistItem> getWishes() {
-		return wishes;
-	}
+	return wishes;
+    }
 
-	public void setWishes(List<WishlistItem> wishes) {
-		this.wishes = wishes;
-	}
+    public void setWishes(List<WishlistItem> wishes) {
+	this.wishes = wishes;
+    }
 
-	public String getNotice() {
+    public String getNotice() {
 	return notice;
     }
 
@@ -86,11 +95,11 @@ public class Request {
     }
 
     public boolean isUpdated() {
-        return updated;
+	return updated;
     }
 
     public void setUpdated(boolean updated) {
-        this.updated = updated;
+	this.updated = updated;
     }
 
     public RequestStatus getStatus() {
@@ -100,10 +109,11 @@ public class Request {
     public void setStatus(RequestStatus status) {
 	this.status = status;
     }
-    
+
     @Override
     public String toString() {
-        return "Anfrage: " + id + " von " + sourceUser + " zu " + targetUser + " zur Fahrt " + tour ;
+	return "Anfrage: " + id + " von " + sourceUser + " zu " + targetUser
+		+ " zur Fahrt " + tour;
     }
 
 }

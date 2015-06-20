@@ -10,6 +10,14 @@ import javax.persistence.ManyToOne;
 
 import de.shelp.enums.FriendshipStatus;
 
+/**
+ * Entität die einen Freundschaft respräsentiert. Umfasst eine Id, Ersteller (
+ * {@link User}), Empfänger ({@link User}), Status ({@link FriendshipStatus})
+ * und ein Änderungsdatum.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Entity
 public class Friendship {
 
@@ -32,6 +40,12 @@ public class Friendship {
     public Friendship() {
     }
 
+    /**
+     * Erstellt den Hash für eine neue Freundschaft. Der Hash besteht aus dem
+     * Hash des Erstellers und Empfängers
+     * 
+     * @return der Hash der Freundschaft
+     */
     public int getFriendshipHash() {
 	return initiatorUser.hashCode() + recipientUser.hashCode();
     }

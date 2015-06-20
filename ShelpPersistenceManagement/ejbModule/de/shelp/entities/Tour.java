@@ -16,6 +16,17 @@ import javax.persistence.OneToMany;
 
 import de.shelp.enums.TourStatus;
 
+/**
+ * Entität die einen Fahrt respräsentiert. Umfasst eine Id, den Ersteller (
+ * {@link User}), einen Freigabestatus ({@link ApprovalStatus}), eine Kapazität
+ * ({@link Capacity}), eine Bezahlmethode ({@link PaymentCondition}), eine
+ * Liefermethode ({@link DeliveryCondition}), einen Status ({@link TourStatus}),
+ * eine Liste von Anfragen ({@link Request}), einen Ort ({@link Location}), ein
+ * Flag ob die Fahrt verändert wurde und ein Zeitpunkt.
+ * 
+ * @author Jos Werner
+ *
+ */
 @Entity
 public class Tour {
 
@@ -26,19 +37,19 @@ public class Tour {
     @ManyToOne
     @JoinColumn(name = "approval_status_id")
     private ApprovalStatus approvalStatus;
-    
+
     @ManyToOne
     @JoinColumn(name = "capacity_id")
     private Capacity capacity;
-    
+
     @ManyToOne
     @JoinColumn(name = "payment_condition_id")
     private PaymentCondition paymentCondition;
-    
+
     @ManyToOne
     @JoinColumn(name = "devlivery_condition_id")
     private DeliveryCondition deliveryCondition;
-    
+
     @Enumerated(EnumType.ORDINAL)
     private TourStatus status;
 
@@ -121,11 +132,11 @@ public class Tour {
     }
 
     public boolean isUpdated() {
-        return updated;
+	return updated;
     }
 
     public void setUpdated(boolean updated) {
-        this.updated = updated;
+	this.updated = updated;
     }
 
     public List<Request> getRequest() {
@@ -146,11 +157,18 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Fahrt: " + id + " zu " + location + " von " + owner ;
+	return "Fahrt: " + id + " zu " + location + " von " + owner;
     }
-    
+
+    /**
+     * Überprüft ob alle nötigen Angaben zur Fahrt vorhanden sind.
+     * 
+     * @return true wenn die Tor valide ist, false sonst
+     */
     public boolean isValid() {
-	return approvalStatus != null && location != null && capacity != null && paymentCondition != null && deliveryCondition != null && time != null;
+	return approvalStatus != null && location != null && capacity != null
+		&& paymentCondition != null && deliveryCondition != null
+		&& time != null;
     }
-    
+
 }

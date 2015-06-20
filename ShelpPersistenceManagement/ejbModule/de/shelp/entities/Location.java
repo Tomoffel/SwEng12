@@ -4,6 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Entität die einen Ort respräsentiert. Umfasst eine Id, eine Beschreibung und
+ * die PLZ.
+ * 
+ * @author Jos Werner
+ *
+ */
 @Entity
 public class Location {
 

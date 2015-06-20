@@ -6,62 +6,70 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+/**
+ * Entität die einen Bewertung respräsentiert. Umfasst eine Id, den Ersteller (
+ * {@link User}), den Empfänger ({@link User}), ein Rating (in Sternen 10 - 50)
+ * und eine Beschreibung der Bewertung.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Entity
 public class Rating {
 
-	@Id
-	@GeneratedValue
-	private long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "source_user")
-	private User sourceUser;
+    @Id
+    @GeneratedValue
+    private long id;
 
-	@ManyToOne
-	@JoinColumn(name = "target_User")
-	private User targetUser;
+    @ManyToOne
+    @JoinColumn(name = "source_user")
+    private User sourceUser;
 
-	private int rating;
-	private String notice;
+    @ManyToOne
+    @JoinColumn(name = "target_User")
+    private User targetUser;
 
-	public long getId() {
-		return id;
-	}
+    private int rating;
+    private String notice;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+	return id;
+    }
 
-	public User getSourceUser() {
-		return sourceUser;
-	}
+    public void setId(long id) {
+	this.id = id;
+    }
 
-	public void setSourceUser(User sourceUser) {
-		this.sourceUser = sourceUser;
-	}
+    public User getSourceUser() {
+	return sourceUser;
+    }
 
-	public User getTargetUser() {
-		return targetUser;
-	}
+    public void setSourceUser(User sourceUser) {
+	this.sourceUser = sourceUser;
+    }
 
-	public void setTargetUser(User targetUser) {
-		this.targetUser = targetUser;
-	}
+    public User getTargetUser() {
+	return targetUser;
+    }
 
-	public int getRating() {
-		return rating;
-	}
+    public void setTargetUser(User targetUser) {
+	this.targetUser = targetUser;
+    }
 
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
+    public int getRating() {
+	return rating;
+    }
 
-	public String getNotice() {
-		return notice;
-	}
+    public void setRating(int rating) {
+	this.rating = rating;
+    }
 
-	public void setNotice(String notice) {
-		this.notice = notice;
-	}
+    public String getNotice() {
+	return notice;
+    }
+
+    public void setNotice(String notice) {
+	this.notice = notice;
+    }
 
 }

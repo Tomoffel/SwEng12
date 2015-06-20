@@ -4,6 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Entität die einen Bezahlmethode respräsentiert. Umfasst eine Id und eine Beschreibung.
+ * 
+ * @author Jos Werner
+ *
+ */
 @Entity
 public class PaymentCondition {
 
