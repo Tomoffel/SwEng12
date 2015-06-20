@@ -33,7 +33,7 @@ import de.shelp.util.ShelpHelper;
  * deleteFriendship(int, int)}, Freundschaften geändert werden {@link
  * changeFriendShip(int, FriendshipStatus, int)}, Freunde hinzugefügt werden
  * {@link addFriend(int, String) }, alle Freunde abgerufen werden {@link
- * getFriends(int)}, Jeder Schritt wird über die Logausgabe dokumentiert.
+ * getFriends(int)}, Jeder Schritt wird über die Logausgabe {@link #LOGGER} dokumentiert.
  * Außerdem werden alle Entitäten vor der Rückgabe in Data Transfer Objekte
  * umgewandelt.
  * 
@@ -136,7 +136,7 @@ public class FriendIntegration {
 
 	/**
 	 * Schnittstelle, die genutzt werden kann um Freundschaften zu beenden.
-	 * Status der Freundschaft wird mit Hilfe der Methode changeFriendShip
+	 * Status der Freundschaft {@link Friendship} wird mit Hilfe der Methode changeFriendShip
 	 * {@link #changeFriendShip(int, FriendshipStatus, int)} auf "DENIED"
 	 * gesetzt.
 	 * 
@@ -153,7 +153,7 @@ public class FriendIntegration {
 
 	/**
 	 * Schnittstelle, die genutzt werden kann um eine Freundschaft zu löschen.
-	 * Zunächst wir die Freundschaft auf gültigkeit geprüft und im Erfolgsfall
+	 * Zunächst wir die Freundschaft {@link Friendship} auf gültigkeit geprüft und im Erfolgsfall
 	 * die Freundschaft gelöscht.
 	 * 
 	 * @param friendshipId
@@ -179,7 +179,7 @@ public class FriendIntegration {
 	}
 
 	/**
-	 * Interne Methode die zur Änderung einer Freundschaft genutzt werden kann.
+	 * Interne Methode die zur Änderung einer Freundschaft {@link Friendship} genutzt werden kann.
 	 * Zunächst wird die Freundschaft auf Gültigkeit überprüft. Anschließend
 	 * wird der Status und das Datum aktualisiert und abschließend in der
 	 * Datenbank gespeichert.
@@ -217,12 +217,12 @@ public class FriendIntegration {
 
 	/**
 	 * Schnitttstelle, die genutzt werden kann um einen Freund hinzuzufügen.
-	 * Zunächst wird die Session auf Gültigkeit überprüft, anschließend
-	 * überprüft, dass sich ein Benutzer nicht selbst als Freund hinzufügen
+	 * Zunächst wird die Session {@link ShelpSession} auf Gültigkeit überprüft, anschließend
+	 * überprüft, dass sich ein Benutzer {@link User} nicht selbst als Freund hinzufügen
 	 * kann. Weiterhin wird überpüft, dass die Freundschaft zwischen den
 	 * Benutzern nicht bereits existiert. Im Erfolgsfall wird die Freundschaft
 	 * hinzugefügt, im Fehlerfall wird weiter geprüft, warum die Freundschaft
-	 * nicht erstellt werden kann und entsprechende Meldung zurückgegeben.
+	 * nicht erstellt werden kann und entsprechende Meldung {@link ShelpException} zurückgegeben.
 	 * 
 	 * @param sessionId
 	 *            Aktuelle SessionID
@@ -299,14 +299,14 @@ public class FriendIntegration {
 	}
 
 	/**
-	 * Interne Methode zur Überprüfung einer Freundschaft. Zunächst wird die
+	 * Interne Methode zur Überprüfung einer Freundschaft {@link Friendship}. Zunächst wird die
 	 * Session auf Gültigkeit überprüft. Weiterhin wird überprüft, ob die
 	 * Freundschaft {@link Friendship} bereits existiert und gültig ist. Bei
 	 * Existenz bzw. Ungültikeit wird eine entsprechender Fehler
 	 * {@link ShelpException} geworfen. Anschließend wird überprüft, ob der
 	 * aktuelle Benutzer der Empfänger der Freundschaftsanfrage bzw. an der
 	 * Freundschaft beteiligt ist. {@link Friendship} ist. Im Fehlerfall wird
-	 * der Status PERMISSION_DENIED zurückgegeben. Nach erfolgreichem
+	 * der Status PERMISSION_DENIED {@link FriendshipStatus} zurückgegeben. Nach erfolgreichem
 	 * Durchlaufer aller Tests und Überprüfungen wird abschließend eine Email an
 	 * die Benuter der beteiligten Freunschaftsanfrage gesendet.
 	 * 
