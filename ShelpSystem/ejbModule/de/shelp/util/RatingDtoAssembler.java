@@ -6,6 +6,12 @@ import javax.ejb.Stateless;
 import de.shelp.dto.rating.RatingTO;
 import de.shelp.entities.Rating;
 
+
+/**
+ * Klasse zur Umwandlung von RatingObjekten in transportfähige Objekte.
+ * @author anwender
+ *
+ */
 @Stateless
 public class RatingDtoAssembler {
 	
@@ -15,6 +21,11 @@ public class RatingDtoAssembler {
     @EJB
     private UserDtoAssembler dtoAssembler;
 
+    /**
+     * Methode zum Umwandeln des Objektes
+     * @param r
+     * @return
+     */
     public RatingTO makeDTO(Rating r) {
 	RatingTO dto = new RatingTO();
 

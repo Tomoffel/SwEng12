@@ -11,56 +11,72 @@ import de.shelp.entities.User;
 import de.shelp.exception.SessionNotExistException;
 import de.shelp.exception.UserNotExistException;
 
+/**
+ * Hilfsklasse die zwei Methoden zur Überprüfung enthält. 1. Methode
+ * {@link #checkSession(int, ShelpUserDAOLocal)} zur Überprüftung der aktuellen
+ * Session auf Gültigkeit. 2. Methode
+ * {@link #checkUser(String, ShelpUserDAOLocal)} zur Überprüfung eines Benutzers
+ * {@link User}.
+ * 
+ * In Fehlerfällen wird die entsprechende Exception
+ * {@link SessionNotExistException} oder {@link UserNotExistException} geworfen.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Stateless
 @LocalBean
 public class ShelpHelper {
-    private static final Logger LOGGER = Logger.getLogger(ShelpHelper.class);
+	private static final Logger LOGGER = Logger.getLogger(ShelpHelper.class);
 
-    /**
-     * Helper-method to check current session
-     * 
-     * @param sessionId
-     * @return valid session
-     * @throws SessionNotExistException
-     */
-    public ShelpSession checkSession(int sessionId, ShelpUserDAOLocal dao)
-	    throws SessionNotExistException {
+	/**
+	 * Hilfsmethode zur Überprüfung einer SessionID
+	 * 
+	 * @param sessionId
+	 * @return session Gültige Session
+	 * @throws SessionNotExistException
+	 *             Wird im Fehlerfall geworfen.
+	 */
+	public ShelpSession checkSession(int sessionId, ShelpUserDAOLocal dao)
+			throws SessionNotExistException {
 
-	// get current Session
-	ShelpSession session = dao.getSession(sessionId);
+		// get current Session
+		ShelpSession session = dao.getSession(sessionId);
 
-	if (session == null) {
-	    String message = "Session-Id existiert nicht.";
-	    LOGGER.info(message);
-	    throw new SessionNotExistException(message);
+		if (session == null) {
+			String message = "Session-Id existiert nicht.";
+			LOGGER.info(message);
+			throw new SessionNotExistException(message);
+		}
+
+		// Session hat etwas getan und muss aktualisiert werden
+		dao.updateSession(session);
+
+		return session;
 	}
-	
-	//Session hat etwas getan und muss aktualisiert werden
-	dao.updateSession(session);
 
-	return session;
-    }
+	/**
+	 * Hilfsfunktion zur Überprüfung eines Benutzers {@link User} anhand der
+	 * UserID.
+	 * 
+	 * @param sessionId
+	 *            Aktuelle Session-ID
+	 * @return User Gültiger User
+	 * @throws SessionNotExistException
+	 *             Wird im Fehlerfall geworfen.
+	 */
+	public User checkUser(String userId, ShelpUserDAOLocal dao)
+			throws UserNotExistException {
 
-    /**
-     * Helper-method to check current session
-     * 
-     * @param sessionId
-     * @return valid session
-     * @throws SessionNotExistException
-     */
-    public User checkUser(String userId, ShelpUserDAOLocal dao)
-	    throws UserNotExistException {
+		// get current Session
+		User user = dao.findUserByName(userId);
 
-	// get current Session
-	User user = dao.findUserByName(userId);
-
-	if (user == null) {
-	    String message = "Benutzer " + userId + " existiert nicht.";
-	    LOGGER.info(message);
-	    throw new UserNotExistException(message);
+		if (user == null) {
+			String message = "Benutzer " + userId + " existiert nicht.";
+			LOGGER.info(message);
+			throw new UserNotExistException(message);
+		}
+		return user;
 	}
-	return user;
-    }
-
 
 }
