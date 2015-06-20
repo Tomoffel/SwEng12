@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Entität die einen Lieferbedingung respräsentiert. Umfasst eine Id und eine
+ * Entität die eine Lieferbedingung respräsentiert. Umfasst eine Id und eine
  * Beschreibung.
  * 
  * @author Jos Werner

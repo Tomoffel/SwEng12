@@ -1,8 +1,17 @@
 package de.shelp.dto.friend;
 
 import de.shelp.dto.user.UserTO;
+import de.shelp.entities.User;
 import de.shelp.enums.FriendshipStatus;
 
+/**
+ * TO-Objekt das eine Freundschaft respräsentiert. Umfasst eine Id, Ersteller (
+ * {@link User}), Empfänger ({@link User}), Status ({@link FriendshipStatus})
+ * und ein Änderungsdatum.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 public class FriendshipTO {
 
     private int id;

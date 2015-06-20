@@ -4,8 +4,20 @@ import java.util.List;
 
 import de.shelp.dto.tour.TourTO;
 import de.shelp.dto.user.UserTO;
+import de.shelp.entities.Tour;
+import de.shelp.entities.User;
+import de.shelp.entities.WishlistItem;
 import de.shelp.enums.RequestStatus;
 
+/**
+ * Entität die einen Anfrage respräsentiert. Umfasst eine Id, den Ersteller (
+ * {@link User}), den Empfänger ({@link User}), eine Fahrt ({@link Tour}), eine
+ * Liste mit Wünschen {@link WishlistItem}, eine Beschreibung, einen Status (
+ * {@link RequestStatus}) und ein Flag zum setzen ob die Anfrage geändert wurde.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 public class RequestTO {
 
     private long id;

@@ -9,8 +9,26 @@ import de.shelp.dto.state.DeliveryConditionTO;
 import de.shelp.dto.state.LocationTO;
 import de.shelp.dto.state.PaymentConditionTO;
 import de.shelp.dto.user.UserTO;
+import de.shelp.entities.ApprovalStatus;
+import de.shelp.entities.Capacity;
+import de.shelp.entities.DeliveryCondition;
+import de.shelp.entities.Location;
+import de.shelp.entities.PaymentCondition;
+import de.shelp.entities.Request;
+import de.shelp.entities.User;
 import de.shelp.enums.TourStatus;
 
+/**
+ * TO-Objekt das eine Fahrt respräsentiert. Umfasst eine Id, den Ersteller (
+ * {@link User}), einen Freigabestatus ({@link ApprovalStatus}), eine Kapazität
+ * ({@link Capacity}), eine Bezahlmethode ({@link PaymentCondition}), eine
+ * Liefermethode ({@link DeliveryCondition}), einen Status ({@link TourStatus}),
+ * eine Liste von Anfragen ({@link Request}), einen Ort ({@link Location}), ein
+ * Flag ob die Fahrt verändert wurde und ein Zeitpunkt.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class TourTO {
 
     private long id;

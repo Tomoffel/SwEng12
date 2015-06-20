@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import de.shelp.enums.TourStatus;
 
 /**
- * Entität die einen Fahrt respräsentiert. Umfasst eine Id, den Ersteller (
+ * Entität die eine Fahrt respräsentiert. Umfasst eine Id, den Ersteller (
  * {@link User}), einen Freigabestatus ({@link ApprovalStatus}), eine Kapazität
  * ({@link Capacity}), eine Bezahlmethode ({@link PaymentCondition}), eine
  * Liefermethode ({@link DeliveryCondition}), einen Status ({@link TourStatus}),

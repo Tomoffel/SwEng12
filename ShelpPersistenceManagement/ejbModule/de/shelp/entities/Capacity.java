@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Entität die einen Kapazität respräsentiert. Umfasst eine Id und eine
+ * Entität die eine Kapazität respräsentiert. Umfasst eine Id und eine
  * Beschreibung.
  * 
  * @author Jos Werner

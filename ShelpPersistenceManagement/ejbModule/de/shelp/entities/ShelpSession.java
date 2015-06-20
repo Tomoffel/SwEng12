@@ -8,13 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import de.shelp.enums.TourStatus;
-
 /**
- * Entität die einen Session respräsentiert. Umfasst eine Id, den Ersteller (
- * {@link User}), den Empfänger ({@link User}), eine Fahrt ({@link Tour}), eine
- * Liste mit Wünschen {@link WishlistItem}, eine Beschreibung, einen Status (
- * {@link TourStatus}) und ein Flag zum setzen ob die Fahrt geändert wurde.
+ * Entität die eine Session respräsentiert. Umfasst eine Id, den Besitzer (
+ * {@link User}) und das Änderungsdatum.
  * 
  * @author Thomas Sennekamp
  *
@@ -54,11 +50,11 @@ public class ShelpSession {
     }
 
     public Date getUpdatedOn() {
-        return updatedOn;
+	return updatedOn;
     }
 
     public void setUpdatedOn(Date updatedOn) {
-        this.updatedOn = updatedOn;
+	this.updatedOn = updatedOn;
     }
 
     @Override

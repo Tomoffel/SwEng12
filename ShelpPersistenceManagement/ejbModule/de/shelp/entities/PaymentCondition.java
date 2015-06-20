@@ -5,7 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Entität die einen Bezahlmethode respräsentiert. Umfasst eine Id und eine Beschreibung.
+ * Entität die eine Bezahlmethode respräsentiert. Umfasst eine Id und eine
+ * Beschreibung.
  * 
  * @author Jos Werner
  *

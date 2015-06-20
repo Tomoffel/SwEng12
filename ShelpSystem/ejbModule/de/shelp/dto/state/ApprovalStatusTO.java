@@ -2,6 +2,13 @@ package de.shelp.dto.state;
 
 import de.shelp.entities.ApprovalStatus;
 
+/**
+ * TO-Objekt das einen Freigabestatus respräsentiert. Umfasst eine Id und eine
+ * Beschreibung.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class ApprovalStatusTO {
     private int id;
     private String description;

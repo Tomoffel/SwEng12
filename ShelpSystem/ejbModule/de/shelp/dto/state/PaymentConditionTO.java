@@ -1,6 +1,11 @@
 package de.shelp.dto.state;
 
-
+/**
+ * TO-Objekte das eine Bezahlmethode respräsentiert. Umfasst eine Id und eine Beschreibung.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class PaymentConditionTO {
 
     private int id;

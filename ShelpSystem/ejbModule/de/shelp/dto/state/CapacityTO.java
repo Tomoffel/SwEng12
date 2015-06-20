@@ -1,6 +1,12 @@
 package de.shelp.dto.state;
 
-
+/**
+ * TO-Objekt das eine Kapazität respräsentiert. Umfasst eine Id und eine
+ * Beschreibung.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class CapacityTO {
 
     private int id;

@@ -1,5 +1,12 @@
 package de.shelp.dto.state;
 
+/**
+ * TO-Objekt das einen Ort respräsentiert. Umfasst eine Id, eine Beschreibung und
+ * die PLZ.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class LocationTO {
 
     private long id;

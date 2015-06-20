@@ -12,13 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import de.shelp.enums.RequestStatus;
-import de.shelp.enums.TourStatus;
 
 /**
  * Entität die einen Anfrage respräsentiert. Umfasst eine Id, den Ersteller (
  * {@link User}), den Empfänger ({@link User}), eine Fahrt ({@link Tour}), eine
  * Liste mit Wünschen {@link WishlistItem}, eine Beschreibung, einen Status (
- * {@link TourStatus}) und ein Flag zum setzen ob die Fahrt geändert wurde.
+ * {@link RequestStatus}) und ein Flag zum setzen ob die Anfrage geändert wurde.
  * 
  * @author Thomas Sennekamp
  *
