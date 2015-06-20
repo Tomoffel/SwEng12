@@ -230,7 +230,7 @@ public class TourIntegrationTest {
     }
 
     /**
-     * 
+     * Testet alle Fehler an die beim Fahrterstellen auftreten können.
      */
     @Test
     public void bTestCreateTourFail() {
@@ -247,6 +247,11 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.ERROR, createTour.getReturnCode());
     }
 
+    /**
+     * Testet ob Fahrten gesucht werden können die für alle Freigegeben wurden
+     * und direkt am Ort sind. Erwartet das die Fahrten die vorher angelegt
+     * wurden passend gefunden werden.
+     */
     @Test
     public void cTestSearchToursAllDirect() {
 
@@ -262,6 +267,11 @@ public class TourIntegrationTest {
 		.getDescription(), locations.get(0).getDescription());
     }
 
+    /**
+     * Testet ob Fahrten gesucht werden können die für "Nur Freunde" Freigegeben
+     * wurden und direkt am Ort sind. Erwartet das die Fahrten die vorher
+     * angelegt wurden passend gefunden werden.
+     */
     @Test
     public void cTestSearchToursFriendDirect() {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(1)
@@ -274,6 +284,11 @@ public class TourIntegrationTest {
 		.getDescription(), locations.get(0).getDescription());
     }
 
+    /**
+     * Testet ob Fahrten gesucht werden können die für alle Freigegeben wurden
+     * und im Umfeld des Ortes sind. Erwartet das die Fahrten die vorher
+     * angelegt wurden passend gefunden werden.
+     */
     @Test
     public void dTestSearchToursAllNear() {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
@@ -290,6 +305,11 @@ public class TourIntegrationTest {
 		.getDescription(), locations.get(1).getDescription());
     }
 
+    /**
+     * Testet ob Fahrten gesucht werden können die für "Nur Freunde" Freigegeben
+     * wurden und im Umfeld des Ortes sind. Erwartet das die Fahrten die vorher
+     * angelegt wurden passend gefunden werden.
+     */
     @Test
     public void dTestSearchToursFriendNear() {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(1)
@@ -302,6 +322,9 @@ public class TourIntegrationTest {
 		.getDescription(), locations.get(0).getDescription());
     }
 
+    /**
+     * Testet alle Fehler an die beim Fahrtensuchen auftreten können.
+     */
     @Test
     public void eTestSearchToursFail() {
 	// Session existiert nicht
@@ -313,6 +336,9 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.ERROR, searchTour.getReturnCode());
     }
 
+    /**
+     * Testet ob eine Fahrt abgesagt werden können.
+     */
     @Test
     public void fTestDeleteTour() {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
@@ -325,6 +351,9 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, tour.getReturnCode());
     }
 
+    /**
+     * Testet alle Fehler an die beim Fahrtensuchen auftreten können.
+     */
     @Test
     public void fTestDeleteTourFail() {
 	ToursResponse searchTour = remoteSystem.searchTours(states.get(0)
@@ -342,6 +371,9 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.ERROR, tour.getReturnCode());
     }
 
+    /**
+     * Testet ab ob die Fahrten von einem Benutzer abgefragt werden können.
+     */
     @Test
     public void gTestGetTours() {
 	ToursResponse tours = remoteSystem.getTours(session2.getId());
@@ -352,6 +384,9 @@ public class TourIntegrationTest {
 		.getLocation().getDescription());
     }
 
+    /**
+     * Testet alle Fehler an die beim Abfragen der Fahrten auftreten können.
+     */
     @Test
     public void hTestGetToursFail() {
 	// Session existiert nicht
@@ -359,6 +394,9 @@ public class TourIntegrationTest {
 	Assert.assertEquals(ReturnCode.ERROR, tours.getReturnCode());
     }
 
+    /**
+     * Testet ob die Anfragen zu einer Fahrt abgefragt werden können.
+     */
     @Test
     public void iTestGetRequestsOfTour() {
 	RequestIntegrationService requestIntegrationService = new RequestIntegrationService();
@@ -389,6 +427,9 @@ public class TourIntegrationTest {
 	Assert.assertEquals("Test2", requests.get(1).getNotice());
     }
 
+    /**
+     * Testet alle Fehler die beim Anfrageabfragen auftreten können.
+     */
     @Test
     public void jTestGetRequestsOfTourFail() {
 	ToursResponse searchTour = remoteSystem
@@ -417,15 +458,22 @@ public class TourIntegrationTest {
 		requestsOfTour.getReturnCode());
     }
 
+    /**
+     * Testet ob alle aktualisierten Fahrten abgefragt werden können.
+     */
     @Test
-    public void kTestGetUpdateRequestSuccess() {
+    public void kTestGetUpdateTourSuccess() {
 	ToursResponse updatedTours = remoteSystem.getUpdatedTours(session2
 		.getId());
 	Assert.assertEquals(1, updatedTours.getTours().size());
     }
 
+    /**
+     * Testet alle Fehler an die beim abfragen der Aktualisierten Anfragen
+     * auftreten können.
+     */
     @Test
-    public void TestGetUpdateRequestFail() {
+    public void TestGetUpdateTourFail() {
 	// Session existiert nicht
 	ToursResponse updatedTours = remoteSystem.getUpdatedTours(5000);
 	Assert.assertEquals(ReturnCode.ERROR, updatedTours.getReturnCode());
