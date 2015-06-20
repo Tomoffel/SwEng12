@@ -15,15 +15,17 @@ import javax.persistence.criteria.Root;
 import de.shelp.dao.local.ShelpTourDAOLocal;
 import de.shelp.entities.ApprovalStatus;
 import de.shelp.entities.Capacity;
-import de.shelp.entities.DeliveryCondition;
 import de.shelp.entities.Location;
-import de.shelp.entities.PaymentCondition;
 import de.shelp.entities.Tour;
 import de.shelp.entities.User;
 import de.shelp.enums.TourStatus;
 
 /**
- * Session Bean implementation class ShelpTourDAO
+ * Session Bean Klasse in der alle Methoden der {@link ShelpTourDAOLocal}
+ * ausimplementiert sind um alle Datenbankzugriffe für die Fahrtenverwaltung zu
+ * realisieren.
+ * 
+ * @author Jos Werner
  */
 @Stateless
 public class ShelpTourDAO implements ShelpTourDAOLocal {
@@ -60,7 +62,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 			&& location.equals(tourOfUser.getLocation())
 			&& capacity.equals(tourOfUser.getCapacity())
 			&& tourOfUser.getTime().after(startTime)
-			&& tourOfUser.getTime().before(endTime)) {
+			&& tourOfUser.getTime().before(endTime)
+			&& tourOfUser.getStatus().equals(TourStatus.PLANNED)) {
 		    searchedTours.add(tourOfUser);
 		}
 	    }
@@ -90,7 +93,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     public List<Tour> searchNear(ApprovalStatus approvalStatus,
 	    Location location, Capacity capacity, Date startTime, Date endTime,
 	    User currentUser) {
-	// Get all locations, filter by zipcode of given location
+	// Alle Orte die in der Nähe des Ortes sind suchen
 	CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 	CriteriaQuery<Location> criteriaQuery = criteriaBuilder
 		.createQuery(Location.class);
@@ -102,9 +105,8 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	List<Location> locationList = em.createQuery(criteriaQuery)
 		.getResultList();
 
-	// search all tours of location list and at to result
 	List<Tour> resultList = new ArrayList<Tour>();
-
+	// Alle gefundenen Orte durchgehen und passende Fahrten dazu aufnehmen
 	for (Location locationSearch : locationList) {
 	    resultList.addAll(search(approvalStatus, locationSearch, capacity,
 		    startTime, endTime, currentUser));
@@ -124,30 +126,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
 	em.persist(tour);
     }
 
-    @Override
-    public Location getLocation(long locationId) {
-	return em.find(Location.class, locationId);
-    }
-
-    @Override
-    public ApprovalStatus getApprovalStatus(int approvalStatusId) {
-	return em.find(ApprovalStatus.class, approvalStatusId);
-    }
-
-    @Override
-    public Capacity getCapacity(int capacityId) {
-	return em.find(Capacity.class, capacityId);
-    }
-
-    @Override
-    public PaymentCondition getPaymentCondition(int paymentConditionId) {
-	return em.find(PaymentCondition.class, paymentConditionId);
-    }
-
-    @Override
-    public DeliveryCondition getDeliveryCondition(int deliveryConditionId) {
-	return em.find(DeliveryCondition.class, deliveryConditionId);
-    }
+   
 
     @Override
     public void saveTour(Tour tour) {
@@ -155,7 +134,7 @@ public class ShelpTourDAO implements ShelpTourDAOLocal {
     }
 
     @Override
-    public void realiseTour(Tour tour) {
+    public void closeTour(Tour tour) {
 	tour.setStatus(TourStatus.CLOSED);
 	saveTour(tour);
     }

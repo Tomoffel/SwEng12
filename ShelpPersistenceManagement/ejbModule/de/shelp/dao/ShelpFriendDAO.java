@@ -13,6 +13,14 @@ import de.shelp.dao.local.ShelpFriendDAOLocal;
 import de.shelp.entities.Friendship;
 import de.shelp.enums.FriendshipStatus;
 
+/**
+ * Session Bean Klasse in der alle Methoden der {@link ShelpFriendDAOLocal}
+ * ausimplementiert sind um alle Datenbankzugriffe für die
+ * Freundschaftsverwaltung zu realisieren.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Stateless
 public class ShelpFriendDAO implements ShelpFriendDAOLocal {
 

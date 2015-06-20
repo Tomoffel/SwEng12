@@ -11,6 +11,7 @@ import javax.jws.WebService;
 import org.jboss.logging.Logger;
 import org.jboss.ws.api.annotation.WebContext;
 
+import de.shelp.dao.local.ShelpStateDAOLocal;
 import de.shelp.dao.local.ShelpTourDAOLocal;
 import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
@@ -65,6 +66,13 @@ public class TourIntegration {
      */
     @EJB(beanName = "ShelpTourDAO", beanInterface = ShelpTourDAOLocal.class)
     private ShelpTourDAOLocal tourDao;
+
+    /**
+     * EJB zur Abfrage von Datensätzen der Listen. Referenz auf die EJB wird per
+     * Dependency Injection gefüllt.
+     */
+    @EJB(beanName = "ShelpStateDAO", beanInterface = ShelpStateDAOLocal.class)
+    private ShelpStateDAOLocal stateDao;
 
     /**
      * EJB zur Abfrage von Datensätzen der Benutzer. Referenz auf die EJB wird
@@ -131,12 +139,12 @@ public class TourIntegration {
 	ReturnCodeResponse response = new ReturnCodeResponse();
 	try {
 	    Tour tour = new Tour();
-	    tour.setApprovalStatus(tourDao.getApprovalStatus(approvalStatusId));
-	    tour.setLocation(tourDao.getLocation(locationId));
-	    tour.setCapacity(tourDao.getCapacity(capacityId));
-	    tour.setPaymentCondition(tourDao
+	    tour.setApprovalStatus(stateDao.getApprovalStatus(approvalStatusId));
+	    tour.setLocation(stateDao.getLocation(locationId));
+	    tour.setCapacity(stateDao.getCapacity(capacityId));
+	    tour.setPaymentCondition(stateDao
 		    .getPaymentCondition(paymentConditionId));
-	    tour.setDeliveryCondition(tourDao
+	    tour.setDeliveryCondition(stateDao
 		    .getDeliveryCondition(deliveryConditionId));
 	    tour.setTime(new Date(time));
 	    tour.setUpdated(false);
@@ -194,12 +202,12 @@ public class TourIntegration {
 	ToursResponse response = new ToursResponse();
 
 	try {
-	    Location location = tourDao.getLocation(locationId);
+	    Location location = stateDao.getLocation(locationId);
 	    User currentUser = helper.checkSession(sessionId, userDao)
 		    .getUser();
-	    ApprovalStatus approvalStatus = tourDao
+	    ApprovalStatus approvalStatus = stateDao
 		    .getApprovalStatus(approvalStatusId);
-	    Capacity capacity = tourDao.getCapacity(capacityId);
+	    Capacity capacity = stateDao.getCapacity(capacityId);
 
 	    if (location == null || approvalStatus == null || capacity == null) {
 		LOGGER.warn("Suche ist nicht vollständig");
@@ -272,7 +280,9 @@ public class TourIntegration {
      * die FahrtId und SessionId existiert und gibt andernfalls den
      * {@link ReturnCode} ERROR zurück. Überprüft außerdem ob der Benutzer (
      * {@link User}) aus der Session auch der Besitzer er Fahrt ist. Ist es
-     * nicht so wird der {@link ReturnCode} PERMISSION_DENIED zurückgegeben.
+     * nicht so wird der {@link ReturnCode} PERMISSION_DENIED zurückgegeben. <br>
+     * Wurde die Fahrt erfolgreich abgesagt wird jedem Benutzer der eine Anfrage
+     * gestellt hat eine E-Mail zugeschickt.
      * 
      * @param tourId
      *            - Id der Fahrt die geschlossen werden soll

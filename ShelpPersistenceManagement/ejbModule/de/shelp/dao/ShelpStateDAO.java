@@ -15,7 +15,11 @@ import de.shelp.entities.Location;
 import de.shelp.entities.PaymentCondition;
 
 /**
- * Session Bean implementation class ShelpStateDAO
+ * Session Bean Klasse in der alle Methoden der {@link ShelpStateDAOLocal}
+ * ausimplementiert sind um alle Datenbankzugriffe für die Listenverwaltung zu
+ * realisieren.
+ * 
+ * @author Jos Werner
  */
 @Stateless
 public class ShelpStateDAO implements ShelpStateDAOLocal {
@@ -53,20 +57,47 @@ public class ShelpStateDAO implements ShelpStateDAOLocal {
 
     @Override
     public List<DeliveryCondition> getDeliveryConditions() {
-	CriteriaQuery<DeliveryCondition> criteria = em.getCriteriaBuilder().createQuery(
-		DeliveryCondition.class);
+	CriteriaQuery<DeliveryCondition> criteria = em.getCriteriaBuilder()
+		.createQuery(DeliveryCondition.class);
 	criteria.select(criteria.from(DeliveryCondition.class));
-	List<DeliveryCondition> resultList = em.createQuery(criteria).getResultList();
+	List<DeliveryCondition> resultList = em.createQuery(criteria)
+		.getResultList();
 	return resultList;
     }
 
     @Override
     public List<PaymentCondition> getPaymentConditions() {
-	CriteriaQuery<PaymentCondition> criteria = em.getCriteriaBuilder().createQuery(
-		PaymentCondition.class);
+	CriteriaQuery<PaymentCondition> criteria = em.getCriteriaBuilder()
+		.createQuery(PaymentCondition.class);
 	criteria.select(criteria.from(PaymentCondition.class));
-	List<PaymentCondition> resultList = em.createQuery(criteria).getResultList();
+	List<PaymentCondition> resultList = em.createQuery(criteria)
+		.getResultList();
 	return resultList;
+    }
+
+    @Override
+    public Location getLocation(long locationId) {
+	return em.find(Location.class, locationId);
+    }
+
+    @Override
+    public ApprovalStatus getApprovalStatus(int approvalStatusId) {
+	return em.find(ApprovalStatus.class, approvalStatusId);
+    }
+
+    @Override
+    public Capacity getCapacity(int capacityId) {
+	return em.find(Capacity.class, capacityId);
+    }
+
+    @Override
+    public PaymentCondition getPaymentCondition(int paymentConditionId) {
+	return em.find(PaymentCondition.class, paymentConditionId);
+    }
+
+    @Override
+    public DeliveryCondition getDeliveryCondition(int deliveryConditionId) {
+	return em.find(DeliveryCondition.class, deliveryConditionId);
     }
 
 }

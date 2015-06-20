@@ -25,7 +25,9 @@ import de.shelp.util.ShelpHelper;
 
 /**
  * Webservice der alle nötigen Methoden zur Bewertungsverwaltung bereitstellt.
- * Über die Schnittstelle können . <br>
+ * Über die Schnittstelle können Bewertungen angelegt
+ * {@link #createRating(String, int, String, int)} und ausgelesen
+ * {@link #getRatings(String)} werden. <br>
  * Jeder Schritt wird über die Logausgabe dokumentiert. Außerdem werden alle
  * Entitäten vor der Rückgabe in Data Transfer Objekte umgewandelt.
  * 

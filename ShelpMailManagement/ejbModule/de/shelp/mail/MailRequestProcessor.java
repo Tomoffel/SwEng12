@@ -15,12 +15,16 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.websocket.OnMessage;
 
 import org.jboss.logging.Logger;
 
 /**
- * Message-Driven Bean implementation class for: OutputRequestProcessor
- *
+ * Message-Driven Bean impelmentierung für Klasse: MailRequestProcessor Wird
+ * genutzt um E-Mails zu verschicken. Der Inhalt und Empfänger wird in der
+ * {@link OnMessage} Methode übergeben (getrennt durch "\n").
+ * 
+ * @author Thomas Sennekamp
  */
 @MessageDriven(activationConfig = {
 	@ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Queue"),

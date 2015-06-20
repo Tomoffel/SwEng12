@@ -75,7 +75,7 @@ public class ShelpSchedules {
 	    if (tour.getTime().before(new Date())) {
 		LOGGER.info(tour
 			+ " ist vorbei und wird auf abgeschlossen gesetzt.");
-		tourDao.realiseTour(tour);
+		tourDao.closeTour(tour);
 	    }
 	}
     }

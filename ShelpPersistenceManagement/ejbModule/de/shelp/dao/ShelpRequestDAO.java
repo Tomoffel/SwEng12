@@ -8,6 +8,14 @@ import de.shelp.dao.local.ShelpRequestDAOLocal;
 import de.shelp.entities.Request;
 import de.shelp.enums.RequestStatus;
 
+/**
+ * Session Bean Klasse in der alle Methoden der {@link ShelpRequestDAOLocal}
+ * ausimplementiert sind um alle Datenbankzugriffe für die
+ * Anfrageverwaltung zu realisieren.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @Stateless
 public class ShelpRequestDAO implements ShelpRequestDAOLocal {
     @PersistenceContext

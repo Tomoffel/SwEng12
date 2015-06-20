@@ -18,10 +18,17 @@ import de.shelp.entities.DeliveryCondition;
 import de.shelp.entities.Location;
 import de.shelp.entities.PaymentCondition;
 
+/**
+ * Singleton Klasse die beim Serverstart gestartet wird und die Anfangswerte in
+ * die Datenbank füllt. Überprüft dabei immer zuerst ob die Werte nicht schon in
+ * der Datenbank existieren.
+ * 
+ * @author Jos Werner
+ *
+ */
 @Startup
 @Singleton
 public class DataBuilder {
-
 
     @PersistenceContext
     EntityManager em;

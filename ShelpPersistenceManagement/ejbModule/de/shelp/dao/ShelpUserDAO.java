@@ -16,7 +16,11 @@ import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
 
 /**
- * Session Bean implementation class ShelpUserDAO
+ * Session Bean Klasse in der alle Methoden der {@link ShelpUserDAOLocal}
+ * ausimplementiert sind um alle Datenbankzugriffe für die Benutzerverwaltung zu
+ * realisieren.
+ * 
+ * @author Jos Werner
  */
 @Stateless
 public class ShelpUserDAO implements ShelpUserDAOLocal {
@@ -86,6 +90,5 @@ public class ShelpUserDAO implements ShelpUserDAOLocal {
 	session.setUpdatedOn(new Date());
 	em.persist(session);
     }
-
 
 }

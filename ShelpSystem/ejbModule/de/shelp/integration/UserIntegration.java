@@ -75,7 +75,8 @@ public class UserIntegration {
      * und ob der Benutzer schon existiert. Sollte dies der Fall sein wird der
      * {@link ReturnCode} ERROR zurückgegeben. Kann der Benutzer angelegt werden
      * wird direkt eine neue {@link ShelpSession} für den Benutzer angelegt und
-     * auf der Datenbank abgespeichert.
+     * auf der Datenbank abgespeichert. Anschließend wird dem Benutzer eine
+     * E-Mail geschickt.
      * 
      * @param email
      *            - die E-Mailadresse des neuen Benutzers
