@@ -13,7 +13,7 @@ import de.shelp.entities.WishlistItem;
 
 /**
  * Klasse zur Umwandlung von RequestObjekten in transportfähige Objekte.
- * @author Jos Werner
+ * @author Thomas Sennekamp
  *
  */
 @Stateless

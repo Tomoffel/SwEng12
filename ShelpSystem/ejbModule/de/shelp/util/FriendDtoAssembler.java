@@ -8,7 +8,7 @@ import de.shelp.entities.Friendship;
 
 /**
  * Klasse zur Umwandlung von UserObjekten in transportfähige Objekte.
- * @author Jos Werner
+ * @author Thomas Sennekamp
  *
  */
 

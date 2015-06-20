@@ -8,8 +8,7 @@ import de.shelp.entities.ShelpSession;
 import de.shelp.entities.User;
 
 /** Klasse zur Umwandlung von UserObjekten
- * @author Thomas Sennekamp
- *
+ * @author Jos Werner
  */
 @Stateless
 public class UserDtoAssembler {

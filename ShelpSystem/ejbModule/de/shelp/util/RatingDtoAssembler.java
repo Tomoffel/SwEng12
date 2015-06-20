@@ -9,7 +9,7 @@ import de.shelp.entities.Rating;
 
 /**
  * Klasse zur Umwandlung von RatingObjekten in transportfähige Objekte.
- * @author anwender
+ * @author Thomas Sennekamp
  *
  */
 @Stateless

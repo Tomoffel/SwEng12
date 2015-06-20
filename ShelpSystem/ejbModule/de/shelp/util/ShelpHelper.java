@@ -21,7 +21,7 @@ import de.shelp.exception.UserNotExistException;
  * In Fehlerfällen wird die entsprechende Exception
  * {@link SessionNotExistException} oder {@link UserNotExistException} geworfen.
  * 
- * @author Thomas Sennekamp
+ * @author Jos Werner
  *
  */
 @Stateless

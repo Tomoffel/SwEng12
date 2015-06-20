@@ -16,7 +16,7 @@ import de.shelp.entities.PaymentCondition;
 /**
  * Klasse zur Umwandlung von State-Objekten in transportfähige Objekte.
  * 
- * @author Thomas Sennekamp
+ * @author Jos Werner
  *
  */
 
