@@ -4,7 +4,7 @@ import de.shelp.enums.ReturnCode;
 
 /**
  * Erweiterung der ShelpException {@link ShelpException}. Wird aufgerufen bei nicht existierender Session.
- * @author Thomas Sennekamp
+ * @author Jos Werner
  *
  */
 public class SessionNotExistException extends ShelpException {

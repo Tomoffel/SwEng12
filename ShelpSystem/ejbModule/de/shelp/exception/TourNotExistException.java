@@ -4,7 +4,7 @@ import de.shelp.enums.ReturnCode;
 
 /**
  * Erweiterung der ShelpException {@link ShelpException}. Wird aufgerufen bei nicht existierender Tour.
- * @author Thomas Sennekamp
+ * @author Jos Werner
  *
  */
 public class TourNotExistException extends ShelpException {

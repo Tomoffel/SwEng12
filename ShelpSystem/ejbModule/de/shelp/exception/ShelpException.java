@@ -3,7 +3,7 @@ package de.shelp.exception;
 import de.shelp.enums.ReturnCode;
 /**
  * Grundlegende Fehlermeldung für das ShelpSystem
- * @author Jos Werner
+ * @author Thomas Sennekamp
  *
  */
 
