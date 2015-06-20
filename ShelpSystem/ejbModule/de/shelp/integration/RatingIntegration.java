@@ -23,37 +23,61 @@ import de.shelp.exception.ShelpException;
 import de.shelp.util.RatingDtoAssembler;
 import de.shelp.util.ShelpHelper;
 
+/**
+ * Webservice der alle nötigen Methoden zur Bewertungsverwaltung bereitstellt.
+ * Über die Schnittstelle können . <br>
+ * Jeder Schritt wird über die Logausgabe dokumentiert. Außerdem werden alle
+ * Entitäten vor der Rückgabe in Data Transfer Objekte umgewandelt.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 @WebService
 @WebContext(contextRoot = "/shelp")
 @Stateless
 public class RatingIntegration {
 
     /**
-     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-     * Injection gefüllt.
+     * EJB zur Abfrage von Datensätzen der Bewertungen. Referenz auf die EJB
+     * wird per Dependency Injection gefüllt.
      */
     @EJB(beanName = "ShelpRatingDAO", beanInterface = ShelpRatingDAOLocal.class)
     private ShelpRatingDAOLocal daoRating;
 
     /**
-     * EJB zur Abfrage von Datensätzen Referenz auf die EJB wird per Dependency
-     * Injection gefüllt.
+     * EJB zur Abfrage von Datensätzen der Benutzer- Referenz auf die EJB wird
+     * per Dependency Injection gefüllt.
      */
     @EJB(beanName = "ShelpUserDAO", beanInterface = ShelpUserDAOLocal.class)
     private ShelpUserDAOLocal daoUser;
 
     /**
-     * EJB zur Erzeugung von DataTransferObjects
+     * EJB zur Erzeugung von DataTransferObjects von Bewertungen
      */
     @EJB
     private RatingDtoAssembler dtoAssembler;
 
+    /**
+     * EJB zur Einbindung von generellen Hilfsmethoden
+     */
     @EJB
     private ShelpHelper helper;
 
     private static final Logger LOGGER = Logger
 	    .getLogger(RatingIntegration.class);
 
+    /**
+     * Schnittstelle die genutzt werden kann um zu einem Benutzer ({@link User})
+     * alle Bewertungen ({@link Rating}) zu bekommen- Prüft ob der Benutzer in
+     * der Datenbank existiert und gibt {@link ReturnCode} ERROR zurück falls
+     * nicht.
+     * 
+     * @param userName
+     *            - die E-Mail des Benutzers dessen Ratings angefragt werden
+     * @return einen {@link RatingResponse} mit {@link ReturnCode} OK und allen
+     *         Bewertungen des Benutzers oder {@link ReturnCode} ERROR +
+     *         Fehlermeldung
+     */
     public RatingResponse getRatings(String userName) {
 	RatingResponse response = new RatingResponse();
 
@@ -80,6 +104,30 @@ public class RatingIntegration {
 
     }
 
+    /**
+     * Schnittstelle die genutzt werden kann um eine Bewertung ({@link Rating})
+     * zu einem Benutzers ({@link User}) zu erstellen. Prüft ob der Zielnutzer
+     * und die SessionId existieren und gibt {@link ReturnCode} ERROR zurück
+     * falls nicht. Überprüft außerdem ob das Rating im gültigen Bereich
+     * zwischen 10 und 50 liegt und ob der Benutzer aus der Session und der
+     * Zielnutzer ungleich sind. Falls nicht wieder ERROR. <br>
+     * Das Rating muss vor der Übertragung mal 10 genommen werden (d.h. 4,5 wird
+     * zu 45 usw.). Dies ist nötig da die Übertragung eines Floats mit kSoap
+     * nicht geht und halbe Sterne möglich sein sollen. <br>
+     * Der Ersteller der Fahrt wird automatisch aus der SessionId ermittelt.
+     * 
+     * @param targetUserId
+     *            - E-Mail des zu bewertenden Nutzers
+     * @param rating
+     *            - die Bewertung in Sternen
+     * @param notice
+     *            - eine kurzer Text vom Bewerter
+     * @param sessionId
+     *            - die Id der Session des bewertenden Nutzers
+     * 
+     * @return ein {@link ReturnCodeResponse} mit {@link ReturnCode} OK oder
+     *         ERROR + Fehlermeldung
+     */
     public ReturnCodeResponse createRating(String targetUserId, int rating,
 	    String notice, int sessionId) {
 	ReturnCodeResponse response = new ReturnCodeResponse();
