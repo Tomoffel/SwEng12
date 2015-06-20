@@ -37,7 +37,8 @@ import de.shelp.integration.UserIntegrationService;
 import de.shelp.integration.UserResponse;
 
 /**
- * Testet alle Webservice-Schnittstellen zur TourIntegration.
+ * Testet alle Webservice-Schnittstellen zur TourIntegration. * 
+ * @author Thomas Sennekamp
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TourIntegrationTest {

@@ -23,6 +23,8 @@ import de.shelp.integration.UserResponse;
 
 /**
  * Testet alle Webservice-Schnittstellen zur FriendIntegration.
+ * 
+ * @author Jos Werner
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FriendIntegrationTest {

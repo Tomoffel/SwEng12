@@ -23,6 +23,8 @@ import de.shelp.integration.StateIntegrationService;
 
 /**
  * Testet alle Webservice-Schnittstellen zur StateIntegration.
+ * 
+ * @author Thomas Sennekamp
  */
 public class StateIntegrationTest {
 

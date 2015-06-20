@@ -39,6 +39,8 @@ import de.shelp.integration.WishlistItemTO;
 
 /**
  * Testet alle Webservice-Schnittstellen zur TourIntegration.
+ * 
+ * @author Jos Werner
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RequestIntegrationTest {
