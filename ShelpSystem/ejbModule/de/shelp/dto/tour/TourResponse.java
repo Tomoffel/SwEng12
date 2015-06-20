@@ -2,6 +2,13 @@ package de.shelp.dto.tour;
 
 import de.shelp.dto.ReturnCodeResponse;
 
+/**
+ * Klasse repräsentiert die Rückgabe für eine Fahrt ({@link TourTO}). Erbt von
+ * {@link ReturnCodeResponse}.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class TourResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = 4333669660990735973L;

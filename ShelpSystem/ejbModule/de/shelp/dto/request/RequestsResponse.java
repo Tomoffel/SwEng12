@@ -5,6 +5,13 @@ import java.util.List;
 import de.shelp.dto.ReturnCodeResponse;
 import de.shelp.dto.tour.TourTO;
 
+/**
+ * Klasse repräsentiert die Rückgabe für mehrere Anfragen ({@link RequestTO}). Erbt von
+ * {@link ReturnCodeResponse}.
+ * 
+ * @author Thomas Sennekamp
+ *
+ */
 public class RequestsResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = 5957637236176457984L;

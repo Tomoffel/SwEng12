@@ -13,7 +13,7 @@ import org.jboss.ws.api.annotation.WebContext;
 import de.shelp.dao.local.ShelpRatingDAOLocal;
 import de.shelp.dao.local.ShelpUserDAOLocal;
 import de.shelp.dto.ReturnCodeResponse;
-import de.shelp.dto.rating.RatingResponse;
+import de.shelp.dto.rating.RatingsResponse;
 import de.shelp.dto.rating.RatingTO;
 import de.shelp.entities.Rating;
 import de.shelp.entities.ShelpSession;
@@ -76,12 +76,12 @@ public class RatingIntegration {
      * 
      * @param userName
      *            - die E-Mail des Benutzers dessen Ratings angefragt werden
-     * @return einen {@link RatingResponse} mit {@link ReturnCode} OK und allen
+     * @return einen {@link RatingsResponse} mit {@link ReturnCode} OK und allen
      *         Bewertungen des Benutzers oder {@link ReturnCode} ERROR +
      *         Fehlermeldung
      */
-    public RatingResponse getRatings(String userName) {
-	RatingResponse response = new RatingResponse();
+    public RatingsResponse getRatings(String userName) {
+	RatingsResponse response = new RatingsResponse();
 
 	try {
 	    User user = helper.checkUser(userName, daoUser);

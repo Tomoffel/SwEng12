@@ -4,6 +4,14 @@ import java.util.List;
 
 import de.shelp.dto.ReturnCodeResponse;
 
+/**
+ * Klasse repräsentiert die Rückgabe für alle Listen ({@link ApprovalStatusTO},
+ * {@link CapacityTO}, {@link DeliveryConditionTO}, {@link PaymentConditionTO},
+ * {@link LocationTO}). Erbt von {@link ReturnCodeResponse}.
+ * 
+ * @author Jos Werner
+ *
+ */
 public class AllListResponse extends ReturnCodeResponse {
 
     private static final long serialVersionUID = -3883979253357422621L;
