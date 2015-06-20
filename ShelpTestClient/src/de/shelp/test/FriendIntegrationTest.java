@@ -34,7 +34,8 @@ public class FriendIntegrationTest {
     private static ShelpSessionTO session4;
 
     /**
-     * Baut einmalig die Verbindung zum Server auf
+     * Baut einmalig die Verbindung zum Server auf und setzt zentrale
+     * Informationen für die Testfälle.
      */
     @BeforeClass
     public static void initTestCase() {
@@ -78,6 +79,10 @@ public class FriendIntegrationTest {
 	session4 = loginResponse.getSession();
     }
 
+    /**
+     * Überprüft ob eine Freundschaft erfolgreich angefragt werden kann.
+     * Erwartet das immer OK zurück gegeben wird.
+     */
     @Test
     public void aTestFriendshipAskedSuccess() {
 	ReturnCodeResponse addFriend = remoteSystem.addFriend(session1.getId(),
@@ -91,6 +96,10 @@ public class FriendIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, addFriend.getReturnCode());
     }
 
+    /**
+     * Überprüft alle Fehler die während der Anfrage einer Freundschaft
+     * auftreten können. Erwartet das keine Freundschaft angelegt wird.
+     */
     @Test
     public void bTestFriendshipAskedFailed() {
 	// Session existiert nicht
@@ -114,6 +123,10 @@ public class FriendIntegrationTest {
 		+ session2.getUser().getEmail(), addFriend.getMessage());
     }
 
+    /**
+     * Überprüft ob Freundschaften eines Benutzers angefragt werden können.
+     * Erwartet das die vorher angelegten Freundschaften gefunden werden.
+     */
     @Test
     public void cTestGetFriendshipsFirstSuccess() {
 	FriendsResponse friends = remoteSystem.getFriends(session1.getId());
@@ -145,6 +158,10 @@ public class FriendIntegrationTest {
 		.getStatus());
     }
 
+    /**
+     * Prüft alle Fehler beim Abfragen der Freunde eines Benutzer ab. Erwartet
+     * immer einen Fehler.
+     */
     @Test
     public void dTestGetFriendshipsFailed() {
 	// ungültiger Benutzer
@@ -152,6 +169,9 @@ public class FriendIntegrationTest {
 	Assert.assertEquals(ReturnCode.ERROR, friends.getReturnCode());
     }
 
+    /**
+     * Testet ob eine Freundschaftsanfrage abgelehnt werden kann. Erwartet OK.
+     */
     @Test
     public void eTestFriendshipDeniedSuccess() {
 	FriendsResponse friends = remoteSystem.getFriends(session2.getId());
@@ -162,6 +182,10 @@ public class FriendIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, deniedFriendship.getReturnCode());
     }
 
+    /**
+     * Überprüft alle Fehler die während der Freundschaftablehnung auftreten
+     * können. Erwartet das es immer einen Fehler gibt.
+     */
     @Test
     public void fTestFriendshipDeniedFailed() {
 	FriendsResponse friends = remoteSystem.getFriends(session2.getId());
@@ -203,6 +227,9 @@ public class FriendIntegrationTest {
 		deniedFriendship.getMessage());
     }
 
+    /**
+     * Testet ob eine Freundschaftsanfrage angenommen werden kann. Erwartet OK.
+     */
     @Test
     public void gTestFriendshipAcceptSuccess() {
 	FriendsResponse friends = remoteSystem.getFriends(session3.getId());
@@ -212,6 +239,10 @@ public class FriendIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, acceptFriendship.getReturnCode());
     }
 
+    /**
+     * Überprüft alle Fehler die während der Freundschaftannahme auftreten
+     * können. Erwartet das es immer einen Fehler gibt.
+     */
     @Test
     public void hTestFriendshipAcceptFailed() {
 	FriendsResponse friends = remoteSystem.getFriends(session3.getId());
@@ -253,6 +284,10 @@ public class FriendIntegrationTest {
 		acceptFriendship.getMessage());
     }
 
+    /**
+     * Überprüft alle Fehler die während dem Löschen einer Freundschaft
+     * auftreten können. Erwartet das es immer einen Fehler gibt.
+     */
     @Test
     public void jTestFriendshipDeleteFailed() {
 	FriendsResponse friends = remoteSystem.getFriends(session3.getId());
@@ -285,6 +320,10 @@ public class FriendIntegrationTest {
 		deleteFriendship.getMessage());
     }
 
+    /**
+     * Überprüft alle Fehler die beim erstellen einer Freundschaft auftreten
+     * wenn diese schon existiert. Erwarte immer einen Fehler.
+     */
     @Test
     public void kTestFriendshipAskedExist() {
 	// Anfrage wurde schon gestellt zwischen xx und yy.
@@ -312,6 +351,10 @@ public class FriendIntegrationTest {
 		+ session1.getUser().getEmail() + ".", addFriend.getMessage());
     }
 
+    /**
+     * Überprüft ob sich durch die vorherigen Testfälle der Status der
+     * Freundschaften angepasst hat.
+     */
     @Test
     public void lTestGetFriendshipsChangedStatus() {
 	FriendsResponse friends = remoteSystem.getFriends(session1.getId());
@@ -346,6 +389,10 @@ public class FriendIntegrationTest {
 		.getStatus());
     }
 
+    /**
+     * Überprüft ob eine Freundschaft gelöscht werden kann. Erwartet das die
+     * Freundschaft gelöscht wird.
+     */
     @Test
     public void mTestFriendshipDeleteSuccess() {
 	FriendsResponse friends = remoteSystem.getFriends(session2.getId());

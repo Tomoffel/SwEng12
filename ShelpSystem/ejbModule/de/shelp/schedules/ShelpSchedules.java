@@ -83,7 +83,7 @@ public class ShelpSchedules {
     public void closeTours() {
 	List<Tour> tours = tourDao.getOpenTours();
 	LOGGER.info(tours.size()
-		+ " exstierende Fahrten werden auf ihre Gültigkeit geprüft");
+		+ " existierende Fahrten werden auf ihre Gültigkeit geprüft");
 
 	for (Tour tour : tours) {
 	    // Alle Fahrten die vorrüber sind werden abgeschlossen
