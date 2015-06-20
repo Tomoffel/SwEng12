@@ -55,6 +55,9 @@ public class RatingIntegrationTest {
 	session2 = loginResponse.getSession();
     }
 
+    /**
+     * Testet, ob die Erstellung eines Rating erfolgreich ist.
+     */
     @Test
     public void aTestCreateRatingSuccess() {
 	ReturnCodeResponse createRating = remoteSystem.createRating(session2
@@ -62,6 +65,9 @@ public class RatingIntegrationTest {
 	Assert.assertEquals(ReturnCode.OK, createRating.getReturnCode());
     }
 
+    /**
+     * Testet, ob die Erstellung von Ratings fehlschlägt.
+     */
     @Test
     public void bTestCreateRatingFailed() {
 	// Session existiert nicht
@@ -98,15 +104,18 @@ public class RatingIntegrationTest {
 	Assert.assertEquals("Ungültiges Rating 6.0", createRating.getMessage());
     }
 
+    /**
+     * Testet, ob Ratings erfolgreich angerufen werden können.
+     */
     @Test
-    public void cTestCreateGetRatingsSuccess() {
+    public void cTestGetRatingsSuccess() {
 	// session1 mit keinen Bewertungen
 	RatingResponse ratings = remoteSystem.getRatings(session1.getUser()
 		.getEmail());
 	Assert.assertEquals(ReturnCode.OK, ratings.getReturnCode());
 	Assert.assertEquals(0, ratings.getRatings().size());
 
-	// session2 mit einer Bewertungen aus Testfal a
+	// session2 mit einer Bewertungen aus Testfall a
 	ratings = remoteSystem.getRatings(session2.getUser().getEmail());
 	Assert.assertEquals(ReturnCode.OK, ratings.getReturnCode());
 	Assert.assertEquals(1, ratings.getRatings().size());
@@ -115,8 +124,11 @@ public class RatingIntegrationTest {
 		.getNotice());
     }
 
+    /**
+     * Testet, ob  Ratings nicht erfolgreich angerufen werden können.
+     */
     @Test
-    public void cTestCreateGetRatingsFailed() {
+    public void cTestGetRatingsFailed() {
 	// ungültiger Benutzer
 	RatingResponse ratings = remoteSystem.getRatings("nichtvorhanden");
 	Assert.assertEquals(ReturnCode.ERROR, ratings.getReturnCode());
